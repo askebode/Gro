@@ -239,6 +239,12 @@ img { max-width: 100%; display: block; }
   color: transparent;
 }
 
+.hero-with-video .hero-content h1 {
+  background: linear-gradient(95deg, #85837D 0%, #85837D 90%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 /* Hero video som baggrund */
 .hero-with-video {
   position: relative;
@@ -280,8 +286,7 @@ img { max-width: 100%; display: block; }
 .hero-with-video .hero-content {
   position: relative;
   z-index: 2;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  color: #85837D;
 }
 
 /* Evt. lidt ekstra spacing-tuning på mobil hvis behov */
@@ -296,6 +301,10 @@ img { max-width: 100%; display: block; }
   color: var(--color-text-muted);
   max-width: 50ch;
   font-weight: 500;
+}
+
+.hero-with-video .hero-content .lead {
+  color: #85837D;
 }
 
 /* Lists */
