@@ -12,6 +12,7 @@
   --color-text: #1f2624;
   --color-text-muted: #5b6964;
   --color-focus-ring: #2f6050;
+  --color-video: #63615D;
   --radius-xs: 3px;
   --radius-s: 6px;
   --radius-m: 14px;
@@ -253,6 +254,7 @@ img { max-width: 100%; display: block; }
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background: var(--color-video);
 }
 
 .hero-with-video .hero-video {
@@ -262,7 +264,7 @@ img { max-width: 100%; display: block; }
   object-position: center;
   display: block;
   pointer-events: none;   /* Så klik går videre til links/knapper */
-  background: #11241f;    /* Fallback farve mens video loader */
+  background: var(--color-video);    /* Fallback farve mens video loader */
 }
 
 .hero-with-video .hero-overlay {
@@ -271,15 +273,15 @@ img { max-width: 100%; display: block; }
   z-index: 1;
   pointer-events: none;
   /* Justér overlay så tekst har god kontrast */
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.55) 85%),
-    linear-gradient(120deg, rgba(0,0,0,0.15), rgba(0,0,0,0));
+  background: rgba(99,97,93,0.6);
   mix-blend-mode: normal;
 }
 
 .hero-with-video .hero-content {
   position: relative;
   z-index: 2;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 }
 
 /* Evt. lidt ekstra spacing-tuning på mobil hvis behov */
