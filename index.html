@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calm Down Studio – Ro, balance og bæredygtig arbejdskultur</title>
+  <meta name="description" content="Calm Down Studio hjælper virksomheder med at sænke tempoet, skabe ro og styrke work–life balance gennem mikrojusteringer og groundende workshops." />
+  <meta name="theme-color" content="#4d7667" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="brand">
+      <a href="#hero" class="brand-link">Calm Down Studio</a>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Åbn menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <nav class="site-nav" aria-label="Hovednavigation">
+      <ul>
+        <li><a href="#koncept">koncept</a></li>
+        <li><a href="#ydelser">ydelser</a></li>
+        <li><a href="#omos">om os</a></li>
+        <li><a href="#kontakt">kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero med video -->
+    <section id="hero" class="hero section hero-with-video">
+      <div class="hero-media" aria-hidden="true">
+        <video
+          class="hero-video"
+          autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            poster="assets/img/hero.jpg"
+        >
+          <!-- Hvis du senere laver en .webm kan du tilføje den øverst som første source -->
+          <source src="assets/video/hero.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="container narrow hero-content">
+        <h1>Kom ned i tempo – og styrk energien</h1>
+        <p class="lead">
+          Vi hjælper virksomheder med at skabe ro, mental bæredygtighed og reel work–life balance gennem små praktiske justeringer og meningsfulde workshops.
+        </p>
+        <a href="#koncept" class="btn primary">Se vores tilgang</a>
+      </div>
+    </section>
+
+    <!-- Koncept -->
+    <section id="koncept" class="section">
+      <div class="container">
+        <h2>Koncept</h2>
+        <p>Hverdagen er fyldt med konstant stimuli – notifikationer, skærme, møder og mentale skift. Mange sidder stille hele dagen, men bruger enorme mængder kognitiv energi. Pauser foregår ofte med telefon i hånden, hvilket forlænger belastningen fremfor at give restitution.</p>
+        <p>Calm Down Studio peger på små, realistiske mikrojusteringer i arbejdskulturen, som frigør luft og reducerer unødig mental støj. Vi kombinerer viden om hvad der belaster hjernen med evidens omkring mentalsundhed, balance og tempo‑regulering – og omsætter den til konkrete arbejdsgange.</p>
+        <ul class="icon-list">
+          <li><strong>Observer</strong> – Kortlæg stimuli, afbrydelser og energilækager.</li>
+          <li><strong>Justér</strong> – Indfør små greb, der skaber ro (mødestruktur, pauser, fokusrum, rytmer).</li>
+          <li><strong>Ground</strong> – Etabler praksisser der sænker tempo og giver reel restitution.</li>
+          <li><strong>Forankr</strong> – Hjælp teams med at vedligeholde balance og energiniveau over tid.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Ydelser -->
+    <section id="ydelser" class="section alt">
+      <div class="container">
+        <h2>Ydelser</h2>
+        <div class="grid cards">
+          <article class="card">
+            <h3>Puls- & stimuli­analyse</h3>
+            <p>Kortlæg hvor og hvornår mental belastning opstår – afbrydelser, mødeflow, kontekstskift og pauser.</p>
+          </article>
+          <article class="card">
+            <h3>Mikrojusteringer</h3>
+            <p>Pragmatiske ændringer i struktur og adfærd: fokustider, pauseritualer, mødekomprimering, notifikationshygiejne.</p>
+          </article>
+          <article class="card">
+            <h3>Workshops</h3>
+            <p>Fælles grounding, energigenopladning og hands‑on værktøjer til mental ro og bæredygtig performance.</p>
+          </article>
+          <article class="card">
+            <h3>Ledelsessparring</h3>
+            <p>Støtte til at skabe rammer for sund work–life balance, forebyggelse af kognitiv overload og bedre teamrytmer.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Om os -->
+    <section id="omos" class="section">
+      <div class="container narrow">
+        <h2>Om os</h2>
+        <p>Calm Down Studio udspringer af et ønske om at skabe arbejdskulturer hvor tempo ikke konstant accelererer, men styres bevidst. Vi samler viden om mentalsundhed, neurobelastning, pauser, bevægelse og arbejdsmønstre – og gør den brugbar i praksis.</p>
+        <p>Vores tilgang er jordnær: Små skridt, lav indsats – høj effekt over tid. Ingen skyld eller moraliserende regler; i stedet et realistisk design af hverdagen, der giver hjernen ro til fordybelse, pauser og regenerering.</p>
+        <p>Vi arbejder tæt med teams, så justeringer ikke lander som “et projekt”, men som en integreret rytme i deres samarbejde.</p>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt" class="section alt">
+      <div class="container narrow">
+        <h2>Kontakt</h2>
+        <p>Vil du høre hvordan vi kan hjælpe jer med at sænke tempoet og styrke energien? Skriv til os – vi tager gerne en uforpligtende samtale.</p>
+        <form class="contact-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Tak for din besked! (Demo)');">
+          <div class="form-row">
+            <label for="navn">Navn</label>
+            <input id="navn" name="navn" type="text" required />
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="form-row">
+            <label for="besked">Besked</label>
+            <textarea id="besked" name="besked" rows="5" required placeholder="Fortæl kort om jeres udfordring..."></textarea>
+          </div>
+          <button type="submit" class="btn primary">Send</button>
+        </form>
+        <div class="contact-meta">
+          <p><strong>Email:</strong> <a href="mailto:info@example.com">info@example.com</a></p>
+          <p><strong>Telefon:</strong> +45 12 34 56 78</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container small">
+      <p>&copy; <span id="year"></span> Calm Down Studio. Alle rettigheder forbeholdes.</p>
+    </div>
+  </footer>
+</body>
+</html>
