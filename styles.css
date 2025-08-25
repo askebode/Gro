@@ -1,7 +1,8 @@
 /* ============== Design tokens ============== */
 :root {
   --color-bg: #f5f7f6;
-  --color-bg-alt: #eef2f1;
+  --color-bg-alt: #85837D;
+  --color-bg-sections: #93918C;
   --color-surface: #ffffff;
   --color-surface-tint: #ffffffcc;
   --color-border: #d9e1de;
@@ -113,6 +114,7 @@ img { max-width: 100%; display: block; }
 .section {
   padding: var(--space-8) 0 var(--space-7);
   position: relative;
+  background: var(--color-bg-sections);
 }
 .section.alt {
   background: var(--color-bg-alt);
@@ -138,7 +140,7 @@ img { max-width: 100%; display: block; }
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: .5px;
-  background: linear-gradient(110deg, var(--color-accent) 0%, var(--color-accent-soft) 60%);
+  background: linear-gradient(110deg, #85837D 0%, #85837D 60%);
   -webkit-background-clip: text;
   color: transparent;
   padding: .2rem .1rem;
