@@ -302,6 +302,134 @@ img { max-width: 100%; display: block; }
   color: #85837D;
 }
 
+/* ================= Hero Impact Enhancements ================ */
+
+/* Particle canvas sits between video overlay and content */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* below hero-content (which is 2) */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero-particles {
+    opacity: 0.38;
+    mix-blend-mode: lighten;
+  }
+}
+
+/* Headline kinetic words */
+.hero-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem .7rem;
+  line-height: 1.08;
+}
+
+.hero-title .reveal-word,
+.hero-title .reveal-dash {
+  display: inline-block;
+  position: relative;
+  transform: translateY(1.2em) scale(.98);
+  opacity: 0;
+  filter: blur(6px);
+  transition:
+    transform 760ms var(--ease-standard),
+    opacity 760ms var(--ease-standard),
+    filter 900ms var(--ease-standard);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+.hero-title .reveal-dash {
+  width: .8rem;
+  text-align: center;
+  transform: translateY(1.2em) scale(.95);
+  opacity: 0;
+}
+
+.hero-title .is-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.hero-title .reveal-instant {
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+/* Optional subtle underline growth for each word (pseudo-element) */
+.hero-title .reveal-word::after {
+  content: "";
+  position: absolute;
+  left: 4%;
+  bottom: -0.25em;
+  width: 92%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-alt), var(--color-accent));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  opacity: 0;
+  transition: transform 620ms var(--ease-standard), opacity 620ms var(--ease-standard);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 320ms);
+  border-radius: 2px;
+}
+
+.hero-title .is-visible::after {
+  transform: scaleX(1);
+  opacity: .7;
+}
+
+/* Enhance video overlay layering with a secondary subtle gradient veil */
+.hero-with-video .hero-overlay {
+  background:
+    linear-gradient(160deg, rgba(99,97,93,0.75) 0%, rgba(99,97,93,0.25) 40%, rgba(99,97,93,0.65) 100%),
+    radial-gradient(circle at 25% 70%, rgba(233,241,247,0.18), rgba(233,241,247,0) 60%);
+  mix-blend-mode: multiply;
+}
+
+/* Additional gentle luminous haze above everything (but below content) */
+.hero-with-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 70% 30%, rgba(233,241,247,0.18), transparent 60%),
+    radial-gradient(circle at 15% 80%, rgba(186,186,181,0.14), transparent 65%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Refine hero content stacking to sit above new layers */
+.hero-with-video .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Motion reduction handling: ensure no entrance animation */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .reveal-word,
+  .hero-title .reveal-dash,
+  .hero-title .reveal-word::after {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  .hero-title .reveal-word::after {
+    transform: scaleX(1) !important;
+  }
+  .hero-particles { display: none; }
+}
+
 .lead {
   font-size: clamp(1.05rem, 2.1vw, 1.3rem);
   color: var(--color-text-muted);
