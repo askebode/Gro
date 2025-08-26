@@ -363,25 +363,6 @@ img { max-width: 100%; display: block; }
   transition: none !important;
 }
 
-/* Hover-only faint underline (remove the removal rule above if you use this) */
-.hero-title .reveal-word::after {
-  content: "";
-  position: absolute;
-  left: 8%;
-  bottom: -0.3em;
-  width: 84%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--color-accent-alt), var(--color-accent));
-  opacity: 0;
-  transform: scaleX(0.2);
-  transform-origin: 0 50%;
-  transition: opacity .35s ease, transform .45s ease;
-}
-.hero-title .reveal-word:is(.is-visible)::after {
-  opacity: .35;
-  transform: scaleX(1);
-}
-
 /* Enhance video overlay layering with a secondary subtle gradient veil */
 .hero-with-video .hero-overlay {
   background:
