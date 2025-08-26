@@ -250,9 +250,7 @@ img { max-width: 100%; display: block; }
 .hero h1 {
   margin-bottom: .7em;
   font-weight: 700;
-  background: linear-gradient(95deg, var(--color-text) 0%, var(--color-accent) 90%);
   -webkit-background-clip: text;
-  color: transparent;
 }
 
 .hero-with-video.hero {
@@ -262,7 +260,6 @@ img { max-width: 100%; display: block; }
 .hero-with-video .hero-content h1 {
   background: linear-gradient(95deg, #E9F1F7 0%, #BABAB5 90%);
   -webkit-background-clip: text;
-  color: transparent;
 }
 
 .hero-with-video {
