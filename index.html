@@ -30,28 +30,41 @@
   </header>
 
   <main id="main">
-    <section id="hero" class="hero section hero-with-video">
-      <div class="hero-media" aria-hidden="true">
-        <video
-          class="hero-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="auto"
-          poster="assets/img/hero.jpg"
-        >
-          <source src="assets/video/hero.mp4" type="video/mp4" />
-        </video>
-        <div class="hero-overlay"></div>
-      </div>
-      <div class="container narrow hero-content">
-        <h1>Kom ned i tempo – og styrk energien</h1>
-        <p class="lead">
-          Vi hjælper virksomheder med at skabe ro, mental bæredygtighed og reel work–life balance gennem små praktiske justeringer og meningsfulde workshops.
-        </p>
-      </div>
-    </section>
+    <section id="hero" class="hero section hero-with-video" data-hero>
+  <div class="hero-media" aria-hidden="true">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="assets/img/hero.jpg"
+    >
+      <source src="assets/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <!-- Decorative particle canvas (progressive enhancement) -->
+  <canvas id="hero-particles" class="hero-particles" aria-hidden="true"></canvas>
+
+  <div class="container narrow hero-content">
+    <h1 class="hero-title" aria-label="Kom ned i tempo – og styrk energien">
+      <span class="reveal-word">Kom</span>
+      <span class="reveal-word">ned</span>
+      <span class="reveal-word">i</span>
+      <span class="reveal-word">tempo</span>
+      <span class="reveal-dash">–</span>
+      <span class="reveal-word">og</span>
+      <span class="reveal-word">styrk</span>
+      <span class="reveal-word">energien</span>
+    </h1>
+    <p class="lead">
+      Vi hjælper virksomheder med at skabe ro, mental bæredygtighed og reel work–life balance gennem små praktiske justeringer og meningsfulde workshops.
+    </p>
+  </div>
+</section>
 
     <!-- Koncept -->
     <section id="koncept" class="section">
@@ -136,6 +149,88 @@
   </footer>
 
   <script>
+    
+  (function() {
+    // Headline stagger reveal using Intersection Observer
+    const hero = document.querySelector('[data-hero]');
+    if (!hero) return;
+
+    const words = hero.querySelectorAll('.reveal-word, .reveal-dash');
+    if (!words.length) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    words.forEach((el, i) => {
+      if (!prefersReduced) {
+        el.style.setProperty('--reveal-delay', (120 * i) + 'ms');
+      } else {
+        // No animation for reduced motion users
+        el.classList.add('reveal-instant');
+      }
+    });
+
+    if (prefersReduced) return;
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          words.forEach(w => w.classList.add('is-visible'));
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    io.observe(hero);
+
+    // Lightweight particle background (very subtle)
+    const canvas = document.getElementById('hero-particles');
+    if (canvas && !prefersReduced) {
+      const ctx = canvas.getContext('2d');
+      let w, h, particles;
+
+      function resize() {
+        w = canvas.width = hero.clientWidth;
+        h = canvas.height = hero.clientHeight;
+        const count = Math.min(42, Math.round(w * h / 18000));
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * w,
+            y: Math.random() * h,
+            r: 0.6 + Math.random() * 1.4,
+            a: 0.25 + Math.random() * 0.4,
+            vx: (Math.random() - 0.5) * 0.08,
+            vy: (Math.random() - 0.5) * 0.08
+        }));
+      }
+
+      function tick() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < -10) p.x = w + 5;
+          if (p.x > w + 10) p.x = -5;
+          if (p.y < -10) p.y = h + 5;
+          if (p.y > h + 10) p.y = -5;
+          ctx.beginPath();
+          const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+          grd.addColorStop(0, 'rgba(233,241,247,' + p.a + ')');
+          grd.addColorStop(1, 'rgba(233,241,247,0)');
+          ctx.fillStyle = grd;
+          ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.restore();
+        requestAnimationFrame(tick);
+      }
+
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+      requestAnimationFrame(tick);
+    }
+  })();
+    
     // Minimal enhancement: year + nav toggle
     (function () {
       const y = document.getElementById('year');
