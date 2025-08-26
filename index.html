@@ -11,7 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="has-organic-texture">
+  <!-- Global subtle noise texture (decorative) -->
+  <div class="texture-noise" aria-hidden="true"></div>
+    
   <header class="site-header" role="banner">
     <div class="brand">
       <a href="#hero" class="brand-link">Calm Down Studio</a>
@@ -106,14 +109,19 @@
     </section>
 
     <!-- Om os -->
-    <section id="omos" class="section">
-      <div class="container narrow">
+    <section id="about" class="section section--alt has-divider">
+  <!-- Top organic divider -->
+  <div class="section-divider section-divider--top" aria-hidden="true"></div>
+  <div class="container">
+          <div class="container narrow">
         <h2>Om os</h2>
         <p>Calm Down Studio udspringer af et ønske om at skabe arbejdskulturer hvor tempo ikke konstant accelererer, men styres bevidst. Vi samler viden om mentalsundhed, neurobelastning, pauser, bevægelse og arbejdsmønstre – og gør den brugbar i praksis.</p>
         <p>Vores tilgang er jordnær: Små skridt, lav indsats – høj effekt over tid. Ingen skyld eller moraliserende regler; i stedet et realistisk design af hverdagen, der giver hjernen ro til fordybelse, pauser og regenerering.</p>
         <p>Vi arbejder tæt med teams, så justeringer ikke lander som “et projekt”, men som en integreret rytme i deres samarbejde.</p>
       </div>
-    </section>
+  <!-- Bottom organic divider (optional) -->
+  <div class="section-divider section-divider--bottom" aria-hidden="true"></div>
+</section>
 
     <section id="kontakt" class="section alt">
       <div class="container narrow">
