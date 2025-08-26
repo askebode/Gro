@@ -382,7 +382,6 @@ img { max-width: 100%; display: block; }
 .card:focus-within {
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
-  border-color: var(--color-accent-alt);
 }
 
 /* Forms */
