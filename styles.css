@@ -179,6 +179,7 @@ img { max-width: 100%; display: block; }
 .site-nav a:focus,
 .site-nav a.active {
   color: var(--color-text);
+  text-decoration: none;
 }
 .site-nav a:hover::after,
 .site-nav a:focus::after,
@@ -242,7 +243,7 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-with-video .hero-content h1 {
-  background: linear-gradient(95deg, #85837D 0%, #85837D 90%);
+  background: linear-gradient(95deg, #E9F1F7 0%, #BABAB5 90%);
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -306,7 +307,7 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-with-video .hero-content .lead {
-  color: #85837D;
+  color: #E9F1F7;
 }
 
 /* Lists */
