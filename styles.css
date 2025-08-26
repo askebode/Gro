@@ -408,7 +408,7 @@ label {
 input, textarea {
   font: inherit;
   padding: .7rem .8rem .72rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-bg-sections);
   border-radius: var(--radius-s);
   resize: vertical;
   background: var(--color-surface);
@@ -425,7 +425,7 @@ input:focus, textarea:focus {
 .btn {
   --btn-bg: var(--color-accent);
   --btn-bg-hover: var(--color-accent-soft);
-  --btn-color: #fff;
+  --btn-color: var(--color-text-muted);
   display: inline-flex;
   align-items: center;
   gap: .5rem;
