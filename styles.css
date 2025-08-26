@@ -416,9 +416,8 @@ input, textarea {
   transition: border-color var(--trans-fast), background var(--trans-fast);
 }
 input:focus, textarea:focus {
-  border-color: var(--color-accent);
+  border-color: var(--color-line-soft);
   outline: 0;
-  background: var(--color-surface);
 }
 
 /* Buttons */
