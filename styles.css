@@ -366,18 +366,6 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 85% 20%, rgba(137,180,164,0.18), transparent 60%),
-    radial-gradient(circle at 15% 85%, rgba(109,145,130,0.15), transparent 55%);
-  opacity: 0;
-  transition: opacity var(--trans-med);
-  pointer-events: none;
-}
-
 .card h3 {
   margin-top: 0;
   font-size: 1.02rem;
@@ -395,10 +383,6 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
   border-color: var(--color-accent-alt);
-}
-.card:hover::after,
-.card:focus-within::after {
-  opacity: 1;
 }
 
 /* Forms */
