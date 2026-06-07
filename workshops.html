@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Workshops & temaer – Idéværkstedet gro</title>
+    <meta name="description" content="Eksempler på workshoptemaer hos Idéværkstedet gro: Opfind din egen gadget, Byg en prototype med pap og kode, og flere." />
+    <meta name="theme-color" content="#2f8f5b" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Spring til indhold</a>
+
+    <header class="site-header" role="banner">
+        <a href="index.html" class="brand-link">
+            <span class="brand-mark"><img src="assets/favicon.svg" alt="" /></span>
+            Kulturforeningen Gro
+        </a>
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Åbn menu" aria-controls="primary-nav">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <nav id="primary-nav" class="site-nav" aria-label="Hovednavigation" data-nav>
+            <ul>
+                <li><a href="index.html">Kalender</a></li>
+                <li><a href="om.html">Om Gro</a></li>
+                <li><a href="workshops.html" aria-current="page">Workshops</a></li>
+                <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                <li><a href="kontakt.html" class="nav-cta">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero bg-orange" aria-labelledby="hero-title">
+            <div class="container">
+                <div data-reveal>
+                    <p class="eyebrow">Workshops &amp; temaer</p>
+                    <h1 id="hero-title">Hver workshop starter med et "hvad nu hvis...?"</h1>
+                    <p class="lead">Fra idé til skitse til noget, man faktisk kan røre ved.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Temaer -->
+        <section class="block bg-cream" aria-labelledby="temaer-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
+                    <p class="eyebrow">Eksempler på temaer</p>
+                    <h2 id="temaer-title">Find dit næste byggeprojekt</h2>
+                </div>
+                <div data-reveal>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-orange);">10–14 år</span>
+                        <div><h3>Opfind din egen gadget</h3><p>Byg en helt ny opfindelse af genbrugsdele, motorer og en god portion stædighed.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-blue);">11–16 år</span>
+                        <div><h3>Byg en prototype med pap og kode</h3><p>Pap og lim møder micro:bit og enkel kode – så modellen kan lyse, bippe og bevæge sig.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-green);">8–17 år</span>
+                        <div><h3>Fra problem til produkt</h3><p>Tag noget, der irriterer dig i hverdagen, og design en løsning på det.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-pink);">Unge + mentorer</span>
+                        <div><h3>Pitch din idé</h3><p>Lær at fortælle om din idé med sparring fra lokale iværksættere.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sådan foregår det -->
+        <section class="hero bg-blue" aria-labelledby="forloeb-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
+                    <p class="eyebrow">Sådan foregår en workshop</p>
+                    <h2 id="forloeb-title">Idé → skitse → byg → test → vis frem</h2>
+                    <p class="lead">Vi holder rammerne enkle, så der er mest mulig tid til at bygge, fejle og prøve igen.</p>
+                    <p style="margin-top: var(--space-6);">
+                        <a class="btn btn-on-bold" href="index.html#kalender">Se kommende workshops</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Kulturforeningen Gro</h3>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
+            </div>
+            <div>
+                <h3>Genveje</h3>
+                <ul>
+                    <li><a href="index.html">Kalender</a></li>
+                    <li><a href="om.html">Om Gro</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                    <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Kontakt</h3>
+                <ul>
+                    <li>Havnevej 4, 9330 Egense</li>
+                    <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

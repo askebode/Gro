@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Om Gro – Kulturforeningen Gro</title>
+    <meta name="description" content="Kulturforeningen Gro står bag Idéværkstedet gro i Egense – et pusterum inspireret af højskole- og byggelegepladstraditioner." />
+    <meta name="theme-color" content="#2f8f5b" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Spring til indhold</a>
+
+    <header class="site-header" role="banner">
+        <a href="index.html" class="brand-link">
+            <span class="brand-mark"><img src="assets/favicon.svg" alt="" /></span>
+            Kulturforeningen Gro
+        </a>
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Åbn menu" aria-controls="primary-nav">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <nav id="primary-nav" class="site-nav" aria-label="Hovednavigation" data-nav>
+            <ul>
+                <li><a href="index.html">Kalender</a></li>
+                <li><a href="om.html" aria-current="page">Om Gro</a></li>
+                <li><a href="workshops.html">Workshops</a></li>
+                <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                <li><a href="kontakt.html" class="nav-cta">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero bg-blue" aria-labelledby="hero-title">
+            <div class="container">
+                <div data-reveal>
+                    <p class="eyebrow">Om Gro</p>
+                    <h1 id="hero-title">Bygget af og til Egenses børn og unge</h1>
+                    <p class="lead">Et permanent mødested, hvor nysgerrighed, fællesskab og kreativitet får plads til at vokse.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- To traditioner -->
+        <section class="block bg-cream" aria-labelledby="traditioner-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
+                    <p class="eyebrow">Vores rødder</p>
+                    <h2 id="traditioner-title">To traditioner, én ny slags pusterum</h2>
+                </div>
+                <div class="cols-2">
+                    <div data-reveal>
+                        <h3>Højskoletraditionen</h3>
+                        <p>Fællesskabet, samtalen og det frie rum til at undre sig sammen – på tværs af alder.</p>
+                    </div>
+                    <div data-reveal>
+                        <h3>Byggelegepladstraditionen</h3>
+                        <p>Friheden til selv at bygge, rode og skrue – med rigtigt værktøj og rigtige materialer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Idéværkstedet -->
+        <section id="vaerksted" class="hero bg-green" aria-labelledby="vaerksted-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
+                    <p class="eyebrow">Idéværkstedet</p>
+                    <h2 id="vaerksted-title">Et sted, der vokser sammen med dem, der bruger det</h2>
+                    <p class="lead">Åbne værkstedstider med mentorstøtte – og et rum, der hele tiden bygges om af dem, der kommer der.</p>
+                    <p style="margin-top: var(--space-6);">
+                        <a class="btn btn-on-bold" href="index.html#kalender">Se værkstedstider i kalenderen</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Værdier -->
+        <section class="block bg-cream" aria-labelledby="vaerdier-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
+                    <p class="eyebrow">Det tror vi på</p>
+                    <h2 id="vaerdier-title">Fire ord, der driver os</h2>
+                </div>
+                <div data-reveal>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-green);">01</span>
+                        <div><h3>Nysgerrighed</h3><p>Gode idéer starter med et "hvad nu hvis...?". Det er fint ikke at vide, hvad man er i gang med endnu.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-blue);">02</span>
+                        <div><h3>Fællesskab</h3><p>Man bygger bedre sammen – med hinanden, mentorer og lokale kræfter.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-orange);">03</span>
+                        <div><h3>Kreativitet</h3><p>Ingen forkerte svar. Vi øver os i at tænke skævt og se muligheder, hvor andre ser skrammel.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-pink);">04</span>
+                        <div><h3>Medskabelse</h3><p>Gro er ikke et færdigt hus. Det formes af dem, der bruger det – fra dag ét.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Kulturforeningen Gro</h3>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
+            </div>
+            <div>
+                <h3>Genveje</h3>
+                <ul>
+                    <li><a href="index.html">Kalender</a></li>
+                    <li><a href="om.html">Om Gro</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                    <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Kontakt</h3>
+                <ul>
+                    <li>Havnevej 4, 9330 Egense</li>
+                    <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

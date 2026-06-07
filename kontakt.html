@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kontakt – Kulturforeningen Gro</title>
+    <meta name="description" content="Find adresse og åbningstider for Idéværkstedet gro i Egense, og send en besked til Kulturforeningen Gro." />
+    <meta name="theme-color" content="#2f8f5b" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Spring til indhold</a>
+
+    <header class="site-header" role="banner">
+        <a href="index.html" class="brand-link">
+            <span class="brand-mark"><img src="assets/favicon.svg" alt="" /></span>
+            Kulturforeningen Gro
+        </a>
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Åbn menu" aria-controls="primary-nav">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <nav id="primary-nav" class="site-nav" aria-label="Hovednavigation" data-nav>
+            <ul>
+                <li><a href="index.html">Kalender</a></li>
+                <li><a href="om.html">Om Gro</a></li>
+                <li><a href="workshops.html">Workshops</a></li>
+                <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                <li><a href="kontakt.html" aria-current="page" class="nav-cta">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero bg-yellow" aria-labelledby="hero-title">
+            <div class="container">
+                <div data-reveal>
+                    <p class="eyebrow">Kontakt</p>
+                    <h1 id="hero-title">Find os, skriv til os, kom forbi</h1>
+                    <p class="lead">Idéværkstedet gro ligger midt i Egense og er åbent for alle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Praktisk info + formular -->
+        <section class="block bg-cream" aria-labelledby="praktisk-title">
+            <div class="container cols-2" style="align-items: start;">
+                <div data-reveal>
+                    <p class="eyebrow">Praktisk info</p>
+                    <h2 id="praktisk-title">Sådan finder du os</h2>
+                    <div class="stack-tight" style="margin-top: var(--space-6);">
+                        <p class="mt-0"><strong>Adresse</strong><br />Havnevej 4 · 9330 Egense</p>
+                        <p class="mt-0"><strong>Åbne værkstedstider</strong><br />Onsdage og søndage kl. 14–17</p>
+                        <p class="mt-0"><strong>E-mail</strong><br /><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></p>
+                    </div>
+                </div>
+
+                <div data-reveal>
+                    <p class="eyebrow">Skriv til os</p>
+                    <h2>Send en besked</h2>
+                    <form class="form" data-contact-form novalidate>
+                        <div class="form-row">
+                            <label for="navn">Navn</label>
+                            <input type="text" id="navn" name="navn" autocomplete="name" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required />
+                        </div>
+                        <div class="form-row">
+                            <label for="besked">Besked</label>
+                            <textarea id="besked" name="besked" rows="4" required></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-on-cream">Send besked</button>
+                        </div>
+                        <p class="form-status" role="status" data-form-status></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>Kulturforeningen Gro</h3>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
+            </div>
+            <div>
+                <h3>Genveje</h3>
+                <ul>
+                    <li><a href="index.html">Kalender</a></li>
+                    <li><a href="om.html">Om Gro</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
+                    <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Kontakt</h3>
+                <ul>
+                    <li>Havnevej 4, 9330 Egense</li>
+                    <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
