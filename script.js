@@ -45,7 +45,9 @@
     // Kalender — fremhæv begivenheden midt i billedet, når man
     // scroller på en touch-enhed (samme effekt som hover på desktop)
     var eventList = document.querySelector('.event-list');
-    if (eventList && 'IntersectionObserver' in window && window.matchMedia('(hover: none)').matches) {
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
+        window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    if (eventList && 'IntersectionObserver' in window && isTouchDevice) {
         var eventRows = eventList.querySelectorAll('.event-row');
         var eventObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
