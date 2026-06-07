@@ -4,436 +4,228 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Calm Down Studio – Ro, balance og bæredygtig arbejdskultur</title>
-    <meta name="description" content="Calm Down Studio hjælper virksomheder med at sænke tempoet, skabe ro og styrke work–life balance gennem mikrojusteringer og groundende workshops.">
-    <meta name="theme-color" content="#4d7667" />
+    <title>Kulturforeningen Gro – Idéværkstedet gro i Egense</title>
+    <meta name="description" content="Idéværkstedet gro er stedet i Egense, hvor børn og unge eksperimenterer, opfinder og bygger prototyper. Se kalenderen og find din næste workshop." />
+    <meta name="theme-color" content="#34a65a" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Spring til indhold</a>
+
     <header class="site-header" role="banner">
-        <div class="brand">
-            <a href="#hero" class="brand-link">Calm Down Studio</a>
-        </div>
-        <button class="nav-toggle" aria-expanded="false" aria-label="Åbn menu" aria-controls="primary-nav">
-      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-    </button>
+        <a href="index.html" class="brand-link">
+            <span class="brand-mark"><img src="assets/favicon.svg" alt="" /></span>
+            Kulturforeningen Gro
+        </a>
+        <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Åbn menu" aria-controls="primary-nav">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
         <nav id="primary-nav" class="site-nav" aria-label="Hovednavigation" data-nav>
             <ul>
-                <li><a href="#koncept">koncept</a></li>
-                <li><a href="#ydelser">ydelser</a></li>
-                <li><a href="#omos">om os</a></li>
-                <li><a href="#kontakt">kontakt</a></li>
+                <li><a href="index.html" aria-current="page">Kalender</a></li>
+                <li><a href="om.html">Om Gro</a></li>
+                <li><a href="workshops.html">Workshops</a></li>
+                <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                <li><a href="kontakt.html" class="nav-cta">Kontakt</a></li>
             </ul>
         </nav>
     </header>
 
     <main id="main">
-        <section id="hero" class="hero section hero-with-video" data-hero>
-            <div class="hero-media" aria-hidden="true">
-                <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero.jpg">
-      <source src="assets/video/hero.mp4" type="video/mp4" />
-    </video>
-                <div class="hero-overlay"></div>
+        <!-- Hero -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-shapes" aria-hidden="true">
+                <span class="shape shape-circle" style="width:120px;height:120px;left:-40px;top:30px;background:var(--color-yellow);"></span>
+                <span class="shape shape-square" style="width:80px;height:80px;right:8%;top:14%;background:var(--color-blue);transform:rotate(12deg);"></span>
+                <span class="shape shape-circle" style="width:60px;height:60px;right:18%;bottom:10%;background:var(--color-pink);"></span>
             </div>
-
-            <!-- Decorative particle canvas (progressive enhancement) -->
-            <canvas id="hero-particles" class="hero-particles" aria-hidden="true"></canvas>
-
-            <div class="container narrow hero-content">
-                <h1 class="hero-title" aria-label="Kom ned i tempo – og styrk energien">
-                    <span class="reveal-word">Kom</span>
-                    <span class="reveal-word">ned</span>
-                    <span class="reveal-word">i</span>
-                    <span class="reveal-word">tempo</span>
-                    <span class="reveal-dash">–</span>
-                    <span class="reveal-word">og</span>
-                    <span class="reveal-word">styrk</span>
-                    <span class="reveal-word">energien</span>
-                </h1>
-                <p class="lead">
-                    Vi hjælper virksomheder med at skabe ro, mental bæredygtighed og reel work–life balance gennem små praktiske justeringer og meningsfulde workshops.
-                </p>
-            </div>
-        </section>
-
-        <!-- Koncept -->
-        <section id="koncept" class="section">
-            <div class="container">
-                <h2>Koncept</h2>
-                <p>Hverdagen er fyldt med konstant stimuli – notifikationer, skærme, møder og mentale skift. Mange sidder stille hele dagen, men bruger enorme mængder kognitiv energi. Pauser foregår ofte med telefon i hånden, hvilket forlænger belastningen
-                    fremfor at give restitution.</p>
-                <p>Calm Down Studio peger på små, realistiske mikrojusteringer i arbejdskulturen, som frigør luft og reducerer unødig mental støj. Vi kombinerer viden om hvad der belaster hjernen med evidens omkring mentalsundhed, balance og tempo‑regulering
-                    – og omsætter den til konkrete arbejdsgange.</p>
-                <ul class="icon-list">
-                    <li><strong>Observer</strong> – Kortlæg stimuli, afbrydelser og energilækager.</li>
-                    <li><strong>Justér</strong> – Indfør små greb, der skaber ro (mødestruktur, pauser, fokusrum, rytmer).</li>
-                    <li><strong>Ground</strong> – Etabler praksisser der sænker tempo og giver reel restitution.</li>
-                    <li><strong>Forankr</strong> – Hjælp teams med at vedligeholde balance og energiniveau over tid.</li>
-                </ul>
+            <div class="container hero-grid">
+                <div class="hero-content" data-reveal>
+                    <p class="eyebrow">Idéværkstedet gro · Egense</p>
+                    <h1 id="hero-title">Fra værksted til væksthus</h1>
+                    <p class="lead">
+                        Gro er det nye idéværksted i Egense, hvor børn og unge eksperimenterer,
+                        opfinder og bygger deres egne idéer – med pap, kode, værktøj og hinanden.
+                        Et permanent mødested, hvor nysgerrighed og fællesskab kan gro.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn btn-primary" href="#kalender">Se hvad der sker</a>
+                        <a class="btn btn-ghost" href="bliv-med.html">Bliv en del af Gro</a>
+                    </div>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <img src="assets/img/illustrations/gadget.svg" alt="" />
+                </div>
             </div>
         </section>
 
-        <section id="ydelser" class="section alt">
+        <div class="divider" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Kalender -->
+        <section id="kalender" class="section" aria-labelledby="kalender-title">
             <div class="container">
-                <h2>Ydelser</h2>
-                <div class="grid cards">
-                    <article class="card">
-                        <h3>Puls- & stimuli­analyse</h3>
-                        <p>Kortlæg hvor og hvornår mental belastning opstår – afbrydelser, mødeflow, kontekstskift og pauser.</p>
+                <div class="section-head" data-reveal>
+                    <p class="eyebrow">Kalender</p>
+                    <h2 id="kalender-title">Hvad sker der hos Gro?</h2>
+                    <p class="lead">
+                        Find dit næste besøg i værkstedet – fra åbne værkstedstider med
+                        mentorstøtte til temaworkshops og fælles arrangementer. Tjek farverne:
+                        de fortæller dig, hvilken slags begivenhed der er tale om.
+                    </p>
+                    <div class="btn-row" aria-hidden="true">
+                        <span class="tag tag-workshop">Workshop</span>
+                        <span class="tag tag-aabent">Åbent værksted</span>
+                        <span class="tag tag-event">Event</span>
+                        <span class="tag tag-samarbejde">Samarbejde</span>
+                    </div>
+                </div>
+
+                <div class="grid" style="gap: var(--space-4);">
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">14</span><span class="month">Aug</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-workshop">Workshop</span>
+                            <h3>Opfind din egen gadget</h3>
+                            <p class="event-meta">Kl. 15.00–17.30 · Idéværkstedet, Egense · 10–14 år</p>
+                            <p class="mt-0">Fra vild idé til fungerende mock-up: vi bygger gadgets af genbrugsdele, motorer og masser af mod på at fejle undervejs.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
                     </article>
-                    <article class="card">
-                        <h3>Mikrojusteringer</h3>
-                        <p>Pragmatiske ændringer i struktur og adfærd: fokustider, pauseritualer, mødekomprimering, notifikationshygiejne.</p>
+
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">21</span><span class="month">Aug</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-aabent">Åbent værksted</span>
+                            <h3>Åbent værksted med mentorstøtte</h3>
+                            <p class="event-meta">Kl. 14.00–17.00 · Idéværkstedet, Egense · Alle aldre</p>
+                            <p class="mt-0">Kom forbi, når det passer dig. Brug værktøj og materialer, og få sparring fra en mentor på dit eget projekt – uden tilmelding.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-ghost" href="om.html#vaerksted">Læs mere</a></div>
                     </article>
-                    <article class="card">
-                        <h3>Workshops</h3>
-                        <p>Fælles grounding, energigenopladning og hands‑on værktøjer til mental ro og bæredygtig performance.</p>
+
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">28</span><span class="month">Aug</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-workshop">Workshop</span>
+                            <h3>Byg en prototype med pap og kode</h3>
+                            <p class="event-meta">Kl. 15.00–17.30 · Idéværkstedet, Egense · 11–16 år</p>
+                            <p class="mt-0">Vi blander pap, lim og fantasi med micro:bit og simpel kode, så jeres opfindelse kan lyse, bippe og bevæge sig.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
                     </article>
-                    <article class="card">
-                        <h3>Ledelsessparring</h3>
-                        <p>Støtte til at skabe rammer for sund work–life balance, forebyggelse af kognitiv overload og bedre teamrytmer.</p>
+
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">5</span><span class="month">Sep</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-samarbejde">Samarbejde</span>
+                            <h3>Iværksætteraften: Mød dem, der har gjort det</h3>
+                            <p class="event-meta">Kl. 17.00–19.00 · Idéværkstedet, Egense · Unge + forældre</p>
+                            <p class="mt-0">Lokale iværksættere åbner op om deres rejse fra idé til virkelighed – og giver gode råd til unge, der vil skabe noget selv.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-ghost" href="bliv-med.html#samarbejde">Læs mere</a></div>
+                    </article>
+
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">12</span><span class="month">Sep</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-aabent">Åbent værksted</span>
+                            <h3>Åbent værksted med mentorstøtte</h3>
+                            <p class="event-meta">Kl. 14.00–17.00 · Idéværkstedet, Egense · Alle aldre</p>
+                            <p class="mt-0">Endnu en eftermiddag med fri adgang til værktøj, materialer og inspiration. Tag en ven under armen og kom forbi.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-ghost" href="om.html#vaerksted">Læs mere</a></div>
+                    </article>
+
+                    <article class="event-card" data-reveal>
+                        <div class="event-date" aria-hidden="true"><span class="day">19</span><span class="month">Sep</span></div>
+                        <div class="event-body">
+                            <span class="tag tag-event">Event</span>
+                            <h3>Design dit drømmeværksted</h3>
+                            <p class="event-meta">Kl. 15.00–18.00 · Idéværkstedet, Egense · 8–17 år</p>
+                            <p class="mt-0">En medskabende eftermiddag, hvor I er med til at tegne, bygge og bestemme, hvordan Gros rum skal se ud og bruges fremover.</p>
+                        </div>
+                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials -->
-        <section id="testimonials" class="section">
-            <div class="container">
-                <h2>Hvad siger vores samarbejdspartnere</h2>
-                <div class="grid cards testimonials">
-                    <article class="card testimonial">
-                        <blockquote>
-                            <p>"Efter workshops med Calm Down Studio har vores team fundet en helt ny rytme. Vi har 40% færre afbrydelser, og energiniveauet er markant højere ved arbejdstidens afslutning."</p>
-                        </blockquote>
-                        <footer class="testimonial-author">
-                            <strong>Maria Hansen</strong>
-                            <span>Projektleder, TechFlow A/S</span>
-                        </footer>
-                    </article>
-                    <article class="card testimonial">
-                        <blockquote>
-                            <p>"De små mikrojusteringer har haft stor betydning. Vores mødekultur er helt forandret, og vi har skabt plads til fordybelse i hverdagen. Rigtig værdifuldt!"</p>
-                        </blockquote>
-                        <footer class="testimonial-author">
-                            <strong>Lars Pedersen</strong>
-                            <span>CEO, GreenTech Solutions</span>
-                        </footer>
-                    </article>
-                    <article class="card testimonial">
-                        <blockquote>
-                            <p>"Jeg var skeptisk over for 'endnu en workshop', men tilgangen var så praktisk og jordnær. Vi har implementeret pauseritualer der faktisk virker i praksis."</p>
-                        </blockquote>
-                        <footer class="testimonial-author">
-                            <strong>Anne Sørensen</strong>
-                            <span>HR-direktør, Innovate Consulting</span>
-                        </footer>
-                    </article>
+        <div class="divider" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Kort om Gro + tal -->
+        <section class="section alt" aria-labelledby="om-kort-title">
+            <div class="container grid grid-2" style="align-items:center;">
+                <div data-reveal>
+                    <p class="eyebrow">Hvorfor Gro?</p>
+                    <h2 id="om-kort-title">Et pusterum, hvor idéer får lov at vokse</h2>
+                    <p>
+                        Gro er inspireret af højskolens fællesskab og byggelegepladsens
+                        frihed til at rode, bygge og prøve sig frem. Børn og unge er med til
+                        at forme stedet fra dag ét – så det bliver deres eget.
+                    </p>
+                    <a class="btn btn-primary" href="om.html">Læs mere om Gro</a>
                 </div>
-            </div>
-        </section>
-
-        <!-- Om os -->
-        <section id="omos" class="section">
-            <div class="container narrow">
-                <h2>Om os</h2>
-                <p>Calm Down Studio udspringer af et ønske om at skabe arbejdskulturer hvor tempo ikke konstant accelererer, men styres bevidst. Vi samler viden om mentalsundhed, neurobelastning, pauser, bevægelse og arbejdsmønstre – og gør den brugbar i
-                    praksis.
-                </p>
-                <p>Vores tilgang er jordnær: Små skridt, lav indsats – høj effekt over tid. Ingen skyld eller moraliserende regler; i stedet et realistisk design af hverdagen, der giver hjernen ro til fordybelse, pauser og regenerering.</p>
-                <p>Vi arbejder tæt med teams, så justeringer ikke lander som “et projekt”, men som en integreret rytme i deres samarbejde.</p>
-            </div>
-        </section>
-
-        <!-- Growth Journey Timeline -->
-        <section id="rejse" class="section">
-            <div class="container narrow">
-                <h2>Rejsen mod ro</h2>
-                <ol class="timeline" aria-label="Proces trin">
-                    <li class="timeline-step" tabindex="0">
-                        <h3>1. Observer</h3>
-                        <p>Kortlæg stimuli, afbrydelser og energilækager i hverdagen.</p>
-                    </li>
-                    <li class="timeline-step" tabindex="0">
-                        <h3>2. Justér</h3>
-                        <p>Indfør små realistiske greb der skaber ro og fokus.</p>
-                    </li>
-                    <li class="timeline-step" tabindex="0">
-                        <h3>3. Ground</h3>
-                        <p>Skab praksisser der sænker tempo og giver reel restitution.</p>
-                    </li>
-                    <li class="timeline-step" tabindex="0">
-                        <h3>4. Forankr</h3>
-                        <p>Vedligehold balance og energi med klare rytmer i teamet.</p>
-                    </li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Stats that germinate -->
-        <section id="stats" class="section alt">
-            <div class="container">
-                <h2>Resultater der spirer</h2>
-                <div class="stats-grid">
-                    <div class="stat" data-target="72">
-                        <svg class="ring" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
-              <circle class="ring-bg" cx="60" cy="60" r="52"/>
-              <circle class="ring-fg" cx="60" cy="60" r="52"/>
-            </svg>
-                        <div class="kpi"><span class="num">0</span>%</div>
-                        <p>Mindre afbrydelsesstress</p>
+                <div data-reveal>
+                    <div class="stats">
+                        <div class="stat">
+                            <p class="stat-number"><span data-counter="120" data-counter-suffix="+">0</span></p>
+                            <p class="stat-label">unge opfindere involveret</p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat-number"><span data-counter="32">0</span></p>
+                            <p class="stat-label">workshops om året</p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat-number"><span data-counter="15">0</span></p>
+                            <p class="stat-label">lokale mentorer &amp; iværksættere</p>
+                        </div>
                     </div>
-                    <div class="stat" data-target="44">
-                        <svg class="ring" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
-              <circle class="ring-bg" cx="60" cy="60" r="52"/>
-              <circle class="ring-fg" cx="60" cy="60" r="52"/>
-            </svg>
-                        <div class="kpi"><span class="num">0</span>%</div>
-                        <p>Flere fokustimer</p>
-                    </div>
-                    <div class="stat" data-target="5">
-                        <svg class="ring" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
-              <circle class="ring-bg" cx="60" cy="60" r="52"/>
-              <circle class="ring-fg" cx="60" cy="60" r="52"/>
-            </svg>
-                        <div class="kpi"><span class="num">0</span>x</div>
-                        <p>Bedre pauseritme</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="kontakt" class="section alt">
-            <div class="container narrow">
-                <h2>Kontakt</h2>
-                <p>Vil du høre hvordan vi kan hjælpe jer med at sænke tempoet og styrke energien? Skriv til os – vi tager gerne en uforpligtende samtale.</p>
-                <form class="contact-form" method="post" onsubmit="event.preventDefault(); alert('Tak for din besked! (Demo)');">
-                    <div class="form-row">
-                        <label for="navn">Navn</label>
-                        <input id="navn" name="navn" type="text" required autocomplete="name" />
-                    </div>
-                    <div class="form-row">
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" required autocomplete="email" />
-                    </div>
-                    <div class="form-row">
-                        <label for="besked">Besked</label>
-                        <textarea id="besked" name="besked" rows="5" required placeholder="Fortæl kort om jeres udfordring..."></textarea>
-                    </div>
-                    <button type="submit" class="btn primary">Send</button>
-                </form>
-                <div class="contact-meta">
-                    <p><strong>Email:</strong> <a href="mailto:info@example.com">info@example.com</a></p>
-                    <p><strong>Telefon:</strong> +45 12 34 56 78</p>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container small">
-            <p>&copy; <span id="year"></span> Calm Down Studio. Alle rettigheder forbeholdes.</p>
+        <div class="container footer-grid">
+            <div>
+                <h3>Kulturforeningen Gro</h3>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Et sted i Egense, hvor børn og unge bygger, opfinder og vokser sammen.</p>
+            </div>
+            <div>
+                <h3>Genveje</h3>
+                <ul>
+                    <li><a href="index.html">Kalender</a></li>
+                    <li><a href="om.html">Om Gro</a></li>
+                    <li><a href="workshops.html">Workshops &amp; temaer</a></li>
+                    <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Kontakt</h3>
+                <ul>
+                    <li>Idéværkstedet gro<br />Havnevej 4, 9330 Egense</li>
+                    <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
+                    <li><a href="kontakt.html">Skriv til os</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            © <span data-year>2026</span> Kulturforeningen Gro · Egense
         </div>
     </footer>
 
-    <script>
-        (function() {
-            // Headline stagger reveal using Intersection Observer
-            const hero = document.querySelector('[data-hero]');
-            if (!hero) return;
-
-            const words = hero.querySelectorAll('.reveal-word, .reveal-dash');
-            if (!words.length) return;
-
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            words.forEach((el, i) => {
-                if (!prefersReduced) {
-                    el.style.setProperty('--reveal-delay', (120 * i) + 'ms');
-                } else {
-                    // No animation for reduced motion users
-                    el.classList.add('reveal-instant');
-                }
-            });
-
-            if (prefersReduced) return;
-
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        words.forEach(w => w.classList.add('is-visible'));
-                        io.disconnect();
-                    }
-                });
-            }, {
-                threshold: 0.4
-            });
-
-            io.observe(hero);
-
-            // Lightweight particle background (very subtle)
-            const canvas = document.getElementById('hero-particles');
-            if (canvas && !prefersReduced) {
-                const ctx = canvas.getContext('2d');
-                let w, h, particles;
-
-                function resize() {
-                    w = canvas.width = hero.clientWidth;
-                    h = canvas.height = hero.clientHeight;
-                    const count = Math.min(42, Math.round(w * h / 18000));
-                    particles = Array.from({
-                        length: count
-                    }, () => ({
-                        x: Math.random() * w,
-                        y: Math.random() * h,
-                        r: 0.6 + Math.random() * 1.4,
-                        a: 0.25 + Math.random() * 0.4,
-                        vx: (Math.random() - 0.5) * 0.08,
-                        vy: (Math.random() - 0.5) * 0.08
-                    }));
-                }
-
-                function tick() {
-                    ctx.clearRect(0, 0, w, h);
-                    ctx.save();
-                    ctx.globalCompositeOperation = 'lighter';
-                    particles.forEach(p => {
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        if (p.x < -10) p.x = w + 5;
-                        if (p.x > w + 10) p.x = -5;
-                        if (p.y < -10) p.y = h + 5;
-                        if (p.y > h + 10) p.y = -5;
-                        ctx.beginPath();
-                        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
-                        grd.addColorStop(0, 'rgba(233,241,247,' + p.a + ')');
-                        grd.addColorStop(1, 'rgba(233,241,247,0)');
-                        ctx.fillStyle = grd;
-                        ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-                        ctx.fill();
-                    });
-                    ctx.restore();
-                    requestAnimationFrame(tick);
-                }
-
-                resize();
-                window.addEventListener('resize', resize, {
-                    passive: true
-                });
-                requestAnimationFrame(tick);
-            }
-        })();
-
-        // Scroll & narrative engagement
-        (function() {
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            // 1) Growth Journey Timeline reveal
-            const timelineSteps = document.querySelectorAll('.timeline-step');
-            if (timelineSteps.length) {
-                if ('IntersectionObserver' in window && !prefersReduced) {
-                    document.documentElement.classList.add('motion-clip');
-                    const obs = new IntersectionObserver((entries) => {
-                        entries.forEach(e => {
-                            if (e.isIntersecting) {
-                                e.target.classList.add('is-visible');
-                                obs.unobserve(e.target);
-                            }
-                        });
-                    }, {
-                        threshold: 0.01,
-                        rootMargin: "0px 0px -20% 0px"
-                    });
-                    // Prime: reveal any already in view and observe the rest
-                    timelineSteps.forEach(s => obs.observe(s));
-                    // Manual fallback check as safety
-                    const manualCheck = () => {
-                        timelineSteps.forEach(s => {
-                            if (!s.classList.contains('is-visible')) {
-                                const r = s.getBoundingClientRect();
-                                if (r.top < window.innerHeight * 0.92) s.classList.add('is-visible');
-                            }
-                        });
-                    };
-                    manualCheck();
-                    window.addEventListener('scroll', manualCheck, {
-                        passive: true
-                    });
-                    window.addEventListener('resize', manualCheck, {
-                        passive: true
-                    });
-                } else {
-                    // Fallback: no motion, just show
-                    timelineSteps.forEach(s => s.classList.add('is-visible'));
-                }
-            }
-
-            // 2) Parallax foliage: update --scroll based on scrollY
-            // (removed) parallax scroll var updater
-
-            // 3) Stats that germinate: count up + ring stroke
-            const stats = document.querySelectorAll('.stat');
-            if (stats.length) {
-                const ringCircumference = 2 * Math.PI * 52;
-                const obs = new IntersectionObserver((entries) => {
-                    entries.forEach(e => {
-                        if (!e.isIntersecting) return;
-                        const el = e.target;
-                        if (el.classList.contains('is-visible')) return;
-                        el.classList.add('is-visible');
-                        const target = Number(el.getAttribute('data-target') || '0');
-                        const numEl = el.querySelector('.num');
-                        const ring = el.querySelector('.ring-fg');
-                        if (ring) {
-                            const dash = Math.max(0, Math.min(100, target)) / 100 * ringCircumference;
-                            el.style.setProperty('--dash', String(dash));
-                        }
-                        if (!prefersReduced && numEl) {
-                            const start = performance.now();
-                            const duration = 1200 + Math.random() * 600;
-                            const from = 0;
-                            const to = target;
-
-                            function tick(now) {
-                                const t = Math.min(1, (now - start) / duration);
-                                const eased = t * (2 - t); // easeOut
-                                const value = Math.floor(from + (to - from) * eased);
-                                numEl.textContent = String(value);
-                                if (t < 1) requestAnimationFrame(tick);
-                            }
-                            requestAnimationFrame(tick);
-                        } else if (numEl) {
-                            numEl.textContent = String(target);
-                        }
-                        obs.unobserve(el);
-                    });
-                }, {
-                    threshold: 0.22,
-                    rootMargin: "0px 0px -10% 0px"
-                });
-                stats.forEach(s => obs.observe(s));
-            }
-        })();
-
-        // Minimal enhancement: year + nav toggle
-        (function() {
-            const y = document.getElementById('year');
-            if (y) y.textContent = new Date().getFullYear();
-            const toggle = document.querySelector('.nav-toggle');
-            const nav = document.getElementById('primary-nav');
-            if (toggle && nav) {
-                toggle.addEventListener('click', () => {
-                    const open = toggle.getAttribute('aria-expanded') === 'true';
-                    toggle.setAttribute('aria-expanded', String(!open));
-                    nav.classList.toggle('open', !open);
-                });
-            }
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
