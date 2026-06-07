@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Kulturforeningen Gro – Idéværkstedet gro i Egense</title>
-    <meta name="description" content="Idéværkstedet gro er stedet i Egense, hvor børn og unge eksperimenterer, opfinder og bygger prototyper. Se kalenderen og find din næste workshop." />
-    <meta name="theme-color" content="#34a65a" />
+    <meta name="description" content="Idéværkstedet gro er stedet i Egense, hvor børn og unge bygger og opfinder. Se kalenderen og find din næste workshop." />
+    <meta name="theme-color" content="#2f8f5b" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,160 +38,102 @@
 
     <main id="main">
         <!-- Hero -->
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero-shapes" aria-hidden="true">
-                <span class="shape shape-circle" style="width:120px;height:120px;left:-40px;top:30px;background:var(--color-yellow);"></span>
-                <span class="shape shape-square" style="width:80px;height:80px;right:8%;top:14%;background:var(--color-blue);transform:rotate(12deg);"></span>
-                <span class="shape shape-circle" style="width:60px;height:60px;right:18%;bottom:10%;background:var(--color-pink);"></span>
-            </div>
-            <div class="container hero-grid">
-                <div class="hero-content" data-reveal>
+        <section class="hero bg-green" aria-labelledby="hero-title">
+            <div class="container">
+                <div data-reveal>
                     <p class="eyebrow">Idéværkstedet gro · Egense</p>
                     <h1 id="hero-title">Fra værksted til væksthus</h1>
-                    <p class="lead">
-                        Gro er det nye idéværksted i Egense, hvor børn og unge eksperimenterer,
-                        opfinder og bygger deres egne idéer – med pap, kode, værktøj og hinanden.
-                        Et permanent mødested, hvor nysgerrighed og fællesskab kan gro.
-                    </p>
+                    <p class="lead">Et nyt sted i Egense, hvor børn og unge bygger, opfinder og finder på – sammen.</p>
                     <div class="btn-row">
-                        <a class="btn btn-primary" href="#kalender">Se hvad der sker</a>
-                        <a class="btn btn-ghost" href="bliv-med.html">Bliv en del af Gro</a>
+                        <a class="btn btn-on-bold" href="#kalender">Se kalenderen</a>
+                        <a class="btn btn-outline" href="bliv-med.html">Bliv en del af Gro</a>
                     </div>
-                </div>
-                <div class="hero-art" aria-hidden="true">
-                    <img src="assets/img/illustrations/gadget.svg" alt="" />
                 </div>
             </div>
         </section>
-
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
 
         <!-- Kalender -->
-        <section id="kalender" class="section" aria-labelledby="kalender-title">
+        <section id="kalender" class="block bg-cream" aria-labelledby="kalender-title">
             <div class="container">
-                <div class="section-head" data-reveal>
+                <div class="kicker" data-reveal>
                     <p class="eyebrow">Kalender</p>
                     <h2 id="kalender-title">Hvad sker der hos Gro?</h2>
-                    <p class="lead">
-                        Find dit næste besøg i værkstedet – fra åbne værkstedstider med
-                        mentorstøtte til temaworkshops og fælles arrangementer. Tjek farverne:
-                        de fortæller dig, hvilken slags begivenhed der er tale om.
-                    </p>
-                    <div class="btn-row" aria-hidden="true">
-                        <span class="tag tag-workshop">Workshop</span>
-                        <span class="tag tag-aabent">Åbent værksted</span>
-                        <span class="tag tag-event">Event</span>
-                        <span class="tag tag-samarbejde">Samarbejde</span>
+                    <p class="lead">Et udpluk af det næste, der sker i værkstedet.</p>
+                </div>
+
+                <div data-reveal>
+                    <div class="event-row">
+                        <div class="event-when"><span class="day">14</span><span class="month">Aug</span></div>
+                        <div>
+                            <span class="event-tag" style="color: var(--color-orange);">Workshop</span>
+                            <h3>Opfind din egen gadget</h3>
+                            <p class="event-meta">Idéværkstedet, Egense · 10–14 år</p>
+                        </div>
+                        <div class="event-cta"><a class="btn btn-outline" href="kontakt.html">Tilmeld dig</a></div>
+                    </div>
+                    <div class="event-row">
+                        <div class="event-when"><span class="day">21</span><span class="month">Aug</span></div>
+                        <div>
+                            <span class="event-tag" style="color: var(--color-green);">Åbent værksted</span>
+                            <h3>Åbent værksted med mentorstøtte</h3>
+                            <p class="event-meta">Idéværkstedet, Egense · Alle aldre</p>
+                        </div>
+                        <div class="event-cta"><a class="btn btn-outline" href="om.html#vaerksted">Læs mere</a></div>
+                    </div>
+                    <div class="event-row">
+                        <div class="event-when"><span class="day">28</span><span class="month">Aug</span></div>
+                        <div>
+                            <span class="event-tag" style="color: var(--color-orange);">Workshop</span>
+                            <h3>Byg en prototype med pap og kode</h3>
+                            <p class="event-meta">Idéværkstedet, Egense · 11–16 år</p>
+                        </div>
+                        <div class="event-cta"><a class="btn btn-outline" href="kontakt.html">Tilmeld dig</a></div>
+                    </div>
+                    <div class="event-row">
+                        <div class="event-when"><span class="day">5</span><span class="month">Sep</span></div>
+                        <div>
+                            <span class="event-tag" style="color: var(--color-pink);">Samarbejde</span>
+                            <h3>Iværksætteraften</h3>
+                            <p class="event-meta">Idéværkstedet, Egense · Unge + forældre</p>
+                        </div>
+                        <div class="event-cta"><a class="btn btn-outline" href="bliv-med.html#samarbejde">Læs mere</a></div>
                     </div>
                 </div>
 
-                <div class="grid" style="gap: var(--space-4);">
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">14</span><span class="month">Aug</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-workshop">Workshop</span>
-                            <h3>Opfind din egen gadget</h3>
-                            <p class="event-meta">Kl. 15.00–17.30 · Idéværkstedet, Egense · 10–14 år</p>
-                            <p class="mt-0">Fra vild idé til fungerende mock-up: vi bygger gadgets af genbrugsdele, motorer og masser af mod på at fejle undervejs.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
-                    </article>
+                <p class="center" style="margin-top: var(--space-8);">
+                    <a class="btn btn-on-cream" href="workshops.html">Se alle workshoptemaer</a>
+                </p>
+            </div>
+        </section>
 
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">21</span><span class="month">Aug</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-aabent">Åbent værksted</span>
-                            <h3>Åbent værksted med mentorstøtte</h3>
-                            <p class="event-meta">Kl. 14.00–17.00 · Idéværkstedet, Egense · Alle aldre</p>
-                            <p class="mt-0">Kom forbi, når det passer dig. Brug værktøj og materialer, og få sparring fra en mentor på dit eget projekt – uden tilmelding.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-ghost" href="om.html#vaerksted">Læs mere</a></div>
-                    </article>
-
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">28</span><span class="month">Aug</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-workshop">Workshop</span>
-                            <h3>Byg en prototype med pap og kode</h3>
-                            <p class="event-meta">Kl. 15.00–17.30 · Idéværkstedet, Egense · 11–16 år</p>
-                            <p class="mt-0">Vi blander pap, lim og fantasi med micro:bit og simpel kode, så jeres opfindelse kan lyse, bippe og bevæge sig.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
-                    </article>
-
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">5</span><span class="month">Sep</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-samarbejde">Samarbejde</span>
-                            <h3>Iværksætteraften: Mød dem, der har gjort det</h3>
-                            <p class="event-meta">Kl. 17.00–19.00 · Idéværkstedet, Egense · Unge + forældre</p>
-                            <p class="mt-0">Lokale iværksættere åbner op om deres rejse fra idé til virkelighed – og giver gode råd til unge, der vil skabe noget selv.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-ghost" href="bliv-med.html#samarbejde">Læs mere</a></div>
-                    </article>
-
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">12</span><span class="month">Sep</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-aabent">Åbent værksted</span>
-                            <h3>Åbent værksted med mentorstøtte</h3>
-                            <p class="event-meta">Kl. 14.00–17.00 · Idéværkstedet, Egense · Alle aldre</p>
-                            <p class="mt-0">Endnu en eftermiddag med fri adgang til værktøj, materialer og inspiration. Tag en ven under armen og kom forbi.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-ghost" href="om.html#vaerksted">Læs mere</a></div>
-                    </article>
-
-                    <article class="event-card" data-reveal>
-                        <div class="event-date" aria-hidden="true"><span class="day">19</span><span class="month">Sep</span></div>
-                        <div class="event-body">
-                            <span class="tag tag-event">Event</span>
-                            <h3>Design dit drømmeværksted</h3>
-                            <p class="event-meta">Kl. 15.00–18.00 · Idéværkstedet, Egense · 8–17 år</p>
-                            <p class="mt-0">En medskabende eftermiddag, hvor I er med til at tegne, bygge og bestemme, hvordan Gros rum skal se ud og bruges fremover.</p>
-                        </div>
-                        <div class="event-actions"><a class="btn btn-secondary" href="kontakt.html">Tilmeld dig</a></div>
-                    </article>
+        <!-- Tal -->
+        <section class="block-tight bg-orange" aria-labelledby="tal-title">
+            <div class="container">
+                <h2 id="tal-title" class="visually-hidden">Gro i tal</h2>
+                <div class="stats" data-reveal>
+                    <div class="stat">
+                        <p class="stat-number"><span data-counter="120" data-counter-suffix="+">0</span></p>
+                        <p class="stat-label">unge opfindere</p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat-number"><span data-counter="32">0</span></p>
+                        <p class="stat-label">workshops om året</p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat-number"><span data-counter="15">0</span></p>
+                        <p class="stat-label">lokale mentorer</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-
-        <!-- Kort om Gro + tal -->
-        <section class="section alt" aria-labelledby="om-kort-title">
-            <div class="container grid grid-2" style="align-items:center;">
-                <div data-reveal>
-                    <p class="eyebrow">Hvorfor Gro?</p>
-                    <h2 id="om-kort-title">Et pusterum, hvor idéer får lov at vokse</h2>
-                    <p>
-                        Gro er inspireret af højskolens fællesskab og byggelegepladsens
-                        frihed til at rode, bygge og prøve sig frem. Børn og unge er med til
-                        at forme stedet fra dag ét – så det bliver deres eget.
-                    </p>
-                    <a class="btn btn-primary" href="om.html">Læs mere om Gro</a>
-                </div>
-                <div data-reveal>
-                    <div class="stats">
-                        <div class="stat">
-                            <p class="stat-number"><span data-counter="120" data-counter-suffix="+">0</span></p>
-                            <p class="stat-label">unge opfindere involveret</p>
-                        </div>
-                        <div class="stat">
-                            <p class="stat-number"><span data-counter="32">0</span></p>
-                            <p class="stat-label">workshops om året</p>
-                        </div>
-                        <div class="stat">
-                            <p class="stat-number"><span data-counter="15">0</span></p>
-                            <p class="stat-label">lokale mentorer &amp; iværksættere</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Kort om Gro -->
+        <section class="block bg-cream" aria-labelledby="om-kort-title">
+            <div class="container kicker center mx-auto" data-reveal>
+                <p class="eyebrow">Hvorfor Gro?</p>
+                <h2 id="om-kort-title">Et pusterum, hvor idéer får lov at vokse</h2>
+                <p class="lead mx-auto">Inspireret af højskolens fællesskab og byggelegepladsens frihed til selv at bygge og prøve sig frem.</p>
+                <p style="margin-top: var(--space-6);"><a class="btn btn-on-cream" href="om.html">Læs mere om Gro</a></p>
             </div>
         </section>
     </main>
@@ -200,29 +142,26 @@
         <div class="container footer-grid">
             <div>
                 <h3>Kulturforeningen Gro</h3>
-                <p>Idéværkstedet gro – fra værksted til væksthus. Et sted i Egense, hvor børn og unge bygger, opfinder og vokser sammen.</p>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
             </div>
             <div>
                 <h3>Genveje</h3>
                 <ul>
                     <li><a href="index.html">Kalender</a></li>
                     <li><a href="om.html">Om Gro</a></li>
-                    <li><a href="workshops.html">Workshops &amp; temaer</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
                     <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
                 </ul>
             </div>
             <div>
                 <h3>Kontakt</h3>
                 <ul>
-                    <li>Idéværkstedet gro<br />Havnevej 4, 9330 Egense</li>
+                    <li>Havnevej 4, 9330 Egense</li>
                     <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
-                    <li><a href="kontakt.html">Skriv til os</a></li>
                 </ul>
             </div>
         </div>
-        <div class="container footer-bottom">
-            © <span data-year>2026</span> Kulturforeningen Gro · Egense
-        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
     </footer>
 
     <script src="script.js"></script>

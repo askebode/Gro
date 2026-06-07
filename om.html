@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Om Gro – Kulturforeningen Gro</title>
-    <meta name="description" content="Kulturforeningen Gro står bag Idéværkstedet gro i Egense – et pusterum inspireret af højskole- og byggelegepladstraditioner, hvor børn og unge former stedet sammen." />
-    <meta name="theme-color" content="#34a65a" />
+    <meta name="description" content="Kulturforeningen Gro står bag Idéværkstedet gro i Egense – et pusterum inspireret af højskole- og byggelegepladstraditioner." />
+    <meta name="theme-color" content="#2f8f5b" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,136 +38,74 @@
 
     <main id="main">
         <!-- Hero -->
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero-shapes" aria-hidden="true">
-                <span class="shape shape-circle" style="width:100px;height:100px;right:-30px;top:18%;background:var(--color-yellow);"></span>
-                <span class="shape shape-square" style="width:70px;height:70px;left:6%;bottom:12%;background:var(--color-orange);transform:rotate(-10deg);"></span>
-            </div>
-            <div class="container hero-grid">
-                <div class="hero-content" data-reveal>
+        <section class="hero bg-blue" aria-labelledby="hero-title">
+            <div class="container">
+                <div data-reveal>
                     <p class="eyebrow">Om Gro</p>
-                    <h1 id="hero-title">Et værksted bygget af og til Egenses børn og unge</h1>
-                    <p class="lead">
-                        Kulturforeningen Gro står bag Idéværkstedet gro – et nyt, permanent
-                        mødested i Egense, hvor nysgerrighed, fællesskab og kreativitet får
-                        plads til at vokse. Et moderne pusterum, inspireret af to stærke
-                        danske traditioner: højskolen og byggelegepladsen.
-                    </p>
-                </div>
-                <div class="hero-art" aria-hidden="true">
-                    <img src="assets/img/illustrations/sprout.svg" alt="" />
+                    <h1 id="hero-title">Bygget af og til Egenses børn og unge</h1>
+                    <p class="lead">Et permanent mødested, hvor nysgerrighed, fællesskab og kreativitet får plads til at vokse.</p>
                 </div>
             </div>
         </section>
-
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
 
         <!-- To traditioner -->
-        <section class="section" aria-labelledby="traditioner-title">
+        <section class="block bg-cream" aria-labelledby="traditioner-title">
             <div class="container">
-                <div class="section-head" data-reveal>
+                <div class="kicker" data-reveal>
                     <p class="eyebrow">Vores rødder</p>
                     <h2 id="traditioner-title">To traditioner, én ny slags pusterum</h2>
-                    <p class="lead">
-                        Gro opstår i mødet mellem to stærke danske fællesskaber – og bliver
-                        til noget helt sit eget: et sted hvor man både kan tænke store tanker
-                        og rode med skruetrækkeren.
-                    </p>
                 </div>
-                <div class="grid grid-2">
-                    <article class="card" data-reveal>
-                        <img class="card-icon" src="assets/img/illustrations/bulb.svg" alt="" aria-hidden="true" />
+                <div class="cols-2">
+                    <div data-reveal>
                         <h3>Højskoletraditionen</h3>
-                        <p>
-                            Fra højskolen henter vi troen på fællesskabet, samtalen og det
-                            frie rum til at undre sig sammen – på tværs af alder og baggrund.
-                            Hos Gro er der plads til både de store spørgsmål og de skæve idéer.
-                        </p>
-                    </article>
-                    <article class="card" data-reveal>
-                        <img class="card-icon" src="assets/img/illustrations/cardboard-bot.svg" alt="" aria-hidden="true" />
+                        <p>Fællesskabet, samtalen og det frie rum til at undre sig sammen – på tværs af alder.</p>
+                    </div>
+                    <div data-reveal>
                         <h3>Byggelegepladstraditionen</h3>
-                        <p>
-                            Fra byggelegepladsen arver vi friheden til selv at bygge, rode,
-                            save og skrue – med rigtigt værktøj og rigtige materialer. Man
-                            lærer bedst ved selv at gøre det, også når det går galt.
-                        </p>
-                    </article>
+                        <p>Friheden til selv at bygge, rode og skrue – med rigtigt værktøj og rigtige materialer.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-
-        <!-- Idéværkstedet som sted -->
-        <section id="vaerksted" class="section alt" aria-labelledby="vaerksted-title">
-            <div class="container grid grid-2" style="align-items:center;">
-                <div data-reveal>
+        <!-- Idéværkstedet -->
+        <section id="vaerksted" class="hero bg-green" aria-labelledby="vaerksted-title">
+            <div class="container">
+                <div class="kicker" data-reveal>
                     <p class="eyebrow">Idéværkstedet</p>
-                    <h2 id="vaerksted-title">Et fysisk sted, der vokser sammen med dem, der bruger det</h2>
-                    <p>
-                        Idéværkstedet ligger midt i Egense og er tænkt som et sted, man bare
-                        kan komme forbi. I de åbne værkstedstider kan børn og unge bruge
-                        værktøj, materialer og udstyr – og få sparring fra mentorer og
-                        lokale iværksættere undervejs.
+                    <h2 id="vaerksted-title">Et sted, der vokser sammen med dem, der bruger det</h2>
+                    <p class="lead">Åbne værkstedstider med mentorstøtte – og et rum, der hele tiden bygges om af dem, der kommer der.</p>
+                    <p style="margin-top: var(--space-6);">
+                        <a class="btn btn-on-bold" href="index.html#kalender">Se værkstedstider i kalenderen</a>
                     </p>
-                    <p>
-                        Det vigtigste af alt: rummet er ikke færdigt – og det er meningen.
-                        Børn og unge er med til at indrette, ombygge og forme værkstedet,
-                        så de får et reelt medejerskab fra første dag.
-                    </p>
-                    <a class="btn btn-primary" href="index.html#kalender">Se åbne værkstedstider i kalenderen</a>
-                </div>
-                <div data-reveal>
-                    <ul class="info-list">
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Åbne værkstedstider</strong> – kom forbi uden tilmelding og brug værksted, værktøj og materialer.</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Mentorstøtte</strong> – frivillige mentorer og lokale iværksættere giver inspiration og gode råd undervejs.</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Tema-workshops</strong> – jævnligt afholdte forløb med konkrete byggeopgaver og temaer.</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Medskabelse</strong> – løbende projekter, hvor brugerne selv er med til at udvikle stedet.</span></li>
-                    </ul>
                 </div>
             </div>
         </section>
-
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
 
         <!-- Værdier -->
-        <section class="section" aria-labelledby="vaerdier-title">
+        <section class="block bg-cream" aria-labelledby="vaerdier-title">
             <div class="container">
-                <div class="section-head" data-reveal>
+                <div class="kicker" data-reveal>
                     <p class="eyebrow">Det tror vi på</p>
-                    <h2 id="vaerdier-title">Fire ord, der driver alt, hvad vi laver</h2>
+                    <h2 id="vaerdier-title">Fire ord, der driver os</h2>
                 </div>
-                <div class="grid grid-2">
-                    <article class="card" data-reveal>
-                        <span class="tag tag-aabent">01</span>
-                        <h3>Nysgerrighed</h3>
-                        <p>Vi tror på, at gode idéer starter med et "hvad nu hvis...?". Hos Gro er det helt fint ikke at vide, hvad man er i gang med endnu.</p>
-                    </article>
-                    <article class="card" data-reveal>
-                        <span class="tag tag-event">02</span>
-                        <h3>Fællesskab</h3>
-                        <p>Man bygger bedre sammen. Gro samler børn, unge, mentorer og lokale kræfter om fælles projekter – og om hinanden.</p>
-                    </article>
-                    <article class="card" data-reveal>
-                        <span class="tag tag-workshop">03</span>
-                        <h3>Kreativitet</h3>
-                        <p>Der er ingen forkerte svar i et idéværksted. Vi øver os i at tænke skævt, prøve nyt og se muligheder, hvor andre ser skrammel.</p>
-                    </article>
-                    <article class="card" data-reveal>
-                        <span class="tag tag-samarbejde">04</span>
-                        <h3>Medskabelse</h3>
-                        <p>Gro er ikke et færdigt hus med faste regler. Det er et fællesskab, der bliver formet af dem, der bruger det – fra dag ét.</p>
-                    </article>
+                <div data-reveal>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-green);">01</span>
+                        <div><h3>Nysgerrighed</h3><p>Gode idéer starter med et "hvad nu hvis...?". Det er fint ikke at vide, hvad man er i gang med endnu.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-blue);">02</span>
+                        <div><h3>Fællesskab</h3><p>Man bygger bedre sammen – med hinanden, mentorer og lokale kræfter.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-orange);">03</span>
+                        <div><h3>Kreativitet</h3><p>Ingen forkerte svar. Vi øver os i at tænke skævt og se muligheder, hvor andre ser skrammel.</p></div>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-label" style="color: var(--color-pink);">04</span>
+                        <div><h3>Medskabelse</h3><p>Gro er ikke et færdigt hus. Det formes af dem, der bruger det – fra dag ét.</p></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -177,29 +115,26 @@
         <div class="container footer-grid">
             <div>
                 <h3>Kulturforeningen Gro</h3>
-                <p>Idéværkstedet gro – fra værksted til væksthus. Et sted i Egense, hvor børn og unge bygger, opfinder og vokser sammen.</p>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
             </div>
             <div>
                 <h3>Genveje</h3>
                 <ul>
                     <li><a href="index.html">Kalender</a></li>
                     <li><a href="om.html">Om Gro</a></li>
-                    <li><a href="workshops.html">Workshops &amp; temaer</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
                     <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
                 </ul>
             </div>
             <div>
                 <h3>Kontakt</h3>
                 <ul>
-                    <li>Idéværkstedet gro<br />Havnevej 4, 9330 Egense</li>
+                    <li>Havnevej 4, 9330 Egense</li>
                     <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
-                    <li><a href="kontakt.html">Skriv til os</a></li>
                 </ul>
             </div>
         </div>
-        <div class="container footer-bottom">
-            © <span data-year>2026</span> Kulturforeningen Gro · Egense
-        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
     </footer>
 
     <script src="script.js"></script>

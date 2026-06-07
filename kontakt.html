@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Kontakt – Kulturforeningen Gro</title>
     <meta name="description" content="Find adresse og åbningstider for Idéværkstedet gro i Egense, og send en besked til Kulturforeningen Gro." />
-    <meta name="theme-color" content="#34a65a" />
+    <meta name="theme-color" content="#2f8f5b" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,45 +38,27 @@
 
     <main id="main">
         <!-- Hero -->
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero-shapes" aria-hidden="true">
-                <span class="shape shape-circle" style="width:90px;height:90px;left:-24px;top:18%;background:var(--color-pink);"></span>
-                <span class="shape shape-square" style="width:64px;height:64px;right:8%;bottom:14%;background:var(--color-blue);transform:rotate(10deg);"></span>
-            </div>
+        <section class="hero bg-yellow" aria-labelledby="hero-title">
             <div class="container">
-                <div class="hero-content center container narrow" data-reveal>
+                <div data-reveal>
                     <p class="eyebrow">Kontakt</p>
                     <h1 id="hero-title">Find os, skriv til os, kom forbi</h1>
-                    <p class="lead" style="margin-inline:auto;">
-                        Idéværkstedet gro ligger midt i Egense og er åbent for alle, der har
-                        lyst til at undre sig, bygge og finde på. Hører du til kommunen,
-                        en lokal virksomhed eller bare en nysgerrig nabo? Skriv endelig.
-                    </p>
+                    <p class="lead">Idéværkstedet gro ligger midt i Egense og er åbent for alle.</p>
                 </div>
             </div>
         </section>
 
-        <div class="divider" aria-hidden="true">
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-
         <!-- Praktisk info + formular -->
-        <section class="section" aria-labelledby="praktisk-title">
-            <div class="container grid grid-2" style="align-items:start; gap: var(--space-10);">
+        <section class="block bg-cream" aria-labelledby="praktisk-title">
+            <div class="container cols-2" style="align-items: start;">
                 <div data-reveal>
                     <p class="eyebrow">Praktisk info</p>
-                    <h2 id="praktisk-title">Sådan finder du Idéværkstedet</h2>
-                    <ul class="info-list" style="margin-top: var(--space-6);">
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Adresse</strong><br />Idéværkstedet gro · Havnevej 4 · 9330 Egense</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Åbne værkstedstider</strong><br />Onsdage og søndage kl. 14.00–17.00 (uden tilmelding)</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>Workshops</strong><br />Annonceres løbende i kalenderen – tilmelding via formularen her på siden</span></li>
-                        <li><span class="dot" aria-hidden="true"></span><span><strong>E-mail</strong><br /><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></span></li>
-                    </ul>
-                    <p class="muted" style="margin-top: var(--space-6);">
-                        Kulturforeningen Gro er en frivilligt drevet forening. Vi svarer så
-                        hurtigt, vi kan – typisk inden for et par dage.
-                    </p>
+                    <h2 id="praktisk-title">Sådan finder du os</h2>
+                    <div class="stack-tight" style="margin-top: var(--space-6);">
+                        <p class="mt-0"><strong>Adresse</strong><br />Havnevej 4 · 9330 Egense</p>
+                        <p class="mt-0"><strong>Åbne værkstedstider</strong><br />Onsdage og søndage kl. 14–17</p>
+                        <p class="mt-0"><strong>E-mail</strong><br /><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></p>
+                    </div>
                 </div>
 
                 <div data-reveal>
@@ -92,15 +74,11 @@
                             <input type="email" id="email" name="email" autocomplete="email" required />
                         </div>
                         <div class="form-row">
-                            <label for="emne">Hvad handler det om?</label>
-                            <input type="text" id="emne" name="emne" placeholder="Fx tilmelding, mentorskab, samarbejde, en idé..." />
-                        </div>
-                        <div class="form-row">
                             <label for="besked">Besked</label>
-                            <textarea id="besked" name="besked" rows="5" required></textarea>
+                            <textarea id="besked" name="besked" rows="4" required></textarea>
                         </div>
-                        <div class="btn-row">
-                            <button type="submit" class="btn btn-primary">Send besked</button>
+                        <div>
+                            <button type="submit" class="btn btn-on-cream">Send besked</button>
                         </div>
                         <p class="form-status" role="status" data-form-status></p>
                     </form>
@@ -113,29 +91,26 @@
         <div class="container footer-grid">
             <div>
                 <h3>Kulturforeningen Gro</h3>
-                <p>Idéværkstedet gro – fra værksted til væksthus. Et sted i Egense, hvor børn og unge bygger, opfinder og vokser sammen.</p>
+                <p>Idéværkstedet gro – fra værksted til væksthus. Egense.</p>
             </div>
             <div>
                 <h3>Genveje</h3>
                 <ul>
                     <li><a href="index.html">Kalender</a></li>
                     <li><a href="om.html">Om Gro</a></li>
-                    <li><a href="workshops.html">Workshops &amp; temaer</a></li>
+                    <li><a href="workshops.html">Workshops</a></li>
                     <li><a href="bliv-med.html">Bliv en del af Gro</a></li>
                 </ul>
             </div>
             <div>
                 <h3>Kontakt</h3>
                 <ul>
-                    <li>Idéværkstedet gro<br />Havnevej 4, 9330 Egense</li>
+                    <li>Havnevej 4, 9330 Egense</li>
                     <li><a href="mailto:hej@kulturforeningengro.dk">hej@kulturforeningengro.dk</a></li>
-                    <li><a href="kontakt.html">Skriv til os</a></li>
                 </ul>
             </div>
         </div>
-        <div class="container footer-bottom">
-            © <span data-year>2026</span> Kulturforeningen Gro · Egense
-        </div>
+        <div class="container footer-bottom">© <span data-year>2026</span> Kulturforeningen Gro</div>
     </footer>
 
     <script src="script.js"></script>
