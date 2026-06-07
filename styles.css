@@ -123,7 +123,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 
 .kicker { max-width: 46ch; }
-.kicker h2 { margin-bottom: var(--space-6); }
+.kicker h1, .kicker h2 { margin-bottom: var(--space-6); }
 
 /* =====================================================
    Buttons — flat, bold, generous tap targets
