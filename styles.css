@@ -61,6 +61,7 @@
 
 body {
     margin: 0;
+    overflow-x: hidden;
     background: var(--color-cream);
     color: var(--color-ink);
     font-family: var(--font-sans);
@@ -465,14 +466,20 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 
 /* Open state — the row's background becomes its matching accent colour,
    echoing the category badge above the title */
+.event-row.is-open,
+.event-row.is-open:hover,
+.event-row.is-open:focus-within,
+.event-row.is-open.is-active {
+    transform: none;
+}
 .event-row.is-open {
     opacity: 1;
     background: var(--event-accent, var(--color-orange));
     color: var(--color-on-bold);
     border-color: transparent;
-    border-radius: var(--radius-lg, 18px);
-    padding-inline: var(--space-4);
-    margin-inline: calc(var(--space-4) * -1);
+    border-radius: 0;
+    margin-inline: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
+    padding-inline: clamp(var(--space-4), 6vw, var(--space-12));
 }
 .event-row.is-open + .event-row { border-top-color: transparent; }
 .event-row.is-open .event-tag,
@@ -505,7 +512,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 @media (max-width: 760px) {
     .event-row { grid-template-columns: 5rem 1fr; }
     .event-row .event-cta { grid-column: 1 / -1; }
-    .event-row.is-open { padding-inline: var(--space-3); margin-inline: calc(var(--space-3) * -1); }
 }
 @media (prefers-reduced-motion: reduce) {
     .event-row, .event-when, .event-thumb, .event-row h3,

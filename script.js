@@ -7,6 +7,17 @@
     var yearEl = document.querySelector('[data-year]');
     if (yearEl) { yearEl.textContent = String(new Date().getFullYear()); }
 
+    // Mål forskellen mellem 100vw og den reelle viewport-bredde, så
+    // fuld-bredde farveblokke (kalenderens udfoldede begivenheder) kan
+    // ramme skærmkanten præcist — på nogle platforme regner 100vw
+    // scrollbaren med, men containerens % gør ikke
+    var vwProbe = document.createElement('div');
+    vwProbe.style.cssText = 'position:fixed; width:100vw; height:0; visibility:hidden; pointer-events:none;';
+    document.documentElement.appendChild(vwProbe);
+    var vwOverhang = vwProbe.getBoundingClientRect().width - document.documentElement.clientWidth;
+    vwProbe.remove();
+    document.documentElement.style.setProperty('--vw-overhang', vwOverhang + 'px');
+
     // Mobil-menu
     var toggle = document.querySelector('[data-nav-toggle]');
     var nav = document.querySelector('[data-nav]');
@@ -98,6 +109,20 @@
             var panel = document.getElementById(btn.getAttribute('aria-controls'));
             var open = btn.getAttribute('aria-expanded') !== 'true';
             btn.setAttribute('aria-expanded', String(open));
+
+            // Lås den vandrette scrollposition mens fold-ud/sammenfold
+            // animerer — layoutskiftet kan ellers udløse en glidende
+            // vandret auto-scroll (scroll-anchoring + scroll-behavior:
+            // smooth), som rykker hele billedet og klipper indhold
+            var lockedX = window.scrollX;
+            var lockUntil = Date.now() + 450;
+            (function lockScrollX() {
+                if (window.scrollX !== lockedX) {
+                    window.scrollTo({ left: lockedX, top: window.scrollY, behavior: 'instant' });
+                }
+                if (Date.now() < lockUntil) { window.requestAnimationFrame(lockScrollX); }
+            })();
+
             if (row) { row.classList.toggle('is-open', open); }
             if (panel) { panel.classList.toggle('is-open', open); }
         });
