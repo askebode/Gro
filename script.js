@@ -56,6 +56,36 @@
     // Kalender — fremhæv begivenheden midt i billedet, når man
     // scroller på en touch-enhed (samme effekt som hover på desktop)
     var eventList = document.querySelector('.event-list');
+
+    // Kalenderens kort "trækkes" magnetisk ind på midten af skærmen
+    // (scroll-snap). Uden ekstra plads foroven kan den første begivenhed
+    // aldrig nå den centrerede hvileposition — kun de andre kan. Vi
+    // måler derfor, hvor meget luft der skal til for at den første
+    // begivenhed allerede starter centreret, så man altid kan "lande"
+    // tilbage på den, ligesom resten af listen
+    var firstEventRow = eventList ? eventList.querySelector('.event-row') : null;
+    function updateFirstEventSpacing() {
+        if (!firstEventRow || !eventList) { return; }
+        eventList.style.paddingTop = '0px';
+
+        // Brug offsetTop (layout-baseret) i stedet for getBoundingClientRect().top
+        // (maleri-baseret) — listen kan stadig være midt i sin reveal-animation
+        // (translateY), som ellers ville forstyrre målingen af hvileposition
+        var documentTop = 0;
+        for (var el = firstEventRow; el; el = el.offsetParent) { documentTop += el.offsetTop; }
+        var rowHeight = firstEventRow.getBoundingClientRect().height;
+        var rowCenter = (documentTop - window.scrollY) + rowHeight / 2;
+
+        var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        var snapportCenter = scrollPaddingTop + (window.innerHeight - scrollPaddingTop) / 2;
+        eventList.style.paddingTop = Math.max(0, snapportCenter - rowCenter) + 'px';
+    }
+    updateFirstEventSpacing();
+    window.addEventListener('resize', updateFirstEventSpacing);
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(updateFirstEventSpacing);
+    }
+
     var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
         window.matchMedia('(hover: none), (pointer: coarse)').matches;
     if (eventList && 'IntersectionObserver' in window && isTouchDevice) {
