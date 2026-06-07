@@ -59,7 +59,7 @@
     var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
         window.matchMedia('(hover: none), (pointer: coarse)').matches;
     if (eventList && 'IntersectionObserver' in window && isTouchDevice) {
-        var eventRows = Array.prototype.slice.call(eventList.querySelectorAll('.event-row'));
+        var touchEventRows = Array.prototype.slice.call(eventList.querySelectorAll('.event-row'));
         var ticking = false;
 
         function updateActiveEventRow() {
@@ -67,7 +67,7 @@
             var viewportCenter = window.innerHeight / 2;
             var closest = null;
             var closestDist = Infinity;
-            eventRows.forEach(function (row) {
+            touchEventRows.forEach(function (row) {
                 var rect = row.getBoundingClientRect();
                 var dist = Math.abs((rect.top + rect.height / 2) - viewportCenter);
                 if (dist < closestDist) {
@@ -75,7 +75,7 @@
                     closest = row;
                 }
             });
-            eventRows.forEach(function (row) { row.classList.toggle('is-active', row === closest); });
+            touchEventRows.forEach(function (row) { row.classList.toggle('is-active', row === closest); });
             eventList.classList.toggle('has-active', !!closest);
         }
 
@@ -93,7 +93,7 @@
                     updateActiveEventRow();
                 } else {
                     window.removeEventListener('scroll', onScroll);
-                    eventRows.forEach(function (row) { row.classList.remove('is-active'); });
+                    touchEventRows.forEach(function (row) { row.classList.remove('is-active'); });
                     eventList.classList.remove('has-active');
                 }
             });
@@ -101,30 +101,47 @@
         listObserver.observe(eventList);
     }
 
-    // Kalender — "Læs mere"-knapper folder en beskrivelse ud under begivenheden
-    var eventToggles = document.querySelectorAll('[data-event-toggle]');
-    eventToggles.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var row = btn.closest('.event-row');
-            var panel = document.getElementById(btn.getAttribute('aria-controls'));
-            var open = btn.getAttribute('aria-expanded') !== 'true';
-            btn.setAttribute('aria-expanded', String(open));
+    // Kalender — "Læs mere" folder en beskrivelse ud under begivenheden.
+    // Kun én begivenhed er åben ad gangen, og man kan også åbne/lukke den
+    // ved at trykke på overskriften eller datoen (ikke kun selve knappen)
+    var allEventRows = Array.prototype.slice.call(document.querySelectorAll('.event-row'));
 
-            // Lås den vandrette scrollposition mens fold-ud/sammenfold
-            // animerer — layoutskiftet kan ellers udløse en glidende
-            // vandret auto-scroll (scroll-anchoring + scroll-behavior:
-            // smooth), som rykker hele billedet og klipper indhold
-            var lockedX = window.scrollX;
-            var lockUntil = Date.now() + 450;
-            (function lockScrollX() {
-                if (window.scrollX !== lockedX) {
-                    window.scrollTo({ left: lockedX, top: window.scrollY, behavior: 'instant' });
-                }
-                if (Date.now() < lockUntil) { window.requestAnimationFrame(lockScrollX); }
-            })();
+    function setEventRowOpen(row, open) {
+        var btn = row.querySelector('[data-event-toggle]');
+        var panel = row.querySelector('.event-details-wrap');
+        if (btn) { btn.setAttribute('aria-expanded', String(open)); }
+        row.classList.toggle('is-open', open);
+        if (panel) { panel.classList.toggle('is-open', open); }
+    }
 
-            if (row) { row.classList.toggle('is-open', open); }
-            if (panel) { panel.classList.toggle('is-open', open); }
+    function toggleEventRow(row) {
+        var btn = row.querySelector('[data-event-toggle]');
+        var willOpen = !btn || btn.getAttribute('aria-expanded') !== 'true';
+        allEventRows.forEach(function (other) {
+            setEventRowOpen(other, other === row ? willOpen : false);
+        });
+
+        // Lås den vandrette scrollposition mens fold-ud/sammenfold
+        // animerer — layoutskiftet kan ellers udløse en glidende
+        // vandret auto-scroll (scroll-anchoring + scroll-behavior:
+        // smooth), som rykker hele billedet og klipper indhold
+        var lockedX = window.scrollX;
+        var lockUntil = Date.now() + 450;
+        (function lockScrollX() {
+            if (window.scrollX !== lockedX) {
+                window.scrollTo({ left: lockedX, top: window.scrollY, behavior: 'instant' });
+            }
+            if (Date.now() < lockUntil) { window.requestAnimationFrame(lockScrollX); }
+        })();
+    }
+
+    allEventRows.forEach(function (row) {
+        var btn = row.querySelector('[data-event-toggle]');
+        if (btn) {
+            btn.addEventListener('click', function () { toggleEventRow(row); });
+        }
+        row.querySelectorAll('[data-event-open]').forEach(function (trigger) {
+            trigger.addEventListener('click', function () { toggleEventRow(row); });
         });
     });
 

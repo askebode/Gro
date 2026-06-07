@@ -327,10 +327,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row {
     position: relative;
     display: grid;
-    grid-template-columns: 7rem minmax(0,1fr) auto;
+    grid-template-columns: minmax(0,1fr) auto;
     align-items: center;
     gap: var(--space-6);
-    padding-block: var(--space-6);
+    padding-block: var(--space-4);
     border-top: 1px solid rgba(31,30,27,0.16);
     transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
         background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
@@ -338,28 +338,43 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
         padding-inline 320ms var(--ease-standard), margin-inline 320ms var(--ease-standard);
 }
 .event-row:last-child { border-bottom: 1px solid rgba(31,30,27,0.16); }
+.event-info { position: relative; min-width: 0; }
+.event-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    margin: 0 0 0.3em;
+}
 .event-when {
     font-family: var(--font-head);
     font-weight: 700;
-    line-height: 1.05;
-    transition: transform 320ms var(--ease-pop);
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 220ms var(--ease-standard);
 }
-.event-when .day { font-size: 2rem; display: block; }
-.event-when .month { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; }
-.event-info { position: relative; }
-.event-row h3 { margin-bottom: 0.25em; transition: color 200ms var(--ease-standard); }
-.event-meta { font-size: var(--text-sm); opacity: 0.7; margin: 0; }
+.event-row h3 {
+    margin: 0;
+    font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 200ms var(--ease-standard);
+}
 .event-tag {
     font-family: var(--font-head);
     font-weight: 700;
     font-size: var(--text-sm);
     display: inline-block;
-    margin-bottom: 0.4em;
     transition: color 320ms var(--ease-standard);
 }
 .tag-orange { color: var(--color-orange); }
 .tag-green { color: var(--color-green); }
 .tag-pink { color: var(--color-pink); }
+.tag-blue { color: var(--color-blue); }
 
 /* Thumbnail that pops in on hover/focus, anchored to the content
    column so it can never collide with the CTA button */
@@ -393,7 +408,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row.is-active .event-when,
 .event-row:hover .event-when,
 .event-row:focus-within .event-when {
-    transform: scale(1.08);
+    opacity: 0.85;
 }
 .event-row.is-active h3,
 .event-row:hover h3,
@@ -510,8 +525,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     .event-thumb svg { width: 28px; height: 28px; }
 }
 @media (max-width: 760px) {
-    .event-row { grid-template-columns: 5rem 1fr; }
-    .event-row .event-cta { grid-column: 1 / -1; }
+    .event-row { grid-template-columns: 1fr; gap: var(--space-3); }
+    .event-row .event-cta { justify-self: start; }
 }
 @media (prefers-reduced-motion: reduce) {
     .event-row, .event-when, .event-thumb, .event-row h3,
