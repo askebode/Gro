@@ -42,6 +42,20 @@
         }
     }
 
+    // Kalender — fremhæv begivenheden midt i billedet, når man
+    // scroller på en touch-enhed (samme effekt som hover på desktop)
+    var eventList = document.querySelector('.event-list');
+    if (eventList && 'IntersectionObserver' in window && window.matchMedia('(hover: none)').matches) {
+        var eventRows = eventList.querySelectorAll('.event-row');
+        var eventObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                entry.target.classList.toggle('is-active', entry.isIntersecting);
+            });
+            eventList.classList.toggle('has-active', !!eventList.querySelector('.event-row.is-active'));
+        }, { threshold: 0, rootMargin: '-42% 0px -42% 0px' });
+        eventRows.forEach(function (row) { eventObserver.observe(row); });
+    }
+
     // Tal-op-tællere
     var counters = document.querySelectorAll('[data-counter]');
     if (counters.length && 'IntersectionObserver' in window) {

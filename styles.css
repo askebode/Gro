@@ -373,30 +373,39 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 .event-thumb svg { width: 38px; height: 38px; }
 
+/* Active state — triggered by hover/focus on desktop, and by
+   scroll position on touch devices (see script.js) */
+.event-list.has-active .event-row:not(.is-active) { opacity: 0.38; }
+.event-row.is-active,
+.event-row:hover,
+.event-row:focus-within {
+    opacity: 1;
+    transform: translateX(var(--space-4));
+}
+.event-row.is-active .event-when,
+.event-row:hover .event-when,
+.event-row:focus-within .event-when {
+    transform: scale(1.08);
+}
+.event-row.is-active h3,
+.event-row:hover h3,
+.event-row:focus-within h3 {
+    color: var(--event-accent, var(--color-orange));
+}
+.event-row.is-active .event-thumb,
+.event-row:hover .event-thumb,
+.event-row:focus-within .event-thumb {
+    opacity: 1;
+    transform: translateY(-50%) scale(1) rotate(-6deg);
+}
 @media (hover: hover) {
     .event-list:hover .event-row { opacity: 0.38; }
-    .event-row:hover,
-    .event-row:focus-within {
-        opacity: 1;
-        transform: translateX(var(--space-4));
-    }
-    .event-row:hover .event-when,
-    .event-row:focus-within .event-when {
-        transform: scale(1.08);
-    }
-    .event-row:hover h3,
-    .event-row:focus-within h3 {
-        color: var(--event-accent, var(--color-orange));
-    }
-    .event-row:hover .event-thumb,
-    .event-row:focus-within .event-thumb {
-        opacity: 1;
-        transform: translateY(-50%) scale(1) rotate(-6deg);
-    }
 }
 
 @media (max-width: 900px) {
-    .event-thumb { display: none; }
+    .event-info { padding-right: 70px; }
+    .event-thumb { width: 56px; height: 56px; right: 0; }
+    .event-thumb svg { width: 28px; height: 28px; }
 }
 @media (max-width: 760px) {
     .event-row { grid-template-columns: 5rem 1fr; }
