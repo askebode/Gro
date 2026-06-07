@@ -42,6 +42,12 @@
 
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
+
+    /* "Magnetisk" scroll — kalenderens begivenheder trækker sig blidt
+       ind på midten af skærmen, når man holder op med at scrolle
+       (kun .event-row har scroll-snap-align, så resten af siden
+       opfører sig som normalt) */
+    scroll-snap-type: y proximity;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -154,39 +160,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .btn-outline { background: transparent; }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
-
-/* =====================================================
-   Marquee — looping ticker for instant energy/motion
-   ===================================================== */
-
-.marquee {
-    overflow: hidden;
-    background: var(--color-ink);
-    color: var(--color-cream);
-    border-block: 2px solid var(--color-ink);
-}
-.marquee-track {
-    display: inline-flex;
-    width: max-content;
-    gap: var(--space-8);
-    padding-block: var(--space-4);
-    white-space: nowrap;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    animation: marquee-scroll 26s linear infinite;
-}
-.marquee-track .dot { color: var(--color-yellow); }
-@keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
-    .marquee { overflow-x: auto; }
-}
 
 /* =====================================================
    Header / navigation — minimal, plenty of air
@@ -332,6 +305,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     gap: var(--space-6);
     padding-block: var(--space-4);
     border-top: 1px solid rgba(31,30,27,0.16);
+    scroll-snap-align: center;
+    scroll-margin-block: 5.5rem;
     transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
         background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
         border-color 320ms var(--ease-standard), border-radius 320ms var(--ease-standard),
@@ -425,27 +400,25 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     .event-list:hover .event-row:not(.is-open) { opacity: 0.38; }
 }
 
-/* "Læs mere" toggle — square-cornered (not pill-shaped like .btn),
-   expands an accordion panel with the event description */
+/* "Læs mere" toggle — diskret tekst-knap (ikke en kraftig knap-boks),
+   expanderer et accordion-panel med begivenhedens beskrivelse */
 .event-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.4em;
     font-family: var(--font-head);
     font-weight: 700;
     font-size: var(--text-sm);
-    border-radius: 8px;
-    border: 2px solid currentColor;
-    padding: 0.7em 1.3em;
+    border: none;
+    padding: 0.4em 0;
     cursor: pointer;
     background: transparent;
     color: inherit;
-    transition: transform var(--trans-pop), opacity var(--trans-fast),
-        background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
-        border-color 320ms var(--ease-standard);
+    opacity: 0.5;
+    transition: opacity var(--trans-fast), color 320ms var(--ease-standard);
 }
-.event-toggle:hover { transform: translateY(-2px); opacity: 0.85; }
-.event-toggle:active { transform: translateY(0); }
+.event-toggle:hover, .event-toggle:focus-visible { opacity: 0.9; }
+.event-toggle:active { opacity: 0.7; }
 .event-toggle-arrow {
     display: inline-block;
     transition: transform 320ms var(--ease-pop);
@@ -506,12 +479,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 .event-row.is-open .event-thumb { opacity: 0; }
 .event-row.is-open .event-toggle {
-    border-color: var(--color-on-bold);
     color: var(--color-on-bold);
+    opacity: 0.75;
 }
-.event-row.is-open .event-toggle:hover {
-    background: var(--color-on-bold);
-    color: var(--event-accent, var(--color-orange));
+.event-row.is-open .event-toggle:hover,
+.event-row.is-open .event-toggle:focus-visible {
+    opacity: 1;
 }
 .event-row.is-open .btn-on-bold:hover {
     background: var(--color-ink);
@@ -531,6 +504,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 @media (prefers-reduced-motion: reduce) {
     .event-row, .event-when, .event-thumb, .event-row h3,
     .event-toggle, .event-toggle-arrow, .event-details-wrap, .event-tag { transition: none; }
+    :root { scroll-snap-type: none; }
 }
 
 /* =====================================================
