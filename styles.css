@@ -331,7 +331,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     gap: var(--space-6);
     padding-block: var(--space-6);
     border-top: 1px solid rgba(31,30,27,0.16);
-    transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard);
+    transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
+        background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
+        border-color 320ms var(--ease-standard), border-radius 320ms var(--ease-standard),
+        padding-inline 320ms var(--ease-standard), margin-inline 320ms var(--ease-standard);
 }
 .event-row:last-child { border-bottom: 1px solid rgba(31,30,27,0.16); }
 .event-when {
@@ -351,7 +354,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     font-size: var(--text-sm);
     display: inline-block;
     margin-bottom: 0.4em;
+    transition: color 320ms var(--ease-standard);
 }
+.tag-orange { color: var(--color-orange); }
+.tag-green { color: var(--color-green); }
+.tag-pink { color: var(--color-pink); }
 
 /* Thumbnail that pops in on hover/focus, anchored to the content
    column so it can never collide with the CTA button */
@@ -375,7 +382,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 
 /* Active state — triggered by hover/focus on desktop, and by
    scroll position on touch devices (see script.js) */
-.event-list.has-active .event-row:not(.is-active) { opacity: 0.38; }
+.event-list.has-active .event-row:not(.is-active):not(.is-open) { opacity: 0.38; }
 .event-row.is-active,
 .event-row:hover,
 .event-row:focus-within {
@@ -399,7 +406,95 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     transform: translateY(-50%) scale(1) rotate(-6deg);
 }
 @media (hover: hover) {
-    .event-list:hover .event-row { opacity: 0.38; }
+    .event-list:hover .event-row:not(.is-open) { opacity: 0.38; }
+}
+
+/* "Læs mere" toggle — square-cornered (not pill-shaped like .btn),
+   expands an accordion panel with the event description */
+.event-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    border-radius: 8px;
+    border: 2px solid currentColor;
+    padding: 0.7em 1.3em;
+    cursor: pointer;
+    background: transparent;
+    color: inherit;
+    transition: transform var(--trans-pop), opacity var(--trans-fast),
+        background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
+        border-color 320ms var(--ease-standard);
+}
+.event-toggle:hover { transform: translateY(-2px); opacity: 0.85; }
+.event-toggle:active { transform: translateY(0); }
+.event-toggle-arrow {
+    display: inline-block;
+    transition: transform 320ms var(--ease-pop);
+}
+.event-toggle[aria-expanded="true"] .event-toggle-arrow {
+    transform: rotate(-180deg);
+}
+
+/* Accordion panel — CSS grid 0fr → 1fr trick avoids measuring heights in JS */
+.event-details-wrap {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 420ms var(--ease-standard);
+}
+.event-row.is-open .event-details-wrap {
+    grid-template-rows: 1fr;
+}
+.event-details {
+    overflow: hidden;
+    min-height: 0;
+}
+.event-details-inner {
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-4);
+    max-width: 60ch;
+}
+.event-details-inner p { margin: 0 0 0.8em; }
+.event-details-meta {
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+/* Open state — the row's background becomes its matching accent colour,
+   echoing the category badge above the title */
+.event-row.is-open {
+    opacity: 1;
+    background: var(--event-accent, var(--color-orange));
+    color: var(--color-on-bold);
+    border-color: transparent;
+    border-radius: var(--radius-lg, 18px);
+    padding-inline: var(--space-4);
+    margin-inline: calc(var(--space-4) * -1);
+}
+.event-row.is-open + .event-row { border-top-color: transparent; }
+.event-row.is-open .event-tag,
+.event-row.is-open h3,
+.event-row.is-open:hover h3,
+.event-row.is-open.is-active h3,
+.event-row.is-open:focus-within h3 {
+    color: var(--color-on-bold);
+}
+.event-row.is-open .event-thumb { opacity: 0; }
+.event-row.is-open .event-toggle {
+    border-color: var(--color-on-bold);
+    color: var(--color-on-bold);
+}
+.event-row.is-open .event-toggle:hover {
+    background: var(--color-on-bold);
+    color: var(--event-accent, var(--color-orange));
+}
+.event-row.is-open .btn-on-bold:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border-color: var(--color-ink);
 }
 
 @media (max-width: 900px) {
@@ -410,9 +505,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 @media (max-width: 760px) {
     .event-row { grid-template-columns: 5rem 1fr; }
     .event-row .event-cta { grid-column: 1 / -1; }
+    .event-row.is-open { padding-inline: var(--space-3); margin-inline: calc(var(--space-3) * -1); }
 }
 @media (prefers-reduced-motion: reduce) {
-    .event-row, .event-when, .event-thumb, .event-row h3 { transition: none; }
+    .event-row, .event-when, .event-thumb, .event-row h3,
+    .event-toggle, .event-toggle-arrow, .event-details-wrap, .event-tag { transition: none; }
 }
 
 /* =====================================================

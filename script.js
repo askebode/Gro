@@ -90,6 +90,19 @@
         listObserver.observe(eventList);
     }
 
+    // Kalender — "Læs mere"-knapper folder en beskrivelse ud under begivenheden
+    var eventToggles = document.querySelectorAll('[data-event-toggle]');
+    eventToggles.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var row = btn.closest('.event-row');
+            var panel = document.getElementById(btn.getAttribute('aria-controls'));
+            var open = btn.getAttribute('aria-expanded') !== 'true';
+            btn.setAttribute('aria-expanded', String(open));
+            if (row) { row.classList.toggle('is-open', open); }
+            if (panel) { panel.classList.toggle('is-open', open); }
+        });
+    });
+
     // Tal-op-tællere
     var counters = document.querySelectorAll('[data-counter]');
     if (counters.length && 'IntersectionObserver' in window) {
