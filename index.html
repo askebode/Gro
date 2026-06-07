@@ -52,6 +52,20 @@
             </div>
         </section>
 
+        <!-- Ticker -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Byg noget skørt</span><span class="dot">●</span>
+                <span>Find på en idé</span><span class="dot">●</span>
+                <span>Mød andre der bygger</span><span class="dot">●</span>
+                <span>Kom som du er</span><span class="dot">●</span>
+                <span>Byg noget skørt</span><span class="dot">●</span>
+                <span>Find på en idé</span><span class="dot">●</span>
+                <span>Mød andre der bygger</span><span class="dot">●</span>
+                <span>Kom som du er</span><span class="dot">●</span>
+            </div>
+        </div>
+
         <!-- Kalender -->
         <section id="kalender" class="block bg-cream" aria-labelledby="kalender-title">
             <div class="container">
@@ -61,40 +75,66 @@
                     <p class="lead">Et udpluk af det næste, der sker i værkstedet.</p>
                 </div>
 
-                <div data-reveal>
-                    <div class="event-row">
+                <div class="event-list" data-reveal>
+                    <div class="event-row" style="--event-accent: var(--color-orange);">
                         <div class="event-when"><span class="day">14</span><span class="month">Aug</span></div>
-                        <div>
+                        <div class="event-info">
                             <span class="event-tag" style="color: var(--color-orange);">Workshop</span>
                             <h3>Opfind din egen gadget</h3>
                             <p class="event-meta">Idéværkstedet, Egense · 10–14 år</p>
+                            <span class="event-thumb" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="24" cy="20" r="11" />
+                                    <path d="M20 36h8M21 41h6" />
+                                    <path d="M24 6v3M9 20h3M36 20h3M13.5 9.5l2 2M34.5 9.5l-2 2" />
+                                </svg>
+                            </span>
                         </div>
                         <div class="event-cta"><a class="btn btn-outline" href="kontakt.html">Tilmeld dig</a></div>
                     </div>
-                    <div class="event-row">
+                    <div class="event-row" style="--event-accent: var(--color-green);">
                         <div class="event-when"><span class="day">21</span><span class="month">Aug</span></div>
-                        <div>
+                        <div class="event-info">
                             <span class="event-tag" style="color: var(--color-green);">Åbent værksted</span>
                             <h3>Åbent værksted med mentorstøtte</h3>
                             <p class="event-meta">Idéværkstedet, Egense · Alle aldre</p>
+                            <span class="event-thumb" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M30 11l7 7-17 17-7-7z" />
+                                    <path d="M13 32l-4 11 11-4" />
+                                    <circle cx="34.5" cy="13.5" r="2.6" />
+                                </svg>
+                            </span>
                         </div>
                         <div class="event-cta"><a class="btn btn-outline" href="om.html#vaerksted">Læs mere</a></div>
                     </div>
-                    <div class="event-row">
+                    <div class="event-row" style="--event-accent: var(--color-orange);">
                         <div class="event-when"><span class="day">28</span><span class="month">Aug</span></div>
-                        <div>
+                        <div class="event-info">
                             <span class="event-tag" style="color: var(--color-orange);">Workshop</span>
                             <h3>Byg en prototype med pap og kode</h3>
                             <p class="event-meta">Idéværkstedet, Egense · 11–16 år</p>
+                            <span class="event-thumb" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="11" y="16" width="26" height="18" rx="3" />
+                                    <path d="M18 24l-4 3 4 3M30 24l4 3-4 3M26 22l-4 8" />
+                                </svg>
+                            </span>
                         </div>
                         <div class="event-cta"><a class="btn btn-outline" href="kontakt.html">Tilmeld dig</a></div>
                     </div>
-                    <div class="event-row">
+                    <div class="event-row" style="--event-accent: var(--color-pink);">
                         <div class="event-when"><span class="day">5</span><span class="month">Sep</span></div>
-                        <div>
+                        <div class="event-info">
                             <span class="event-tag" style="color: var(--color-pink);">Samarbejde</span>
                             <h3>Iværksætteraften</h3>
                             <p class="event-meta">Idéværkstedet, Egense · Unge + forældre</p>
+                            <span class="event-thumb" aria-hidden="true">
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="19" cy="24" r="11" />
+                                    <circle cx="29" cy="24" r="11" />
+                                </svg>
+                            </span>
                         </div>
                         <div class="event-cta"><a class="btn btn-outline" href="bliv-med.html#samarbejde">Læs mere</a></div>
                     </div>

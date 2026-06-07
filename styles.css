@@ -145,14 +145,47 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     background: transparent;
     color: inherit;
 }
-.btn:hover { transform: translateY(-2px); opacity: 0.85; }
-.btn:active { transform: translateY(0); }
+.btn:hover { transform: translateY(-2px) rotate(-1deg); opacity: 0.85; }
+.btn:active { transform: translateY(0) rotate(0); }
 
 .btn-on-bold { background: var(--color-on-bold); color: var(--color-ink); border-color: var(--color-on-bold); }
 .btn-on-cream { background: var(--color-ink); color: var(--color-cream); border-color: var(--color-ink); }
 .btn-outline { background: transparent; }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+
+/* =====================================================
+   Marquee — looping ticker for instant energy/motion
+   ===================================================== */
+
+.marquee {
+    overflow: hidden;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border-block: 2px solid var(--color-ink);
+}
+.marquee-track {
+    display: inline-flex;
+    width: max-content;
+    gap: var(--space-8);
+    padding-block: var(--space-4);
+    white-space: nowrap;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    animation: marquee-scroll 26s linear infinite;
+}
+.marquee-track .dot { color: var(--color-yellow); }
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    .marquee { overflow-x: auto; }
+}
 
 /* =====================================================
    Header / navigation — minimal, plenty of air
@@ -180,8 +213,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     text-decoration: none;
     color: var(--color-ink);
 }
-.brand-mark { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; }
+.brand-mark { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; display: inline-block; transition: transform 420ms var(--ease-pop); }
 .brand-mark img { width: 100%; height: 100%; }
+@media (hover: hover) {
+    .brand-link:hover .brand-mark { transform: rotate(-14deg) scale(1.08); }
+}
 
 .nav-toggle {
     display: none;
@@ -252,9 +288,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     gap: var(--space-6);
     align-items: baseline;
     padding-block: var(--space-6);
+    padding-left: 0;
     border-top: 1px solid currentColor;
     border-color: rgba(31,30,27,0.16);
+    transition: padding-left 260ms var(--ease-pop);
 }
+@media (hover: hover) {
+    .item-row:hover { padding-left: var(--space-4); }
+    .item-row:hover .item-label { opacity: 1; transform: translateX(4px); }
+}
+.item-row .item-label { display: inline-block; transition: opacity 200ms var(--ease-standard), transform 260ms var(--ease-pop); }
 .bg-green .item-row, .bg-orange .item-row, .bg-blue .item-row, .bg-pink .item-row, .bg-ink .item-row {
     border-color: rgba(250,248,242,0.28);
 }
@@ -274,26 +317,33 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 @media (max-width: 640px) { .cols-2, .cols-3 { grid-template-columns: 1fr; gap: var(--space-8); } }
 
 /* =====================================================
-   Calendar — bold, minimal event rows
+   Calendar — playful hover-to-reveal event list
+   (hovering one row dims the rest and pops a thumbnail,
+   inspired by VoxHall's lively concert listing)
    ===================================================== */
 
+.event-list { position: relative; }
 .event-row {
+    position: relative;
     display: grid;
     grid-template-columns: 7rem minmax(0,1fr) auto;
     align-items: center;
     gap: var(--space-6);
     padding-block: var(--space-6);
     border-top: 1px solid rgba(31,30,27,0.16);
+    transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard);
 }
 .event-row:last-child { border-bottom: 1px solid rgba(31,30,27,0.16); }
 .event-when {
     font-family: var(--font-head);
     font-weight: 700;
     line-height: 1.05;
+    transition: transform 320ms var(--ease-pop);
 }
 .event-when .day { font-size: 2rem; display: block; }
 .event-when .month { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; }
-.event-row h3 { margin-bottom: 0.25em; }
+.event-info { position: relative; }
+.event-row h3 { margin-bottom: 0.25em; transition: color 200ms var(--ease-standard); }
 .event-meta { font-size: var(--text-sm); opacity: 0.7; margin: 0; }
 .event-tag {
     font-family: var(--font-head);
@@ -302,9 +352,58 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     display: inline-block;
     margin-bottom: 0.4em;
 }
+
+/* Thumbnail that pops in on hover/focus, anchored to the content
+   column so it can never collide with the CTA button */
+.event-thumb {
+    position: absolute;
+    top: 50%;
+    right: var(--space-8);
+    width: 76px;
+    height: 76px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-lg, 18px);
+    color: var(--color-on-bold);
+    background: var(--event-accent, var(--color-orange));
+    opacity: 0;
+    transform: translateY(-50%) scale(0.4) rotate(-16deg);
+    transition: opacity 200ms var(--ease-standard), transform 380ms var(--ease-pop);
+    pointer-events: none;
+}
+.event-thumb svg { width: 38px; height: 38px; }
+
+@media (hover: hover) {
+    .event-list:hover .event-row { opacity: 0.38; }
+    .event-row:hover,
+    .event-row:focus-within {
+        opacity: 1;
+        transform: translateX(var(--space-4));
+    }
+    .event-row:hover .event-when,
+    .event-row:focus-within .event-when {
+        transform: scale(1.08);
+    }
+    .event-row:hover h3,
+    .event-row:focus-within h3 {
+        color: var(--event-accent, var(--color-orange));
+    }
+    .event-row:hover .event-thumb,
+    .event-row:focus-within .event-thumb {
+        opacity: 1;
+        transform: translateY(-50%) scale(1) rotate(-6deg);
+    }
+}
+
+@media (max-width: 900px) {
+    .event-thumb { display: none; }
+}
 @media (max-width: 760px) {
     .event-row { grid-template-columns: 5rem 1fr; }
     .event-row .event-cta { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .event-row, .event-when, .event-thumb, .event-row h3 { transition: none; }
 }
 
 /* =====================================================
