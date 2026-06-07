@@ -48,14 +48,46 @@
     var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
         window.matchMedia('(hover: none), (pointer: coarse)').matches;
     if (eventList && 'IntersectionObserver' in window && isTouchDevice) {
-        var eventRows = eventList.querySelectorAll('.event-row');
-        var eventObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                entry.target.classList.toggle('is-active', entry.isIntersecting);
+        var eventRows = Array.prototype.slice.call(eventList.querySelectorAll('.event-row'));
+        var ticking = false;
+
+        function updateActiveEventRow() {
+            ticking = false;
+            var viewportCenter = window.innerHeight / 2;
+            var closest = null;
+            var closestDist = Infinity;
+            eventRows.forEach(function (row) {
+                var rect = row.getBoundingClientRect();
+                var dist = Math.abs((rect.top + rect.height / 2) - viewportCenter);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closest = row;
+                }
             });
-            eventList.classList.toggle('has-active', !!eventList.querySelector('.event-row.is-active'));
-        }, { threshold: 0, rootMargin: '-42% 0px -42% 0px' });
-        eventRows.forEach(function (row) { eventObserver.observe(row); });
+            eventRows.forEach(function (row) { row.classList.toggle('is-active', row === closest); });
+            eventList.classList.toggle('has-active', !!closest);
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(updateActiveEventRow);
+            }
+        }
+
+        var listObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                    updateActiveEventRow();
+                } else {
+                    window.removeEventListener('scroll', onScroll);
+                    eventRows.forEach(function (row) { row.classList.remove('is-active'); });
+                    eventList.classList.remove('has-active');
+                }
+            });
+        }, { threshold: 0 });
+        listObserver.observe(eventList);
     }
 
     // Tal-op-tællere
