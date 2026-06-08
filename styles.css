@@ -291,9 +291,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 @media (max-width: 640px) { .cols-2, .cols-3 { grid-template-columns: 1fr; gap: var(--space-8); } }
 
 /* =====================================================
-   Calendar — playful hover-to-reveal event list
-   (hovering one row dims the rest and pops a thumbnail,
-   inspired by VoxHall's lively concert listing)
+   Calendar — event list with colour-coded accent rail
+   (hovering one row dims the rest and shifts it forward;
+   the left border carries each row's category colour)
    ===================================================== */
 
 .event-list { position: relative; }
@@ -304,7 +304,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     align-items: center;
     gap: var(--space-6);
     padding-block: var(--space-4);
+    padding-left: var(--space-4);
     border-top: 1px solid rgba(31,30,27,0.16);
+    border-left: 10px solid var(--event-accent, var(--color-orange));
     scroll-snap-align: center;
     scroll-margin-block: 5.5rem;
     transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
@@ -350,26 +352,13 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .tag-green { color: var(--color-green); }
 .tag-pink { color: var(--color-pink); }
 .tag-blue { color: var(--color-blue); }
-
-/* Thumbnail that pops in on hover/focus, anchored to the content
-   column so it can never collide with the CTA button */
-.event-thumb {
-    position: absolute;
-    top: 50%;
-    right: var(--space-8);
-    width: 76px;
-    height: 76px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--radius-lg, 18px);
-    color: var(--color-on-bold);
-    background: var(--event-accent, var(--color-orange));
-    opacity: 0;
-    transform: translateY(-50%) scale(0.4) rotate(-16deg);
-    transition: opacity 200ms var(--ease-standard), transform 380ms var(--ease-pop);
-    pointer-events: none;
+.event-tag-icon {
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 0.3em;
+    margin-right: 0.4em;
+    vertical-align: -0.22em;
 }
-.event-thumb svg { width: 38px; height: 38px; }
 
 /* Active state — triggered by hover/focus on desktop, and by
    scroll position on touch devices (see script.js). :hover er
@@ -390,11 +379,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row:focus-within h3 {
     color: var(--event-accent, var(--color-orange));
 }
-.event-row.is-active .event-thumb,
-.event-row:focus-within .event-thumb {
-    opacity: 1;
-    transform: translateY(-50%) scale(1) rotate(-6deg);
-}
 @media (hover: hover) {
     .event-list:hover .event-row:not(.is-open) { opacity: 0.38; }
     .event-row:hover {
@@ -403,10 +387,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     }
     .event-row:hover .event-when { opacity: 0.85; }
     .event-row:hover h3 { color: var(--event-accent, var(--color-orange)); }
-    .event-row:hover .event-thumb {
-        opacity: 1;
-        transform: translateY(-50%) scale(1) rotate(-6deg);
-    }
 }
 
 /* "Læs mere" toggle — diskret tekst-knap (ikke en kraftig knap-boks),
@@ -486,7 +466,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row.is-open:focus-within h3 {
     color: var(--color-on-bold);
 }
-.event-row.is-open .event-thumb { opacity: 0; }
 .event-row.is-open .event-toggle {
     color: var(--color-on-bold);
     opacity: 0.75;
@@ -501,17 +480,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     border-color: var(--color-ink);
 }
 
-@media (max-width: 900px) {
-    .event-info { padding-right: 70px; }
-    .event-thumb { width: 56px; height: 56px; right: 0; }
-    .event-thumb svg { width: 28px; height: 28px; }
-}
 @media (max-width: 760px) {
     .event-row { grid-template-columns: 1fr; gap: var(--space-3); }
     .event-row .event-cta { justify-self: start; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .event-row, .event-when, .event-thumb, .event-row h3,
+    .event-row, .event-when, .event-row h3,
     .event-toggle, .event-toggle-arrow, .event-details-wrap, .event-tag { transition: none; }
     :root { scroll-snap-type: none; }
 }
