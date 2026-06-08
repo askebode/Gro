@@ -296,6 +296,15 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
    the left border carries each row's category colour)
    ===================================================== */
 
+.event-list-label {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-ink-soft);
+    margin: 0 0 var(--space-4);
+}
 .event-list { position: relative; }
 .event-row {
     position: relative;
@@ -304,10 +313,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     align-items: center;
     gap: var(--space-6);
     padding-block: var(--space-4);
-    margin-left: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
-    padding-left: calc(50vw - 50% - var(--vw-overhang, 0px) / 2);
     border-top: 1px solid rgba(31,30,27,0.16);
-    border-left: 10px solid var(--event-accent, var(--color-orange));
+    border-left: 18px solid var(--event-accent, var(--color-orange));
+    padding-left: var(--space-4);
     scroll-snap-align: center;
     scroll-margin-block: 5.5rem;
     transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
@@ -437,6 +445,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     max-width: 60ch;
 }
 .event-details-inner p { margin: 0 0 0.8em; }
+.event-details-image {
+    display: grid;
+    place-items: center;
+    height: clamp(120px, 26vw, 200px);
+    margin-bottom: var(--space-4);
+    border-radius: var(--radius-lg, 18px);
+    background: rgba(0,0,0,0.12);
+    color: var(--color-on-bold);
+}
+.event-details-image svg { width: clamp(64px, 14vw, 104px); height: clamp(64px, 14vw, 104px); }
 .event-details-meta {
     font-weight: 700;
     opacity: 0.75;
