@@ -177,6 +177,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     padding: 1.4rem clamp(1.5rem, 5vw, 3rem);
     background: var(--color-cream);
 }
+.site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 2.75rem;
+    background: linear-gradient(to bottom, var(--color-cream), transparent);
+    pointer-events: none;
+}
 
 .brand-link {
     display: inline-flex;
