@@ -467,9 +467,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-details-image {
     display: grid;
     place-items: center;
+    width: 100%;
     height: clamp(120px, 26vw, 200px);
     margin-bottom: var(--space-4);
-    border-radius: var(--radius-lg, 18px);
     background: rgba(0,0,0,0.08);
     color: var(--color-on-accent);
 }
