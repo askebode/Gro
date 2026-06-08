@@ -380,7 +380,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row.is-active,
 .event-row:focus-within {
     opacity: 1;
-    transform: translateX(var(--space-4));
     border-left-width: 80px;
 }
 .event-row.is-active .event-when,
@@ -395,7 +394,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     .event-list:hover .event-row:not(.is-open) { opacity: 0.38; }
     .event-row:hover {
         opacity: 1;
-        transform: translateX(var(--space-4));
         border-left-width: 80px;
     }
     .event-row:hover .event-when { opacity: 0.85; }
