@@ -229,36 +229,6 @@
         });
     });
 
-    // Tal-op-tællere
-    var counters = document.querySelectorAll('[data-counter]');
-    if (counters.length && 'IntersectionObserver' in window) {
-        var counterObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (!entry.isIntersecting) { return; }
-                var el = entry.target;
-                var target = parseInt(el.getAttribute('data-counter'), 10) || 0;
-                var suffix = el.getAttribute('data-counter-suffix') || '';
-                var duration = 900;
-                var start = null;
-
-                function step(timestamp) {
-                    if (start === null) { start = timestamp; }
-                    var progress = Math.min((timestamp - start) / duration, 1);
-                    var eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.round(eased * target) + suffix;
-                    if (progress < 1) { window.requestAnimationFrame(step); }
-                }
-                window.requestAnimationFrame(step);
-                counterObserver.unobserve(el);
-            });
-        }, { threshold: 0.6 });
-        counters.forEach(function (el) { counterObserver.observe(el); });
-    } else {
-        counters.forEach(function (el) {
-            el.textContent = (el.getAttribute('data-counter') || '0') + (el.getAttribute('data-counter-suffix') || '');
-        });
-    }
-
     // Kontaktformular (demo — ingen backend endnu)
     var form = document.querySelector('[data-contact-form]');
     if (form) {
