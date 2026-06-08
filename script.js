@@ -144,50 +144,80 @@
         if (panel) { panel.classList.toggle('is-open', open); }
     }
 
-    // Når en begivenhed foldes ud, scroller vi siden så panelet havner
-    // pænt i vinduet: centreret hvis det kan være der, ellers med
-    // toppen af begivenheden øverst (lige under den klæbende header),
-    // så man kan læse den fra starten
-    function scrollOpenEventIntoView(row) {
-        var rect = row.getBoundingClientRect();
+    // Forudsiger hvor en begivenhed lander, når den foldes ud (og en
+    // evt. anden åben begivenhed ovenover folder sig sammen), og
+    // beregner hvilken scroll-position der placerer den pænt i vinduet:
+    // centreret hvis den kan være der, ellers med toppen lige under
+    // den klæbende header, så man kan læse den fra starten
+    function predictOpenScrollTarget(row) {
+        var rowRect = row.getBoundingClientRect();
+        var detailsInner = row.querySelector('.event-details-inner');
+        var predictedHeight = rowRect.height + (detailsInner ? detailsInner.offsetHeight : 0);
+
+        var shiftAbove = 0;
+        allEventRows.forEach(function (other) {
+            if (other === row) { return; }
+            var otherBtn = other.querySelector('[data-event-toggle]');
+            var isOpen = otherBtn && otherBtn.getAttribute('aria-expanded') === 'true';
+            if (!isOpen) { return; }
+            var otherRect = other.getBoundingClientRect();
+            if (otherRect.top < rowRect.top) {
+                var otherDetailsInner = other.querySelector('.event-details-inner');
+                shiftAbove -= (otherDetailsInner ? otherDetailsInner.offsetHeight : 0);
+            }
+        });
+
+        var predictedTop = rowRect.top + shiftAbove;
         var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
         var availableHeight = window.innerHeight - scrollPaddingTop;
-        var targetTop;
-        if (rect.height <= availableHeight) {
+        var delta;
+        if (predictedHeight <= availableHeight) {
             var areaCenter = scrollPaddingTop + availableHeight / 2;
-            targetTop = window.scrollY + (rect.top + rect.height / 2) - areaCenter;
+            delta = (predictedTop + predictedHeight / 2) - areaCenter;
         } else {
-            targetTop = window.scrollY + rect.top - scrollPaddingTop;
+            delta = predictedTop - scrollPaddingTop;
         }
-        window.scrollTo({ top: Math.max(0, targetTop), left: window.scrollX, behavior: 'smooth' });
+        return Math.max(0, window.scrollY + delta);
     }
 
     function toggleEventRow(row) {
         var btn = row.querySelector('[data-event-toggle]');
         var willOpen = !btn || btn.getAttribute('aria-expanded') !== 'true';
+        var scrollTarget = willOpen ? predictOpenScrollTarget(row) : null;
+
         allEventRows.forEach(function (other) {
             setEventRowOpen(other, other === row ? willOpen : false);
         });
 
-        // Lås den vandrette scrollposition mens fold-ud/sammenfold
-        // animerer — layoutskiftet kan ellers udløse en glidende
-        // vandret auto-scroll (scroll-anchoring + scroll-behavior:
-        // smooth), som rykker hele billedet og klipper indhold
+        // Lås den vandrette scrollposition og — når en begivenhed åbnes —
+        // animer samtidig hen til dens plads i vinduet, i ét samlet loop
+        // (to separate scrollTo-kald ville nemt afbryde hinanden).
+        // Den vandrette lås er nødvendig fordi layoutskiftet ellers kan
+        // udløse en glidende vandret auto-scroll (scroll-anchoring +
+        // scroll-behavior: smooth), som rykker hele billedet og klipper
+        // indhold
         var lockedX = window.scrollX;
-        var lockUntil = Date.now() + 450;
-        (function lockScrollX() {
-            if (window.scrollX !== lockedX) {
-                window.scrollTo({ left: lockedX, top: window.scrollY, behavior: 'instant' });
+        var startY = window.scrollY;
+        var startTime = Date.now();
+        var scrollDuration = 420; // matcher fold-ud-animationens varighed
+        var lockDuration = 450;
+        (function animate() {
+            var elapsed = Date.now() - startTime;
+            var targetY = startY;
+            if (scrollTarget !== null) {
+                var t = Math.min(elapsed / scrollDuration, 1);
+                var eased = 1 - Math.pow(1 - t, 3);
+                targetY = startY + (scrollTarget - startY) * eased;
             }
-            if (Date.now() < lockUntil) { window.requestAnimationFrame(lockScrollX); }
+            if (window.scrollX !== lockedX || Math.round(window.scrollY) !== Math.round(targetY)) {
+                window.scrollTo({ left: lockedX, top: targetY, behavior: 'instant' });
+            }
+            var stillScrolling = scrollTarget !== null && elapsed < scrollDuration;
+            var stillLocking = elapsed < lockDuration;
+            if (stillScrolling || stillLocking) { window.requestAnimationFrame(animate); }
         })();
-
-        // Vent til fold-ud-animationen og den vandrette lås er færdige,
-        // så vores egen (lodrette) scroll ikke kolliderer med dem
-        if (willOpen) {
-            window.setTimeout(function () { scrollOpenEventIntoView(row); }, 480);
-        }
     }
+
 
     allEventRows.forEach(function (row) {
         var btn = row.querySelector('[data-event-toggle]');
