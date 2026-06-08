@@ -181,17 +181,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .brand-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
     text-decoration: none;
     color: var(--color-ink);
+    transition: color 220ms var(--ease-standard);
 }
-.brand-mark { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; display: inline-block; transition: transform 420ms var(--ease-pop); }
-.brand-mark img { width: 100%; height: 100%; }
 @media (hover: hover) {
-    .brand-link:hover .brand-mark { transform: rotate(-14deg) scale(1.08); }
+    .brand-link:hover { color: var(--color-green); }
 }
 
 .nav-toggle {
