@@ -8,15 +8,15 @@
     --color-ink: #1f1e1b;
     --color-ink-soft: #4a4840;
 
-    /* Bold section backgrounds */
-    --color-green: #2f8f5b;
-    --color-orange: #ef5d3f;
-    --color-yellow: #ffc83d;
-    --color-blue: #2f8fc4;
-    --color-pink: #e8487a;
+    /* Bold section backgrounds — cool, analog palette (teal → cobalt → cyan → violet → plum) */
+    --color-green: #1f9d8a;
+    --color-orange: #3d6fe0;
+    --color-yellow: #7b5cf0;
+    --color-blue: #2bafd6;
+    --color-pink: #b23e8c;
 
     --color-on-bold: #faf8f2;
-    --color-on-yellow: #1f1e1b;
+    --color-on-yellow: #faf8f2;
 
     --font-head: "Space Grotesk", "Inter", system-ui, sans-serif;
     --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
