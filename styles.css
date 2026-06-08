@@ -304,6 +304,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     align-items: center;
     gap: var(--space-6);
     padding-block: var(--space-4);
+    margin-left: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
+    padding-left: calc(50vw - 50% - var(--vw-overhang, 0px) / 2);
     border-top: 1px solid rgba(31,30,27,0.16);
     border-left: 10px solid var(--event-accent, var(--color-orange));
     scroll-snap-align: center;
@@ -352,6 +354,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .tag-pink { color: var(--color-pink); }
 .tag-blue { color: var(--color-blue); }
 .event-tag-icon {
+    display: inline-block;
     width: 1.2em;
     height: 1.2em;
     margin-right: 0.35em;
