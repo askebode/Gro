@@ -372,32 +372,41 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-thumb svg { width: 38px; height: 38px; }
 
 /* Active state — triggered by hover/focus on desktop, and by
-   scroll position on touch devices (see script.js) */
+   scroll position on touch devices (see script.js). :hover er
+   afgrænset til enheder der reelt understøtter det — på touch-skærme
+   ville :hover ellers "hænge fast" på en begivenhed man trykker på
+   for at scrolle forbi (klassisk sticky-hover-problem) */
 .event-list.has-active .event-row:not(.is-active):not(.is-open) { opacity: 0.38; }
 .event-row.is-active,
-.event-row:hover,
 .event-row:focus-within {
     opacity: 1;
     transform: translateX(var(--space-4));
 }
 .event-row.is-active .event-when,
-.event-row:hover .event-when,
 .event-row:focus-within .event-when {
     opacity: 0.85;
 }
 .event-row.is-active h3,
-.event-row:hover h3,
 .event-row:focus-within h3 {
     color: var(--event-accent, var(--color-orange));
 }
 .event-row.is-active .event-thumb,
-.event-row:hover .event-thumb,
 .event-row:focus-within .event-thumb {
     opacity: 1;
     transform: translateY(-50%) scale(1) rotate(-6deg);
 }
 @media (hover: hover) {
     .event-list:hover .event-row:not(.is-open) { opacity: 0.38; }
+    .event-row:hover {
+        opacity: 1;
+        transform: translateX(var(--space-4));
+    }
+    .event-row:hover .event-when { opacity: 0.85; }
+    .event-row:hover h3 { color: var(--event-accent, var(--color-orange)); }
+    .event-row:hover .event-thumb {
+        opacity: 1;
+        transform: translateY(-50%) scale(1) rotate(-6deg);
+    }
 }
 
 /* "Læs mere" toggle — diskret tekst-knap (ikke en kraftig knap-boks),

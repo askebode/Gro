@@ -144,6 +144,24 @@
         if (panel) { panel.classList.toggle('is-open', open); }
     }
 
+    // Når en begivenhed foldes ud, scroller vi siden så panelet havner
+    // pænt i vinduet: centreret hvis det kan være der, ellers med
+    // toppen af begivenheden øverst (lige under den klæbende header),
+    // så man kan læse den fra starten
+    function scrollOpenEventIntoView(row) {
+        var rect = row.getBoundingClientRect();
+        var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+        var availableHeight = window.innerHeight - scrollPaddingTop;
+        var targetTop;
+        if (rect.height <= availableHeight) {
+            var areaCenter = scrollPaddingTop + availableHeight / 2;
+            targetTop = window.scrollY + (rect.top + rect.height / 2) - areaCenter;
+        } else {
+            targetTop = window.scrollY + rect.top - scrollPaddingTop;
+        }
+        window.scrollTo({ top: Math.max(0, targetTop), left: window.scrollX, behavior: 'smooth' });
+    }
+
     function toggleEventRow(row) {
         var btn = row.querySelector('[data-event-toggle]');
         var willOpen = !btn || btn.getAttribute('aria-expanded') !== 'true';
@@ -163,6 +181,12 @@
             }
             if (Date.now() < lockUntil) { window.requestAnimationFrame(lockScrollX); }
         })();
+
+        // Vent til fold-ud-animationen og den vandrette lås er færdige,
+        // så vores egen (lodrette) scroll ikke kolliderer med dem
+        if (willOpen) {
+            window.setTimeout(function () { scrollOpenEventIntoView(row); }, 480);
+        }
     }
 
     allEventRows.forEach(function (row) {
