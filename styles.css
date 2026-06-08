@@ -313,14 +313,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     align-items: center;
     gap: var(--space-6);
     padding-block: var(--space-4);
+    margin-left: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
+    padding-left: calc(50vw - 50% - var(--vw-overhang, 0px) / 2 + var(--space-4));
     border-top: 1px solid rgba(31,30,27,0.16);
-    border-left: 18px solid var(--event-accent, var(--color-orange));
-    padding-left: var(--space-4);
+    border-left: 10px solid var(--event-accent, var(--color-orange));
     scroll-snap-align: center;
     scroll-margin-block: 5.5rem;
     transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard),
         background-color 320ms var(--ease-standard), color 320ms var(--ease-standard),
         border-color 320ms var(--ease-standard), border-radius 320ms var(--ease-standard),
+        border-left-width 320ms var(--ease-pop),
         padding-inline 320ms var(--ease-standard), margin-inline 320ms var(--ease-standard);
 }
 .event-row:last-child { border-bottom: 1px solid rgba(31,30,27,0.16); }
@@ -379,6 +381,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row:focus-within {
     opacity: 1;
     transform: translateX(var(--space-4));
+    border-left-width: 80px;
 }
 .event-row.is-active .event-when,
 .event-row:focus-within .event-when {
@@ -393,6 +396,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     .event-row:hover {
         opacity: 1;
         transform: translateX(var(--space-4));
+        border-left-width: 80px;
     }
     .event-row:hover .event-when { opacity: 0.85; }
     .event-row:hover h3 { color: var(--event-accent, var(--color-orange)); }
