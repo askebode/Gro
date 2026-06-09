@@ -381,6 +381,7 @@
     var MAX = 8;
     var active = 0;
     var used = [];
+    var flowers = [];
 
     var layer = document.createElement('div');
     layer.className = 'weed-layer';
@@ -435,18 +436,34 @@
             '--op:'  + op.toFixed(3) + ';' +
             '--dur:' + dur.toFixed(1) + 's;';
 
+        el._baseScrollY = window.scrollY || window.pageYOffset;
+        el._scrollSpeed = rand(0.10, 0.28);
+
         el.addEventListener('animationend', function () {
+            flowers = flowers.filter(function (f) { return f !== el; });
             el.remove();
             active--;
             schedule();
         });
 
         layer.appendChild(el);
+        flowers.push(el);
         schedule();
     }
 
     function schedule() {
         setTimeout(spawn, rand(2200, 5000));
+    }
+
+    // Scroll-driven parallax drift — each flower rises at its own speed
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.addEventListener('scroll', function () {
+            var sy = window.scrollY || window.pageYOffset;
+            flowers.forEach(function (f) {
+                var drift = -(sy - f._baseScrollY) * f._scrollSpeed;
+                f.style.transform = 'translateY(' + drift.toFixed(1) + 'px)';
+            });
+        }, { passive: true });
     }
 
     // Staggered initial blooms — start immediately so flowers are present on load

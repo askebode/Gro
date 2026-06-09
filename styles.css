@@ -823,7 +823,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     object-fit: cover;
     mix-blend-mode: multiply;
     animation: weed-bloom var(--dur, 12s) ease-in-out forwards;
-    will-change: opacity;
+    will-change: opacity, transform;
 }
 @keyframes weed-bloom {
     0%   { opacity: 0; }
