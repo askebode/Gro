@@ -201,14 +201,28 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 
 .brand-link {
     display: inline-flex;
-    align-items: center;
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: -0.01em;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.05em;
     text-decoration: none;
     color: var(--color-ink);
     transition: color 220ms var(--ease-standard);
+}
+.brand-eyebrow {
+    font-family: var(--font-head);
+    font-weight: 500;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    line-height: 1;
+}
+.brand-name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
 }
 @media (hover: hover) {
     .brand-link:hover { color: var(--color-green); }
