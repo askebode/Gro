@@ -443,6 +443,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     z-index: 1;
     background: var(--color-cream);
     border-left-width: 60px;
+    padding-right: 0;
 }
 .event-row.is-active .event-when,
 .event-row:focus-within .event-when {
@@ -458,6 +459,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
         opacity: 1;
         background: var(--color-cream);
         border-left-width: 60px;
+        padding-right: 0;
         z-index: 1;
     }
     .event-row:hover .event-when { opacity: 0.85; }
