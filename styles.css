@@ -395,6 +395,19 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     cursor: pointer;
     transition: color 200ms var(--ease-standard);
 }
+.event-title-inner { display: inline; }
+.event-row h3.is-marquee { text-overflow: clip; }
+.event-row h3.is-marquee .event-title-inner {
+    display: inline-block;
+    animation: title-ticker var(--marquee-dur, 3s) ease-in-out forwards;
+}
+@keyframes title-ticker {
+    0%, 8%  { transform: translateX(0); }
+    82%, 100% { transform: translateX(calc(-1 * var(--marquee-overflow, 0px))); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .event-row h3.is-marquee .event-title-inner { animation: none; }
+}
 .event-tag {
     font-family: var(--font-head);
     font-weight: 700;

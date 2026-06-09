@@ -105,7 +105,13 @@
                     closest = row;
                 }
             });
-            touchEventRows.forEach(function (row) { row.classList.toggle('is-active', row === closest); });
+            touchEventRows.forEach(function (row) {
+                var wasActive = row.classList.contains('is-active');
+                var willBeActive = row === closest;
+                row.classList.toggle('is-active', willBeActive);
+                if (willBeActive && !wasActive && row._marqueeStart) row._marqueeStart();
+                if (!willBeActive && wasActive && row._marqueeStop) row._marqueeStop();
+            });
             eventList.classList.toggle('has-active', !!closest);
         }
 
@@ -240,6 +246,33 @@
         row.querySelectorAll('[data-event-open]').forEach(function (trigger) {
             trigger.addEventListener('click', function () { toggleEventRow(row); });
         });
+    });
+
+    // Event title ticker — wraps each h3 in a span so CSS can animate
+    // it like a marquee when the row is hovered or active on mobile
+    allEventRows.forEach(function (row) {
+        var h3 = row.querySelector('h3');
+        if (!h3) return;
+        var inner = document.createElement('span');
+        inner.className = 'event-title-inner';
+        while (h3.firstChild) { inner.appendChild(h3.firstChild); }
+        h3.appendChild(inner);
+
+        function start() {
+            if (h3.classList.contains('is-marquee')) return;
+            var overflow = h3.scrollWidth - h3.offsetWidth;
+            if (overflow < 6) return;
+            var dur = Math.max(1.5, overflow / 55); // ~55 px/s
+            h3.style.setProperty('--marquee-overflow', overflow + 'px');
+            h3.style.setProperty('--marquee-dur', dur.toFixed(2) + 's');
+            h3.classList.add('is-marquee');
+        }
+        function stop() { h3.classList.remove('is-marquee'); }
+
+        row.addEventListener('mouseenter', start);
+        row.addEventListener('mouseleave', stop);
+        row._marqueeStart = start;
+        row._marqueeStop = stop;
     });
 
     // Kontaktformular (demo — ingen backend endnu)
