@@ -672,6 +672,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     background: color-mix(in oklch, var(--event-accent, var(--color-orange)) 12%, var(--color-cream));
     color: var(--color-ink);
     border-color: transparent;
+    border-top: 10px solid var(--event-accent, var(--color-orange));
     border-left-width: 0;
     border-radius: 0;
     margin-inline: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
