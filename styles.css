@@ -376,26 +376,13 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     font-variation-settings: "opsz" 144, "wght" 600, "SOFT" 0;
 }
 
-/* Kinetic display type — the giant "Kalender" word "breathes" as it scrolls
-   through the viewport: airy + soft at the edges, bold + tight at centre.
-   Pure CSS scroll-driven animation; falls back to the static weight above. */
-@supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-        .event-list-label {
-            animation: kalender-breathe linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 60%;
-        }
-        @keyframes kalender-breathe {
-            from {
-                font-variation-settings: "opsz" 24, "wght" 320, "SOFT" 55;
-                letter-spacing: 0.02em;
-            }
-            to {
-                font-variation-settings: "opsz" 144, "wght" 640, "SOFT" 0;
-                letter-spacing: -0.035em;
-            }
-        }
+/* Kinetic display type — the giant "Kalender" starts bold + tight on page
+   load and softens to light + airy as the user scrolls past it.
+   JS drives the update on every scroll frame; the CSS transition smooths
+   between frames so the animation feels fluid on all browsers. */
+@media (prefers-reduced-motion: no-preference) {
+    .event-list-label {
+        transition: font-variation-settings 60ms linear, letter-spacing 60ms linear;
     }
 }
 .event-list { position: relative; }

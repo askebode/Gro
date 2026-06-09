@@ -319,28 +319,39 @@
     }, { once: true });
 })();
 
-// Kinetic Kalender headline — JS scroll fallback (works on all browsers,
-// including mobile Safari < 18 which lacks animation-timeline: view())
+// Kinetic Kalender headline — works on all browsers (JS drives the animation;
+// a short CSS transition smooths between scroll frames)
 (function () {
     var label = document.querySelector('.event-list-label');
     if (!label) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // If native scroll-driven animations are working, skip JS
-    if (CSS.supports('animation-timeline', 'view()')) return;
+    // exitScrollY = scroll position at which the label has fully exited the top
+    // of the viewport. At scrollY=0 (page top) → bold/tight (p=0).
+    // At exitScrollY → light/airy (p=1). Use offsetTop traversal so CSS
+    // transforms (page-reveal animation) don't skew the measurement.
+    var exitScrollY = 0;
+
+    function calibrate() {
+        var top = 0;
+        for (var el = label; el; el = el.offsetParent) { top += el.offsetTop; }
+        exitScrollY = Math.max(1, top + label.offsetHeight);
+    }
+
+    calibrate();
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(calibrate); }
+    window.addEventListener('resize', calibrate);
 
     function update() {
-        var rect = label.getBoundingClientRect();
-        var vh = window.innerHeight;
-        // 0 = element just entering viewport from bottom; 1 = element 40% into viewport
-        var raw = 1 - (rect.top / (vh * 0.55));
-        var p = Math.max(0, Math.min(1, raw));
+        var scrollY = window.scrollY || window.pageYOffset;
+        var p = Math.max(0, Math.min(1, scrollY / exitScrollY));
         label.style.fontVariationSettings =
-            '"opsz" ' + (24 + p * 120).toFixed(0) +
-            ', "wght" ' + (320 + p * 320).toFixed(0) +
-            ', "SOFT" ' + (55 - p * 55).toFixed(0);
-        label.style.letterSpacing = (0.02 - p * 0.055).toFixed(4) + 'em';
+            '"opsz" ' + (144 - p * 120).toFixed(0) +
+            ', "wght" ' + (640 - p * 340).toFixed(0) +
+            ', "SOFT" ' + (p * 100).toFixed(0);
+        label.style.letterSpacing = (-0.04 + p * 0.08).toFixed(4) + 'em';
     }
+
     window.addEventListener('scroll', update, { passive: true });
     update();
 })();
