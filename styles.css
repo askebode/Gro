@@ -4,22 +4,24 @@
    ===================================================== */
 
 :root {
-    --color-cream: #faf8f2;
-    --color-ink: #1f1e1b;
-    --color-ink-soft: #4a4840;
-    --header-fade: rgba(250,248,242,0.7);
-    --header-fade-0: rgba(250,248,242,0);
+    --color-cream: oklch(97.5% 0.012 88);
+    --color-ink: oklch(14% 0.007 80);
+    --color-ink-soft: oklch(33% 0.010 80);
+    --header-fade: oklch(97.5% 0.012 88 / 0.7);
+    --header-fade-0: oklch(97.5% 0.012 88 / 0);
 
-    /* Bold section backgrounds — dusty pastel, cool analog palette (mint → periwinkle → sky → lavender → rose) */
-    --color-green: #5fbfa8;
-    --color-orange: #7c92e6;
-    --color-yellow: #a78eee;
-    --color-blue: #6fc3dc;
-    --color-pink: #d687b8;
+    /* Cool analog palette — mint → sky → periwinkle → lavender → rose
+       oklch gives perceptually even lightness across hues;
+       use color-mix(in oklch, var(--color-X) N%, white/black) for free tints/shades */
+    --color-green: oklch(73% 0.085 182);
+    --color-orange: oklch(65% 0.12 263);
+    --color-yellow: oklch(68% 0.12 295);
+    --color-blue: oklch(76% 0.085 218);
+    --color-pink: oklch(71% 0.105 335);
 
-    --color-on-bold: #faf8f2;
-    --color-on-accent: #1f1e1b;
-    --color-on-yellow: #1f1e1b;
+    --color-on-bold: oklch(97.5% 0.012 88);
+    --color-on-accent: oklch(14% 0.007 80);
+    --color-on-yellow: oklch(14% 0.007 80);
 
     --font-head: "Space Grotesk", "Inter", system-ui, sans-serif;
     --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
@@ -56,12 +58,12 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-cream: #1c1b18;
-        --color-ink: #faf8f2;
-        --color-ink-soft: #c8c4b6;
-        --color-on-bold: #1c1b18;
-        --header-fade: rgba(28,27,24,0.7);
-        --header-fade-0: rgba(28,27,24,0);
+        --color-cream: oklch(13.5% 0.007 80);
+        --color-ink: oklch(97.5% 0.012 88);
+        --color-ink-soft: oklch(80% 0.012 82);
+        --color-on-bold: oklch(13.5% 0.007 80);
+        --header-fade: oklch(13.5% 0.007 80 / 0.7);
+        --header-fade-0: oklch(13.5% 0.007 80 / 0);
     }
 }
 
@@ -361,7 +363,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     }
     .site-nav[data-open="true"] { transform: translateY(0); opacity: 1; pointer-events: auto; }
     .site-nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: var(--space-3) clamp(1.5rem, 5vw, 3rem) var(--space-6); font-size: 1.05rem; }
-    .site-nav li { border-top: 1px solid rgba(31,30,27,0.12); }
+    .site-nav li { border-top: 1px solid color-mix(in oklch, var(--color-ink) 12%, transparent); }
     .site-nav li:first-child { border-top: none; }
     .site-nav a { display: block; padding: 1em 0.1em; border-bottom: none; }
 }
@@ -389,7 +391,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     padding-block: var(--space-6);
     padding-left: 0;
     border-top: 1px solid currentColor;
-    border-color: rgba(31,30,27,0.16);
+    border-color: color-mix(in oklch, var(--color-ink) 16%, transparent);
     transition: padding-left 260ms var(--ease-pop);
 }
 @media (hover: hover) {
@@ -398,7 +400,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 .item-row .item-label { display: inline-block; transition: opacity 200ms var(--ease-standard), transform 260ms var(--ease-pop); }
 .bg-green .item-row, .bg-orange .item-row, .bg-blue .item-row, .bg-pink .item-row, .bg-ink .item-row {
-    border-color: rgba(250,248,242,0.28);
+    border-color: oklch(97.5% 0.012 88 / 0.28);
 }
 .item-row:last-child { border-bottom: 1px solid; border-color: inherit; }
 .item-row .item-label { font-family: var(--font-head); font-weight: 700; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.7; }
@@ -608,7 +610,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     width: 100%;
     height: clamp(240px, 52vw, 400px);
     margin-bottom: var(--space-4);
-    background: rgba(0,0,0,0.08);
+    background: oklch(0% 0 0 / 0.08);
     color: var(--color-on-accent);
 }
 .event-details-image svg { width: clamp(64px, 14vw, 104px); height: clamp(64px, 14vw, 104px); }
@@ -753,8 +755,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .footer-grid h3 { font-size: var(--text-lg); margin-bottom: var(--space-3); }
 .footer-grid p { opacity: 0.7; }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; opacity: 0.85; }
-.footer-bottom { margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid rgba(250,248,242,0.18); font-size: var(--text-sm); opacity: 0.55; }
-.footer-eu { display: flex; align-items: center; gap: var(--space-4); margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid rgba(250,248,242,0.18); font-size: var(--text-sm); opacity: 0.75; }
+.footer-bottom { margin-top: var(--space-12); padding-top: var(--space-6); border-top: 1px solid color-mix(in oklch, var(--color-cream) 18%, transparent); font-size: var(--text-sm); opacity: 0.55; }
+.footer-eu { display: flex; align-items: center; gap: var(--space-4); margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid color-mix(in oklch, var(--color-cream) 18%, transparent); font-size: var(--text-sm); opacity: 0.75; }
 .footer-eu p { margin: 0; max-width: none; }
 .eu-flag { width: 54px; height: 36px; flex-shrink: 0; border-radius: 2px; }
 @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr; gap: var(--space-6); } }
