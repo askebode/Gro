@@ -468,7 +468,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     display: grid;
     place-items: center;
     width: 100%;
-    height: clamp(120px, 26vw, 200px);
+    height: clamp(240px, 52vw, 400px);
     margin-bottom: var(--space-4);
     background: rgba(0,0,0,0.08);
     color: var(--color-on-accent);
@@ -492,9 +492,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     inset: 0;
     background: var(--event-accent, var(--color-pink));
     mix-blend-mode: multiply;
-    opacity: 0.45;
+    opacity: 0.65;
     pointer-events: none;
 }
+.event-details--with-photo .event-details-image--photo { margin-bottom: 0; }
+.event-details-cta {
+    margin: -2rem 0 var(--space-4);
+    position: relative;
+    z-index: 1;
+}
+.btn-square { border-radius: 0; }
 .event-details-meta {
     font-weight: 700;
     opacity: 0.75;
