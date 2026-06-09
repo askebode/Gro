@@ -383,7 +383,7 @@
     var used = [];
     var flowers = [];
 
-    var MAX_BURST = 6;
+    var MAX_BURST = 42;  // ambient 8 + burst 42 = 50 total max
     var burstActive = 0;
     var burstFlowers = [];  // live burst flowers (for spawn cap)
     var burstEls = [];      // all burst flowers in DOM incl. fading (for parallax)
@@ -466,16 +466,11 @@
 
         var vw = window.innerWidth;
         var vh = window.innerHeight;
-        var w = rand(45, 75);
-        var h = w * rand(0.62, 0.88);
-        var x;
-        if (vw > 900) {
-            x = Math.random() < 0.5 ? rand(0, vw * 0.2) : rand(vw * 0.8, vw - w);
-        } else {
-            x = rand(0, vw - w);
-        }
+        var w = rand(35, 90);
+        var h = w * rand(0.62, 0.92);
+        var x = rand(0, vw - w);
         x = Math.max(0, Math.min(vw - w, x));
-        var y = rand(vh * 0.05, vh * 0.88);
+        var y = rand(0, vh - h);
         var op = rand(0.16, 0.28);
 
         var el = document.createElement('img');
@@ -534,7 +529,7 @@
             });
 
             // Spawn one burst flower per throttle window
-            if (now - lastBurstSpawn > 300) {
+            if (now - lastBurstSpawn > 80) {
                 lastBurstSpawn = now;
                 spawnBurst();
             }
