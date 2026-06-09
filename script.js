@@ -265,7 +265,7 @@
         'assets/img/flowers/1000009413.jpg',
     ];
 
-    var MAX = 4;
+    var MAX = 8;
     var active = 0;
     var used = [];
 
@@ -292,7 +292,7 @@
 
         var vw = window.innerWidth;
         var vh = window.innerHeight;
-        var w  = rand(100, 160);
+        var w  = rand(50, 80);
         var h  = w * rand(0.62, 0.88);
 
         // Restrict to left/right edges on wider screens
@@ -337,7 +337,7 @@
     }
 
     // Staggered initial blooms
-    [1200, 3800, 7000, 11000].forEach(function (t) {
+    [800, 2000, 3500, 5500, 7500, 9500, 12000, 15000].forEach(function (t) {
         setTimeout(spawn, t);
     });
 })();
