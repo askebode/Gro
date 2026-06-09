@@ -183,7 +183,20 @@
     function toggleEventRow(row) {
         var btn = row.querySelector('[data-event-toggle]');
         var willOpen = !btn || btn.getAttribute('aria-expanded') !== 'true';
-        var scrollTarget = willOpen ? predictOpenScrollTarget(row) : null;
+        var scrollTarget;
+        if (willOpen) {
+            scrollTarget = predictOpenScrollTarget(row);
+        } else {
+            // Closing: center the compact row (without the open panel)
+            var rowRect = row.getBoundingClientRect();
+            var wrap = row.querySelector('.event-details-wrap');
+            var panelHeight = wrap ? wrap.getBoundingClientRect().height : 0;
+            var compactHeight = rowRect.height - panelHeight;
+            var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+            var snapportCenter = scrollPaddingTop + (window.innerHeight - scrollPaddingTop) / 2;
+            var delta = (rowRect.top + compactHeight / 2) - snapportCenter;
+            scrollTarget = Math.max(0, window.scrollY + delta);
+        }
 
         allEventRows.forEach(function (other) {
             setEventRowOpen(other, other === row ? willOpen : false);
