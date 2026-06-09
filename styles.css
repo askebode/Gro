@@ -210,8 +210,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 
 /* =====================================================
    Blob section dividers — organic wave transitions
-   Inline SVG, fill="currentColor" so dark mode works:
-     style="background:var(--color-A); color:var(--color-B);"
+   Three cases, all with no background on the div:
+   • color→cream: inverted path (L1440,0 L0,0 Z) fills top; bottom transparent
+   • cream→color: normal path (L1440,70 L0,70 Z) fills bottom; top transparent
+   • color→color: two paths in SVG fill="none", one inverted + one normal
+   ::after grain sits above SVG so it's visible on colored fill areas.
+   Transparent areas let the fixed wildflower layer (z-index:0) show through.
    ===================================================== */
 
 .blob-divide {
@@ -221,11 +225,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     line-height: 0;
     overflow: hidden;
 }
-.blob-divide::before {
+.blob-divide::after {
     content: "";
     position: absolute;
     inset: 0;
-    z-index: -1;
     pointer-events: none;
     background-image: url("assets/grain.jpg");
     background-size: 500px 500px;
