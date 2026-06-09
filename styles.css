@@ -95,6 +95,10 @@ h1 { font-size: var(--heading-1); }
 h2 { font-size: var(--heading-2); }
 h3 { font-size: var(--heading-3); }
 
+.page-content h1,
+.page-content h2,
+.page-content h3 { font-family: var(--font-serif); }
+
 p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .lead { font-size: var(--text-lg); opacity: 0.82; max-width: 50ch; }
 
