@@ -831,6 +831,20 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     82%  { opacity: var(--op, 0.16); }
     100% { opacity: 0; }
 }
+.weed-flower--burst {
+    animation: weed-burst-in 0.5s ease-out forwards;
+}
+.weed-flower--burst.is-fading {
+    animation: weed-burst-out 2s ease-in forwards;
+}
+@keyframes weed-burst-in {
+    from { opacity: 0; }
+    to   { opacity: var(--op, 0.22); }
+}
+@keyframes weed-burst-out {
+    from { opacity: var(--op, 0.22); }
+    to   { opacity: 0; }
+}
 @media (prefers-color-scheme: dark) {
     .weed-flower { mix-blend-mode: screen; opacity: 0.08; }
 }

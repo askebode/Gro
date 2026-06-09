@@ -383,6 +383,11 @@
     var used = [];
     var flowers = [];
 
+    var MAX_BURST = 6;
+    var burstActive = 0;
+    var burstFlowers = [];  // live burst flowers (for spawn cap)
+    var burstEls = [];      // all burst flowers in DOM incl. fading (for parallax)
+
     var layer = document.createElement('div');
     layer.className = 'weed-layer';
     layer.setAttribute('aria-hidden', 'true');
@@ -455,14 +460,88 @@
         setTimeout(spawn, rand(2200, 5000));
     }
 
-    // Scroll-driven parallax drift — each flower rises at its own speed
+    function spawnBurst() {
+        if (burstActive >= MAX_BURST) return;
+        burstActive++;
+
+        var vw = window.innerWidth;
+        var vh = window.innerHeight;
+        var w = rand(45, 75);
+        var h = w * rand(0.62, 0.88);
+        var x;
+        if (vw > 900) {
+            x = Math.random() < 0.5 ? rand(0, vw * 0.2) : rand(vw * 0.8, vw - w);
+        } else {
+            x = rand(0, vw - w);
+        }
+        x = Math.max(0, Math.min(vw - w, x));
+        var y = rand(vh * 0.05, vh * 0.88);
+        var op = rand(0.16, 0.28);
+
+        var el = document.createElement('img');
+        el.src = pickImage();
+        el.className = 'weed-flower weed-flower--burst';
+        el.alt = '';
+        el.style.cssText =
+            'left:' + x.toFixed(1) + 'px;' +
+            'top:' + y.toFixed(1) + 'px;' +
+            'width:' + w.toFixed(1) + 'px;' +
+            'height:' + h.toFixed(1) + 'px;' +
+            '--op:' + op.toFixed(3) + ';';
+
+        el._baseScrollY = window.scrollY || window.pageYOffset;
+        el._scrollSpeed = rand(0.10, 0.28);
+
+        layer.appendChild(el);
+        burstFlowers.push(el);
+        burstEls.push(el);
+    }
+
+    function fadeOutBursts() {
+        var toFade = burstFlowers.slice();
+        burstFlowers = [];
+        toFade.forEach(function (el) {
+            if (el.classList.contains('is-fading')) return;
+            el.classList.add('is-fading');
+            burstActive--;
+            var rem = el;
+            setTimeout(function () {
+                rem.remove();
+                burstEls = burstEls.filter(function (f) { return f !== rem; });
+            }, 2200);
+        });
+    }
+
+    // Scroll-driven parallax drift + burst spawning
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var scrollBurstTimer = null;
+        var lastBurstSpawn = 0;
+
         window.addEventListener('scroll', function () {
             var sy = window.scrollY || window.pageYOffset;
+            var now = Date.now();
+
+            // Parallax — ambient flowers
             flowers.forEach(function (f) {
                 var drift = -(sy - f._baseScrollY) * f._scrollSpeed;
                 f.style.transform = 'translateY(' + drift.toFixed(1) + 'px)';
             });
+
+            // Parallax — burst flowers (live + fading)
+            burstEls.forEach(function (f) {
+                var drift = -(sy - f._baseScrollY) * f._scrollSpeed;
+                f.style.transform = 'translateY(' + drift.toFixed(1) + 'px)';
+            });
+
+            // Spawn one burst flower per throttle window
+            if (now - lastBurstSpawn > 300) {
+                lastBurstSpawn = now;
+                spawnBurst();
+            }
+
+            // Fade out bursts 500ms after scroll stops
+            clearTimeout(scrollBurstTimer);
+            scrollBurstTimer = setTimeout(fadeOutBursts, 500);
         }, { passive: true });
     }
 
