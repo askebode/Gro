@@ -165,6 +165,48 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .bg-pink h1, .bg-pink h2, .bg-pink h3,
 .bg-ink h1, .bg-ink h2, .bg-ink h3 { color: inherit; }
 
+/* =====================================================
+   Inner pages — tinted section backgrounds + accent header
+   Each inner page sets --page-accent on <body> and gets
+   class="inner-page"; all bold sections become 12% tints.
+   ===================================================== */
+
+.inner-page .bg-green  { background: color-mix(in oklch, var(--color-green)  12%, var(--color-cream)); color: var(--color-ink); }
+.inner-page .bg-orange { background: color-mix(in oklch, var(--color-orange) 12%, var(--color-cream)); color: var(--color-ink); }
+.inner-page .bg-yellow { background: color-mix(in oklch, var(--color-yellow) 12%, var(--color-cream)); color: var(--color-ink); }
+.inner-page .bg-blue   { background: color-mix(in oklch, var(--color-blue)   12%, var(--color-cream)); color: var(--color-ink); }
+.inner-page .bg-pink   { background: color-mix(in oklch, var(--color-pink)   12%, var(--color-cream)); color: var(--color-ink); }
+
+/* Grain is barely perceptible on the light tints — dial it back */
+.inner-page .bg-green::after, .inner-page .bg-orange::after, .inner-page .bg-yellow::after,
+.inner-page .bg-blue::after,  .inner-page .bg-pink::after { opacity: 0.18; }
+
+/* Item-row dividers: cream borders → ink on light backgrounds */
+.inner-page .bg-green .item-row,  .inner-page .bg-orange .item-row,
+.inner-page .bg-yellow .item-row, .inner-page .bg-blue .item-row,
+.inner-page .bg-pink .item-row { border-color: color-mix(in oklch, var(--color-ink) 16%, transparent); }
+
+/* Buttons: flip to ink-on-cream (cream button on cream-tinted bg ≈ invisible) */
+.inner-page .bg-green .btn-on-bold,  .inner-page .bg-orange .btn-on-bold,
+.inner-page .bg-yellow .btn-on-bold, .inner-page .bg-blue .btn-on-bold,
+.inner-page .bg-pink .btn-on-bold {
+    background: var(--color-ink); color: var(--color-cream); border-color: var(--color-ink);
+}
+
+/* Blob-divide SVG fills: tint the wave to match the section */
+.inner-page .blob-divide path {
+    fill: color-mix(in oklch, currentColor 12%, var(--color-cream));
+}
+.inner-page .blob-divide image { opacity: 0.18; }
+
+/* Header: solid accent colour from --page-accent; fader below matches */
+.inner-page .site-header {
+    background: var(--page-accent, var(--color-cream));
+}
+.inner-page .site-header::after {
+    background: linear-gradient(to bottom, var(--page-accent, var(--color-cream)), transparent);
+}
+
 .eyebrow {
     display: inline-block;
     font-family: var(--font-head);
