@@ -248,8 +248,7 @@
         });
     });
 
-    // Event title ticker — wraps each h3 in a span so CSS can animate
-    // it like a marquee when the row is hovered or active on mobile
+    // Event title ticker — seamless infinite one-way scroll on hover
     allEventRows.forEach(function (row) {
         var h3 = row.querySelector('h3');
         if (!h3) return;
@@ -257,17 +256,39 @@
         inner.className = 'event-title-inner';
         while (h3.firstChild) { inner.appendChild(h3.firstChild); }
         h3.appendChild(inner);
+        var originalText = inner.textContent;
+        var isRunning = false;
 
         function start() {
-            if (h3.classList.contains('is-marquee')) return;
+            if (isRunning) return;
+            var originalWidth = inner.offsetWidth;
             var overflow = h3.scrollWidth - h3.offsetWidth;
             if (overflow < 6) return;
-            var dur = Math.max(1.5, overflow / 55); // ~55 px/s
-            h3.style.setProperty('--marquee-overflow', overflow + 'px');
-            h3.style.setProperty('--marquee-dur', dur.toFixed(2) + 's');
+            isRunning = true;
+            var gap = 80;
+            var spacer = document.createElement('span');
+            spacer.className = 'event-title-spacer';
+            spacer.setAttribute('aria-hidden', 'true');
+            spacer.style.cssText = 'display:inline-block;width:' + gap + 'px';
+            var clone = document.createElement('span');
+            clone.className = 'event-title-clone';
+            clone.setAttribute('aria-hidden', 'true');
+            clone.textContent = originalText;
+            inner.appendChild(spacer);
+            inner.appendChild(clone);
+            var scrollDist = originalWidth + gap;
+            var dur = (scrollDist / 80).toFixed(2);
+            h3.style.setProperty('--marquee-scroll', scrollDist + 'px');
+            h3.style.setProperty('--marquee-dur', dur + 's');
             h3.classList.add('is-marquee');
         }
-        function stop() { h3.classList.remove('is-marquee'); }
+        function stop() {
+            if (!isRunning) return;
+            isRunning = false;
+            h3.classList.remove('is-marquee');
+            inner.querySelectorAll('.event-title-spacer, .event-title-clone')
+                .forEach(function (el) { el.remove(); });
+        }
 
         row.addEventListener('mouseenter', start);
         row.addEventListener('mouseleave', stop);
