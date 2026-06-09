@@ -213,6 +213,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     height: 52px;
     width: auto;
 }
+@media (prefers-color-scheme: dark) {
+    .brand-logo { filter: invert(1); }
+}
 @media (hover: hover) {
     .brand-link:hover { opacity: 0.82; }
 }
