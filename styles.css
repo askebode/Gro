@@ -208,6 +208,23 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 
 /* =====================================================
+   Blob section dividers — organic wave transitions
+   Inline SVG, fill="currentColor" so dark mode works:
+     style="background:var(--color-A); color:var(--color-B);"
+   ===================================================== */
+
+.blob-divide {
+    display: block;
+    line-height: 0;
+    overflow: hidden;
+}
+.blob-divide svg {
+    display: block;
+    width: 100%;
+    height: clamp(40px, 5.5vw, 68px);
+}
+
+/* =====================================================
    Buttons — flat, bold, generous tap targets
    ===================================================== */
 
