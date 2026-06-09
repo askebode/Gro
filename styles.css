@@ -369,8 +369,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 .event-row h3 {
     margin: 0;
-    font-family: var(--font-serif);
-    font-weight: 300;
+    font-weight: 400;
     font-size: clamp(1.35rem, 3.5vw, 1.85rem);
     overflow: hidden;
     text-overflow: ellipsis;
