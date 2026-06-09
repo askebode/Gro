@@ -319,43 +319,6 @@
     }, { once: true });
 })();
 
-// Kinetic Kalender headline — works on all browsers (JS drives the animation;
-// a short CSS transition smooths between scroll frames)
-(function () {
-    var label = document.querySelector('.event-list-label');
-    if (!label) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    // exitScrollY = scroll position at which the label has fully exited the top
-    // of the viewport. At scrollY=0 (page top) → bold/tight (p=0).
-    // At exitScrollY → light/airy (p=1). Use offsetTop traversal so CSS
-    // transforms (page-reveal animation) don't skew the measurement.
-    var exitScrollY = 0;
-
-    function calibrate() {
-        var top = 0;
-        for (var el = label; el; el = el.offsetParent) { top += el.offsetTop; }
-        exitScrollY = Math.max(1, top + label.offsetHeight);
-    }
-
-    calibrate();
-    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(calibrate); }
-    window.addEventListener('resize', calibrate);
-
-    function update() {
-        var scrollY = window.scrollY || window.pageYOffset;
-        var p = Math.max(0, Math.min(1, scrollY / exitScrollY));
-        label.style.fontVariationSettings =
-            '"opsz" ' + (144 - p * 120).toFixed(0) +
-            ', "wght" ' + (640 - p * 340).toFixed(0) +
-            ', "SOFT" ' + (p * 100).toFixed(0);
-        label.style.letterSpacing = (-0.04 + p * 0.08).toFixed(4) + 'em';
-    }
-
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-})();
-
 // Wildflower background — blomster der popper op som ukrudt
 (function () {
     var IMGS = [

@@ -215,9 +215,21 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
    ===================================================== */
 
 .blob-divide {
+    position: relative;
+    z-index: 1;
     display: block;
     line-height: 0;
     overflow: hidden;
+}
+.blob-divide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("assets/grain.jpg");
+    background-size: 500px 500px;
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
 }
 .blob-divide svg {
     display: block;
@@ -432,15 +444,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     font-variation-settings: "opsz" 144, "wght" 600, "SOFT" 0;
 }
 
-/* Kinetic display type — the giant "Kalender" starts bold + tight on page
-   load and softens to light + airy as the user scrolls past it.
-   JS drives the update on every scroll frame; the CSS transition smooths
-   between frames so the animation feels fluid on all browsers. */
-@media (prefers-reduced-motion: no-preference) {
-    .event-list-label {
-        transition: font-variation-settings 60ms linear, letter-spacing 60ms linear;
-    }
-}
 .event-list { position: relative; }
 .event-row {
     position: relative;
