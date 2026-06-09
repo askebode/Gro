@@ -242,3 +242,104 @@
         });
     }
 })();
+
+// Wildflower background — blomster der popper op som ukrudt
+(function () {
+    var IMGS = [
+        'assets/img/flowers/1000009397.jpg',
+        'assets/img/flowers/1000009398.jpg',
+        'assets/img/flowers/1000009399.jpg',
+        'assets/img/flowers/1000009400.jpg',
+        'assets/img/flowers/1000009401.jpg',
+        'assets/img/flowers/1000009402.jpg',
+        'assets/img/flowers/1000009403.jpg',
+        'assets/img/flowers/1000009404.jpg',
+        'assets/img/flowers/1000009405.jpg',
+        'assets/img/flowers/1000009406.jpg',
+        'assets/img/flowers/1000009407.jpg',
+        'assets/img/flowers/1000009408.jpg',
+        'assets/img/flowers/1000009409.jpg',
+        'assets/img/flowers/1000009410.jpg',
+        'assets/img/flowers/1000009411.jpg',
+        'assets/img/flowers/1000009412.jpg',
+        'assets/img/flowers/1000009413.jpg',
+    ];
+
+    var MAX = 4;
+    var active = 0;
+    var used = [];
+
+    var layer = document.createElement('div');
+    layer.className = 'weed-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(layer);
+
+    function pickImage() {
+        // Avoid repeating the last 4 images
+        var pool = IMGS.filter(function (s) { return used.indexOf(s) === -1; });
+        if (!pool.length) { pool = IMGS.slice(); used = []; }
+        var src = pool[Math.floor(Math.random() * pool.length)];
+        used.push(src);
+        if (used.length > 4) { used.shift(); }
+        return src;
+    }
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function spawn() {
+        if (active >= MAX) { return schedule(); }
+        active++;
+
+        var vw = window.innerWidth;
+        var vh = window.innerHeight;
+        var w  = rand(220, 400);
+        var h  = w * rand(0.62, 0.88);
+
+        // Bias x position toward left/right thirds on wider screens
+        var x;
+        if (vw > 900) {
+            x = Math.random() < 0.5
+                ? rand(0, vw * 0.28)
+                : rand(vw * 0.72, vw - w);
+        } else {
+            x = rand(0, vw - w);
+        }
+        x = Math.max(0, Math.min(vw - w, x));
+
+        var y   = rand(vh * 0.1, vh * 0.78);
+        var rot = rand(-18, 18);
+        var dur = rand(11, 20);
+        var op  = rand(0.13, 0.23);
+
+        var el = document.createElement('img');
+        el.src = pickImage();
+        el.className = 'weed-flower';
+        el.alt = '';
+        el.style.cssText =
+            'left:' + x.toFixed(1) + 'px;' +
+            'top:'  + y.toFixed(1) + 'px;' +
+            'width:'  + w.toFixed(1) + 'px;' +
+            'height:' + h.toFixed(1) + 'px;' +
+            '--r:'   + rot.toFixed(1) + 'deg;' +
+            '--op:'  + op.toFixed(3) + ';' +
+            '--dur:' + dur.toFixed(1) + 's;';
+
+        el.addEventListener('animationend', function () {
+            el.remove();
+            active--;
+            schedule();
+        });
+
+        layer.appendChild(el);
+        schedule();
+    }
+
+    function schedule() {
+        setTimeout(spawn, rand(2200, 5000));
+    }
+
+    // Staggered initial blooms
+    [1200, 3800, 7000, 11000].forEach(function (t) {
+        setTimeout(spawn, t);
+    });
+})();
