@@ -91,6 +91,7 @@ h1, h2, h3, h4 {
     line-height: 1.08;
     letter-spacing: -0.015em;
     margin: 0 0 var(--space-4);
+    text-wrap: balance;
 }
 h1 { font-size: var(--heading-1); }
 h2 { font-size: var(--heading-2); }
@@ -99,7 +100,7 @@ h3 { font-size: var(--heading-3); }
 .page-content h1,
 .page-content h2 { font-family: var(--font-serif); }
 
-p { margin: 0 0 var(--space-4); max-width: 56ch; }
+p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .lead { font-size: var(--text-lg); opacity: 0.82; max-width: 50ch; }
 
 .container { width: min(1100px, 100% - 3rem); margin-inline: auto; }
@@ -168,6 +169,43 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 
 .kicker { max-width: 46ch; }
 .kicker h1, .kicker h2 { margin-bottom: var(--space-6); }
+
+/* =====================================================
+   Hand-drawn human accents
+   Connects the organic logo aesthetic to body content.
+   ===================================================== */
+
+/* Wavy ink underline — <span class="sketch-underline">word</span> */
+.sketch-underline {
+    padding-bottom: 0.18em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2,7 C20,3 42,11 68,6 C90,2 118,10 145,5 C165,1 185,8 198,6' stroke='%231f1e1b' stroke-width='2.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 0.25em;
+}
+@media (prefers-color-scheme: dark) {
+    .sketch-underline {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2,7 C20,3 42,11 68,6 C90,2 118,10 145,5 C165,1 185,8 198,6' stroke='%23faf8f2' stroke-width='2.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    }
+}
+
+/* Ink-circle highlight — organic rotated oval around a short phrase */
+.ink-circle {
+    position: relative;
+    display: inline-block;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+.ink-circle::before {
+    content: "";
+    position: absolute;
+    inset: -0.2em -0.38em;
+    border: 2.5px solid currentColor;
+    border-radius: 40% 60% 55% 45% / 45% 55% 45% 55%;
+    transform: rotate(-2deg);
+    opacity: 0.6;
+    pointer-events: none;
+}
 
 /* =====================================================
    Buttons — flat, bold, generous tap targets
