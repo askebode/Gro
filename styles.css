@@ -101,6 +101,12 @@ h3 { font-size: var(--heading-3); }
 
 .page-content h1,
 .page-content h2 { font-family: var(--font-serif); }
+.page-content h1 {
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144, "wght" 600, "SOFT" 0;
+}
 
 p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .lead { font-size: var(--text-lg); opacity: 0.82; max-width: 50ch; }
