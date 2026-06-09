@@ -397,6 +397,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .event-row.is-active,
 .event-row:focus-within {
     opacity: 1;
+    z-index: 1;
     border-left-width: 60px;
 }
 .event-row.is-active .event-when,
@@ -412,6 +413,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     .event-row:hover {
         opacity: 1;
         border-left-width: 60px;
+        z-index: 1;
     }
     .event-row:hover .event-when { opacity: 0.85; }
     .event-row:hover h3 { color: var(--event-accent, var(--color-orange)); }
@@ -517,6 +519,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 .event-row.is-open {
     opacity: 1;
+    z-index: 1;
     background: var(--event-accent, var(--color-orange));
     color: var(--color-on-accent);
     border-color: transparent;
