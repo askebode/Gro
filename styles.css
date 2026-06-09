@@ -474,8 +474,27 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     color: var(--color-on-accent);
 }
 .event-details-image svg { width: clamp(64px, 14vw, 104px); height: clamp(64px, 14vw, 104px); }
-.event-details-image--photo { background: none; padding: 0; }
-.event-details-image--photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.event-details-image--photo {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    background: none;
+}
+.event-details-image--photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.event-details-image--photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--event-accent, var(--color-pink));
+    mix-blend-mode: multiply;
+    opacity: 0.45;
+    pointer-events: none;
+}
 .event-details-meta {
     font-weight: 700;
     opacity: 0.75;
