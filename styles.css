@@ -128,8 +128,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 
 /* Film-grain texture — warms up the flat colour blocks (anti-flat, riso feel).
-   A desaturated fractal-noise SVG tiled under the content, blended with the
-   section's own colour so it reads as paper/print grain rather than an overlay. */
+   Real photographic grain, centre-cropped and desaturated at the source,
+   tiled at 500 CSS px (the file is 500×500 @2x for retina sharpness). */
 .bg-green::after, .bg-orange::after, .bg-yellow::after,
 .bg-blue::after, .bg-pink::after, .bg-ink::after {
     content: "";
@@ -137,7 +137,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='grainf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainf)'/%3E%3C/svg%3E");
+    background-image: url("assets/grain.jpg");
+    background-size: 500px 500px;
     opacity: 0.55;
     mix-blend-mode: soft-light;
 }
@@ -674,7 +675,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='grainf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainf)'/%3E%3C/svg%3E");
+    background-image: url("assets/grain.jpg");
+    background-size: 500px 500px;
     opacity: 0.55;
     mix-blend-mode: soft-light;
 }
