@@ -310,6 +310,19 @@
     }
 })();
 
+// Gentle scroll-up on frontpage load
+(function () {
+    if (!document.querySelector('[data-calendar]')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var offset = Math.round(window.innerHeight * 0.18);
+    window.scrollTo(0, offset);
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+})();
+
 // Wildflower background — blomster der popper op som ukrudt
 (function () {
     var IMGS = [
