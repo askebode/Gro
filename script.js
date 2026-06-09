@@ -292,24 +292,23 @@
 
         var vw = window.innerWidth;
         var vh = window.innerHeight;
-        var w  = rand(220, 400);
+        var w  = rand(100, 160);
         var h  = w * rand(0.62, 0.88);
 
-        // Bias x position toward left/right thirds on wider screens
+        // Restrict to left/right edges on wider screens
         var x;
         if (vw > 900) {
             x = Math.random() < 0.5
-                ? rand(0, vw * 0.28)
-                : rand(vw * 0.72, vw - w);
+                ? rand(0, vw * 0.18)
+                : rand(vw * 0.82, vw - w);
         } else {
             x = rand(0, vw - w);
         }
         x = Math.max(0, Math.min(vw - w, x));
 
         var y   = rand(vh * 0.1, vh * 0.78);
-        var rot = rand(-18, 18);
         var dur = rand(11, 20);
-        var op  = rand(0.13, 0.23);
+        var op  = rand(0.18, 0.30);
 
         var el = document.createElement('img');
         el.src = pickImage();
@@ -320,7 +319,6 @@
             'top:'  + y.toFixed(1) + 'px;' +
             'width:'  + w.toFixed(1) + 'px;' +
             'height:' + h.toFixed(1) + 'px;' +
-            '--r:'   + rot.toFixed(1) + 'deg;' +
             '--op:'  + op.toFixed(3) + ';' +
             '--dur:' + dur.toFixed(1) + 's;';
 
