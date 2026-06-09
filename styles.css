@@ -624,6 +624,17 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     border-radius: 0;
     margin-inline: calc(50% - 50vw + var(--vw-overhang, 0px) / 2);
     padding-inline: clamp(var(--space-4), 6vw, var(--space-12));
+    isolation: isolate;
+}
+.event-row.is-open::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='grainf'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainf)'/%3E%3C/svg%3E");
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
 }
 .event-row.is-open + .event-row { border-top-color: transparent; }
 .event-row.is-open .event-tag,

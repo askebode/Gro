@@ -319,6 +319,32 @@
     }, { once: true });
 })();
 
+// Kinetic Kalender headline — JS scroll fallback (works on all browsers,
+// including mobile Safari < 18 which lacks animation-timeline: view())
+(function () {
+    var label = document.querySelector('.event-list-label');
+    if (!label) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // If native scroll-driven animations are working, skip JS
+    if (CSS.supports('animation-timeline', 'view()')) return;
+
+    function update() {
+        var rect = label.getBoundingClientRect();
+        var vh = window.innerHeight;
+        // 0 = element just entering viewport from bottom; 1 = element 40% into viewport
+        var raw = 1 - (rect.top / (vh * 0.55));
+        var p = Math.max(0, Math.min(1, raw));
+        label.style.fontVariationSettings =
+            '"opsz" ' + (24 + p * 120).toFixed(0) +
+            ', "wght" ' + (320 + p * 320).toFixed(0) +
+            ', "SOFT" ' + (55 - p * 55).toFixed(0);
+        label.style.letterSpacing = (0.02 - p * 0.055).toFixed(4) + 'em';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
+
 // Wildflower background — blomster der popper op som ukrudt
 (function () {
     var IMGS = [
