@@ -631,7 +631,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 1;
     pointer-events: none;
     background-image: url("assets/grain.jpg");
     background-size: 500px 500px;
@@ -642,7 +641,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     content: "";
     position: absolute;
     inset: 0;
-    z-index: 2;
     background: var(--event-accent, var(--color-pink));
     mix-blend-mode: multiply;
     opacity: 0.65;
