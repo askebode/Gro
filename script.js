@@ -310,12 +310,10 @@
     }
 })();
 
-// Gentle scroll-up reveal on frontpage load via CSS transform on #main
+// Frontpage load reveal — class is set in HTML; just clean up after animation
 (function () {
     var main = document.getElementById('main');
-    if (!main || !document.querySelector('[data-calendar]')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    main.classList.add('page-reveal');
+    if (!main || !main.classList.contains('page-reveal')) return;
     main.addEventListener('animationend', function () {
         main.classList.remove('page-reveal');
     }, { once: true });
