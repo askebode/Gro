@@ -225,16 +225,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     line-height: 0;
     overflow: hidden;
 }
-.blob-divide::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("assets/grain.jpg");
-    background-size: 500px 500px;
-    opacity: 0.55;
-    mix-blend-mode: soft-light;
-}
 .blob-divide svg {
     display: block;
     width: 100%;
