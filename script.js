@@ -336,8 +336,8 @@
         setTimeout(spawn, rand(2200, 5000));
     }
 
-    // Staggered initial blooms
-    [800, 2000, 3500, 5500, 7500, 9500, 12000, 15000].forEach(function (t) {
+    // Staggered initial blooms — start immediately so flowers are present on load
+    [0, 0, 100, 300, 700, 1200, 2000, 3500].forEach(function (t) {
         setTimeout(spawn, t);
     });
 })();

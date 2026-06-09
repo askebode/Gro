@@ -113,6 +113,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 .bg-pink { background: var(--color-pink); color: var(--color-on-accent); }
 .bg-ink { background: var(--color-ink); color: var(--color-cream); }
 
+.bg-green, .bg-orange, .bg-yellow, .bg-blue, .bg-pink, .bg-ink {
+    position: relative;
+    z-index: 1;
+}
+
 .bg-green h1, .bg-green h2, .bg-green h3,
 .bg-orange h1, .bg-orange h2, .bg-orange h3,
 .bg-yellow h1, .bg-yellow h2, .bg-yellow h3,
@@ -153,6 +158,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     transition: transform var(--trans-pop), opacity var(--trans-fast);
     background: transparent;
     color: inherit;
+    position: relative;
+    z-index: 1;
 }
 .btn:hover { transform: translateY(-2px) rotate(-1deg); opacity: 0.85; }
 .btn:active { transform: translateY(0) rotate(0); }
@@ -591,7 +598,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
    Footer
    ===================================================== */
 
-.site-footer { background: var(--color-ink); color: var(--color-cream); padding-block: var(--space-12); }
+.site-footer { background: var(--color-ink); color: var(--color-cream); padding-block: var(--space-12); position: relative; z-index: 1; }
 .site-footer a { color: inherit; text-decoration: underline; text-underline-offset: 0.25em; opacity: 0.85; }
 .site-footer a:hover { opacity: 1; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-8); }
@@ -653,8 +660,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
 }
 @keyframes weed-bloom {
     0%   { opacity: 0; }
-    18%  { opacity: var(--op, 0.16); }
-    78%  { opacity: var(--op, 0.16); }
+    8%   { opacity: var(--op, 0.16); }
+    82%  { opacity: var(--op, 0.16); }
     100% { opacity: 0; }
 }
 @media (prefers-color-scheme: dark) {
