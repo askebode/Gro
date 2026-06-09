@@ -512,6 +512,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     pointer-events: none;
 }
 .event-details--with-photo .event-details-image--photo { margin-bottom: 0; }
+.event-details--with-image .event-details-image { margin-bottom: 0; }
 .event-details-cta {
     margin: -2rem 0 var(--space-4);
     position: relative;
