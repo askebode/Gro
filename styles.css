@@ -7,6 +7,8 @@
     --color-cream: #faf8f2;
     --color-ink: #1f1e1b;
     --color-ink-soft: #4a4840;
+    --header-fade: rgba(250,248,242,0.7);
+    --header-fade-0: rgba(250,248,242,0);
 
     /* Bold section backgrounds — dusty pastel, cool analog palette (mint → periwinkle → sky → lavender → rose) */
     --color-green: #5fbfa8;
@@ -53,14 +55,13 @@
 }
 
 @media (prefers-color-scheme: dark) {
-     :root {
+    :root {
         --color-cream: #1c1b18;
         --color-ink: #faf8f2;
         --color-ink-soft: #c8c4b6;
         --color-on-bold: #1c1b18;
-    }
-    .site-header::after {
-        background: linear-gradient(to bottom, rgba(28,27,24,0.6), rgba(28,27,24,0));
+        --header-fade: rgba(28,27,24,0.7);
+        --header-fade-0: rgba(28,27,24,0);
     }
 }
 
@@ -198,7 +199,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; }
     right: 0;
     top: 100%;
     height: 2.75rem;
-    background: linear-gradient(to bottom, rgba(250,248,242,0.6), rgba(250,248,242,0));
+    background: linear-gradient(to bottom, var(--header-fade), var(--header-fade-0));
     pointer-events: none;
 }
 
