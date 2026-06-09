@@ -310,17 +310,15 @@
     }
 })();
 
-// Gentle scroll-up on frontpage load
+// Gentle scroll-up reveal on frontpage load via CSS transform on #main
 (function () {
-    if (!document.querySelector('[data-calendar]')) return;
+    var main = document.getElementById('main');
+    if (!main || !document.querySelector('[data-calendar]')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var offset = Math.round(window.innerHeight * 0.18);
-    window.scrollTo(0, offset);
-    requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
+    main.classList.add('page-reveal');
+    main.addEventListener('animationend', function () {
+        main.classList.remove('page-reveal');
+    }, { once: true });
 })();
 
 // Wildflower background — blomster der popper op som ukrudt
