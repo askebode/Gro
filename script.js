@@ -272,7 +272,7 @@
     var layer = document.createElement('div');
     layer.className = 'weed-layer';
     layer.setAttribute('aria-hidden', 'true');
-    document.body.prepend(layer);
+    document.body.appendChild(layer);
 
     function pickImage() {
         // Avoid repeating the last 4 images
