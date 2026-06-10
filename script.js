@@ -32,6 +32,40 @@
         }
     }
 
+    // Adresselinjens farve (theme-color) matcher sidens baggrund — den
+    // farvede hero på undersiderne, eller den neutrale baggrund på
+    // forsiden. getComputedStyle returnerer farven i dens egen
+    // farverum (oklch), som theme-color ikke forstår, så den
+    // konverteres til hex (formel: Björn Ottossons OKLab <-> sRGB).
+    function oklchToHex(l, c, h) {
+        var hRad = (h * Math.PI) / 180;
+        var a = c * Math.cos(hRad);
+        var b = c * Math.sin(hRad);
+        var l_ = l + 0.3963377774 * a + 0.2158037573 * b;
+        var m_ = l - 0.1055613458 * a - 0.0638541728 * b;
+        var s_ = l - 0.0894841775 * a - 1.2914855480 * b;
+        l_ = l_ * l_ * l_; m_ = m_ * m_ * m_; s_ = s_ * s_ * s_;
+        var r = 4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_;
+        var g = -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_;
+        var bl = -0.0041960863 * l_ - 0.7034186147 * m_ + 1.7076147010 * s_;
+        function channel(v) {
+            v = v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
+            return Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, '0');
+        }
+        return '#' + channel(r) + channel(g) + channel(bl);
+    }
+    function resolveThemeColor(colorStr) {
+        var m = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/.exec(colorStr);
+        return m ? oklchToHex(parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])) : colorStr;
+    }
+    var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    function setThemeColor(colorStr) {
+        if (themeColorMeta && colorStr) { themeColorMeta.setAttribute('content', resolveThemeColor(colorStr)); }
+    }
+    var pageHeroEl = document.querySelector('.page-content > .hero:first-child');
+    var baseThemeColor = getComputedStyle(pageHeroEl || document.body).backgroundColor;
+    setThemeColor(baseThemeColor);
+
     // Mobil-menu
     var toggle = document.querySelector('[data-nav-toggle]');
     var nav = document.querySelector('[data-nav]');
@@ -256,15 +290,35 @@
         if (panel) { panel.classList.toggle('is-open', open); }
     }
 
+    // Forsiden har ingen farvet hero — i stedet matcher adresselinjens
+    // farve den åbne begivenheds accenttonede baggrund, og falder
+    // tilbage til sidens neutrale baggrund når intet er åbent. Et
+    // skjult prøve-element genbruger .event-row.is-open's egen
+    // baggrundsregel, så den udregnede farve følger med uden at vente
+    // på baggrundens egen overgangsanimation.
+    function openEventRowColor(row) {
+        var probe = document.createElement('div');
+        probe.className = 'event-row is-open';
+        probe.style.cssText = 'position:absolute; visibility:hidden; pointer-events:none; ' +
+            '--event-accent:' + row.style.getPropertyValue('--event-accent') + ';';
+        document.body.appendChild(probe);
+        var color = getComputedStyle(probe).backgroundColor;
+        probe.remove();
+        return color;
+    }
+    function refreshThemeColor() {
+        if (pageHeroEl || !eventList) { return; }
+        var openRow = eventList.querySelector('.event-row.is-open');
+        setThemeColor(openRow ? openEventRowColor(openRow) : baseThemeColor);
+    }
+
     // Forudsiger hvor en begivenhed lander, når den foldes ud (og en
     // evt. anden åben begivenhed ovenover folder sig sammen), og
-    // beregner hvilken scroll-position der placerer den pænt i vinduet:
-    // centreret hvis den kan være der, ellers med toppen lige under
-    // den klæbende header, så man kan læse den fra starten
+    // beregner hvilken scroll-position der placerer dens top lige
+    // under headerens slørede overgang, så det er ensartet uanset
+    // begivenhedens højde
     function predictOpenScrollTarget(row) {
         var rowRect = row.getBoundingClientRect();
-        var detailsInner = row.querySelector('.event-details-inner');
-        var predictedHeight = rowRect.height + (detailsInner ? detailsInner.offsetHeight : 0);
 
         var shiftAbove = 0;
         allEventRows.forEach(function (other) {
@@ -281,14 +335,7 @@
 
         var predictedTop = rowRect.top + shiftAbove;
         var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-        var availableHeight = window.innerHeight - scrollPaddingTop;
-        var delta;
-        if (predictedHeight <= availableHeight) {
-            var areaCenter = scrollPaddingTop + availableHeight / 2;
-            delta = (predictedTop + predictedHeight / 2) - areaCenter;
-        } else {
-            delta = predictedTop - scrollPaddingTop;
-        }
+        var delta = predictedTop - scrollPaddingTop;
         return Math.max(0, window.scrollY + delta);
     }
 
@@ -313,6 +360,7 @@
         allEventRows.forEach(function (other) {
             setEventRowOpen(other, other === row ? willOpen : false);
         });
+        refreshThemeColor();
 
         // Lås den vandrette scrollposition og — når en begivenhed åbnes —
         // animer samtidig hen til dens plads i vinduet, i ét samlet loop

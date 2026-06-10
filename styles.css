@@ -46,7 +46,7 @@
     --space-16: 9rem;
 
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: calc(var(--header-h) * 1.4);
 }
 
 /* "Magnetisk" scroll — kalenderens begivenheder trækker sig blidt
@@ -527,6 +527,15 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     --item-border-color: color-mix(in oklch, var(--color-ink) 16%, transparent);
     border-top: 1px solid var(--item-border-color);
     transition: padding-left 260ms var(--ease-pop);
+}
+/* On the cream background, the wildflowers (.weed-layer) paint above
+   non-isolated content — give text-heavy rows their own opaque layer
+   so blooms never land on top of the text. */
+.bg-cream .item-row {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    background: var(--color-cream);
 }
 @media (hover: hover) {
     .item-row:hover { padding-left: var(--space-4); }
