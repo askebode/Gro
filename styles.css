@@ -374,8 +374,24 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     gap: var(--space-4);
     padding: 1.4rem clamp(1.5rem, 5vw, 3rem);
     background: transparent;
+}
+
+/* Frosted-glass fade beneath the header — a separate fixed layer (not a
+   pseudo-element of .site-header) because backdrop-filter on a pseudo-
+   element of the sticky header doesn't pick up the scrolled content as
+   its backdrop in this engine. Sits just below the header in the stack
+   so nav links/logo stay sharp on top, and fades out via mask-image so
+   the blur softens into the page instead of cutting off hard. */
+.header-blur-fade {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: calc(var(--header-h) * 2.5);
+    z-index: 99;
+    pointer-events: none;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    mask-image: linear-gradient(to bottom, white 0%, white 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, white 0%, white 40%, transparent 100%);
 }
 
 .brand-link {
