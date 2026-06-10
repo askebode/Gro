@@ -199,9 +199,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 .inner-page .blob-divide image { opacity: 0.18; }
 
-/* Header: solid accent colour from --page-accent; fader below matches */
+/* Header: subtle diagonal gradient in the accent colour; fader below matches */
 .inner-page .site-header {
-    background: var(--page-accent, var(--color-cream));
+    background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)));
 }
 .inner-page .site-header::after {
     background: linear-gradient(to bottom, var(--page-accent, var(--color-cream)), transparent);
