@@ -1047,7 +1047,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     }
     ::view-transition-group(page-hero) {
         animation-duration: 700ms;
-        animation-timing-function: var(--ease-pop);
+        animation-timing-function: var(--ease-standard);
     }
 }
 
