@@ -28,9 +28,18 @@
             nav.setAttribute('data-open', String(!open));
         });
         nav.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function (event) {
+                if (nav.getAttribute('data-open') !== 'true') return;
+                // Lad menuen lukke sig blødt, før vi navigerer videre —
+                // ellers springer den åbne menu instant væk, fordi
+                // sidehovedet skiftes uden animation ved view transitions
+                event.preventDefault();
+                var href = link.href;
                 toggle.setAttribute('aria-expanded', 'false');
                 nav.setAttribute('data-open', 'false');
+                setTimeout(function () {
+                    window.location.href = href;
+                }, 220);
             });
         });
     }
