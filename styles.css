@@ -450,8 +450,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
         position: absolute; inset-inline: 0; top: 100%;
         background: var(--color-cream);
         border-bottom: 2px solid var(--color-ink);
-        transform: translateY(-12px); opacity: 0; pointer-events: none;
-        transition: transform var(--trans-fast), opacity var(--trans-fast);
+        transform: translateY(-8px); opacity: 0; pointer-events: none;
+        transition: transform 220ms var(--ease-standard), opacity 220ms var(--ease-standard);
     }
     .site-nav[data-open="true"] { transform: translateY(0); opacity: 1; pointer-events: auto; }
     .site-nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: var(--space-3) clamp(1.5rem, 5vw, 3rem) var(--space-6); font-size: 1.05rem; }
