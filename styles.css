@@ -199,14 +199,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 .inner-page .blob-divide image { opacity: 0.18; }
 
-/* Header: subtle diagonal gradient in the accent colour; fader below matches */
-.inner-page .site-header {
-    background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)));
-}
-.inner-page .site-header::after {
-    background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)));
-    -webkit-mask-image: linear-gradient(to bottom, black, transparent);
-    mask-image: linear-gradient(to bottom, black, transparent);
+/* Page title carries the accent colour instead of the header chrome */
+.inner-page .page-content h1 {
+    color: var(--page-accent, currentColor);
 }
 
 .eyebrow {
