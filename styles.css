@@ -424,81 +424,41 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     .brand-link:hover { opacity: 0.82; }
 }
 
-/* Scratchy accent marks that flicker around the logo at staggered,
-   uneven intervals — quick hand-drawn flashes in the page's accent
-   colour (falls back to orange on the calendar, which has no
-   --page-accent), echoing the scratch texture used elsewhere. */
-.brand-link { position: relative; }
-.brand-eyebrow { position: relative; }
-
-.brand-link::before, .brand-link::after,
-.brand-eyebrow::before, .brand-eyebrow::after {
-    content: "";
+/* A second, hand-traced outline of the logo mark flickers in and out
+   on top of it at uneven intervals, in the page's accent colour
+   (falls back to orange on the calendar, which has no --page-accent) —
+   like someone occasionally re-tracing the shape with a marker. */
+.brand-logo-wrap {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+}
+.brand-logo-outline {
     position: absolute;
-    pointer-events: none;
+    inset: 0;
     background-color: var(--page-accent, var(--color-orange));
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
+    mask-image: url("assets/logo-outline.svg");
+    -webkit-mask-image: url("assets/logo-outline.svg");
     mask-size: 100% 100%;
     -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
     mask-mode: luminance;
     -webkit-mask-source-type: luminance;
     opacity: 0;
+    pointer-events: none;
     animation: logo-scratch-flicker 9s ease-in-out infinite;
 }
 
-.brand-link::before {
-    top: -15px; left: -20px;
-    width: 34px; height: 19px;
-    --mark-rot: -8deg;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20'%3E%3Cpath d='M3,17 C9,11 14,15 20,8 C25,2 30,6 33,3' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 20'%3E%3Cpath d='M3,17 C9,11 14,15 20,8 C25,2 30,6 33,3' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    animation-delay: 0s;
-    animation-duration: 8.4s;
-}
-
-.brand-link::after {
-    bottom: -14px; right: -22px;
-    width: 24px; height: 30px;
-    --mark-rot: 6deg;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 32'%3E%3Cpath d='M4,4 C12,10 6,18 16,22 C20,24 18,28 22,30' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 32'%3E%3Cpath d='M4,4 C12,10 6,18 16,22 C20,24 18,28 22,30' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    animation-delay: 3.6s;
-    animation-duration: 11.2s;
-}
-
-.brand-eyebrow::before {
-    top: -13px; right: -16px;
-    width: 28px; height: 16px;
-    --mark-rot: 10deg;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 16'%3E%3Cpath d='M2,12 C8,6 14,13 20,7 C23,4 25,6 26,4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 16'%3E%3Cpath d='M2,12 C8,6 14,13 20,7 C23,4 25,6 26,4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    animation-delay: 6.4s;
-    animation-duration: 9.6s;
-}
-
-.brand-eyebrow::after {
-    bottom: -34px; left: -22px;
-    width: 20px; height: 28px;
-    --mark-rot: -6deg;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 28'%3E%3Cpath d='M16,3 C9,9 14,15 6,20 C3,23 6,26 3,27' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 28'%3E%3Cpath d='M16,3 C9,9 14,15 6,20 C3,23 6,26 3,27' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    animation-delay: 1.8s;
-    animation-duration: 13.4s;
-}
-
 @keyframes logo-scratch-flicker {
-    0%, 85%, 100% { opacity: 0; transform: scale(0.85) rotate(var(--mark-rot, 0deg)); }
-    89% { opacity: 0.9; transform: scale(1) rotate(var(--mark-rot, 0deg)); }
+    0%, 85%, 100% { opacity: 0; }
+    89% { opacity: 0.9; }
     92% { opacity: 0.2; }
-    95% { opacity: 0.85; transform: scale(1) rotate(var(--mark-rot, 0deg)); }
+    95% { opacity: 0.85; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .brand-link::before, .brand-link::after,
-    .brand-eyebrow::before, .brand-eyebrow::after {
-        animation: none;
-    }
+    .brand-logo-outline { animation: none; }
 }
 
 .nav-toggle {
