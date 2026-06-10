@@ -751,13 +751,58 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     background-color: var(--event-accent, var(--color-orange));
     mask-image: url("assets/scratches.png");
     -webkit-mask-image: url("assets/scratches.png");
-    mask-size: 100% 100%;
-    -webkit-mask-size: 100% 100%;
+    mask-size: 180% 180%;
+    -webkit-mask-size: 180% 180%;
+    mask-position: 0% 0%;
+    -webkit-mask-position: 0% 0%;
     mask-repeat: no-repeat;
     -webkit-mask-repeat: no-repeat;
     mask-mode: luminance;
     -webkit-mask-source-type: luminance;
     opacity: 0.85;
+}
+/* Hver kalenderkort viser et andet udsnit/spejling af samme
+   ridse-tekstur, så de åbne kort ikke ser identiske ud */
+.event-row:nth-of-type(2).is-open::before {
+    mask-size: 220% 130%;
+    -webkit-mask-size: 220% 130%;
+    mask-position: 100% 0%;
+    -webkit-mask-position: 100% 0%;
+    transform: scaleX(-1);
+}
+.event-row:nth-of-type(3).is-open::before {
+    mask-size: 150% 200%;
+    -webkit-mask-size: 150% 200%;
+    mask-position: 50% 100%;
+    -webkit-mask-position: 50% 100%;
+}
+.event-row:nth-of-type(4).is-open::before {
+    mask-size: 200% 150%;
+    -webkit-mask-size: 200% 150%;
+    mask-position: 0% 100%;
+    -webkit-mask-position: 0% 100%;
+    transform: scaleY(-1);
+}
+.event-row:nth-of-type(5).is-open::before {
+    mask-size: 240% 120%;
+    -webkit-mask-size: 240% 120%;
+    mask-position: 100% 50%;
+    -webkit-mask-position: 100% 50%;
+    transform: rotate(180deg);
+}
+.event-row:nth-of-type(6).is-open::before {
+    mask-size: 160% 220%;
+    -webkit-mask-size: 160% 220%;
+    mask-position: 30% 0%;
+    -webkit-mask-position: 30% 0%;
+    transform: scaleX(-1);
+}
+.event-row:nth-of-type(7).is-open::before {
+    mask-size: 190% 170%;
+    -webkit-mask-size: 190% 170%;
+    mask-position: 70% 100%;
+    -webkit-mask-position: 70% 100%;
+    transform: scaleY(-1);
 }
 .event-row.is-open::after {
     content: "";
