@@ -64,27 +64,76 @@
     // begivenhed allerede starter centreret, så man altid kan "lande"
     // tilbage på den, ligesom resten af listen
     var firstEventRow = eventList ? eventList.querySelector('.event-row') : null;
-    function updateFirstEventSpacing() {
-        if (!firstEventRow || !eventList) { return; }
-        eventList.style.paddingTop = '0px';
 
-        // Brug offsetTop (layout-baseret) i stedet for getBoundingClientRect().top
-        // (maleri-baseret) — listen kan stadig være midt i sin reveal-animation
-        // (translateY), som ellers ville forstyrre målingen af hvileposition
+    // documentTop bruger offsetTop-kæden (layout-baseret) i stedet for
+    // getBoundingClientRect().top (maleri-baseret) — listen kan stadig
+    // være midt i sin reveal-animation (transform), som ellers ville
+    // forstyrre målingen af hvilepositionen
+    function eventRowMetrics() {
         var documentTop = 0;
         for (var el = firstEventRow; el; el = el.offsetParent) { documentTop += el.offsetTop; }
         var rowHeight = firstEventRow.getBoundingClientRect().height;
-        var rowCenter = (documentTop - window.scrollY) + rowHeight / 2;
-
         var scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
         var snapportCenter = scrollPaddingTop + (window.innerHeight - scrollPaddingTop) / 2;
-        eventList.style.paddingTop = Math.max(0, snapportCenter - rowCenter) + 'px';
+        return { documentTop: documentTop, rowHeight: rowHeight, snapportCenter: snapportCenter };
+    }
+
+    function updateFirstEventSpacing() {
+        if (!firstEventRow || !eventList) { return; }
+        eventList.style.paddingTop = '0px';
+        var m = eventRowMetrics();
+        var rowCenter = (m.documentTop - window.scrollY) + m.rowHeight / 2;
+        eventList.style.paddingTop = Math.max(0, m.snapportCenter - rowCenter) + 'px';
     }
     updateFirstEventSpacing();
     window.addEventListener('resize', updateFirstEventSpacing);
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(updateFirstEventSpacing);
+
+    // Hvis der ikke er plads nok over kalenderen til at centrere den
+    // første begivenhed med padding alene, starter siden i stedet allerede
+    // scrollet ned til den hvileposition — uden animation, før noget er
+    // tegnet. Ellers ville scroll-snap rette positionen efter indlæsning,
+    // hvilket ses som et hop.
+    if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
+        var m0 = eventRowMetrics();
+        var target = m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter;
+        if (target > 1) {
+            window.scrollTo({ top: target, behavior: 'instant' });
+        }
     }
+
+    // Scroll-snap slås først til, når både skrifterne er indlæst (så
+    // rækkehøjder er endelige) og forsidens "page-reveal"-animation er
+    // færdig. #main animeres med en transform under indlæsning, og
+    // browserens scroll-snap måler positioner inkl. denne transform —
+    // slås snap til mens den stadig kører, retter browseren sig selv hen
+    // mod målet i takt med at transformen forsvinder, hvilket ses som et
+    // hop efterfulgt af en glidende scroll. Selve snappet sker uden
+    // "smooth", så en evt. lille resterende korrektion ikke ses som en
+    // animeret overshoot.
+    function enableSnap() {
+        if (!firstEventRow) { return; }
+        updateFirstEventSpacing();
+        var root = document.documentElement;
+        root.classList.add('snap-ready', 'snap-instant');
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                root.classList.remove('snap-instant');
+            });
+        });
+    }
+    function revealDonePromise() {
+        var main = document.getElementById('main');
+        var reduceMotion = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!main || reduceMotion || !main.classList.contains('page-reveal')) {
+            return Promise.resolve();
+        }
+        return new Promise(function (resolve) {
+            main.addEventListener('animationend', resolve, { once: true });
+        });
+    }
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    Promise.all([fontsReady, revealDonePromise()]).then(enableSnap);
 
     var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
         window.matchMedia('(hover: none), (pointer: coarse)').matches;

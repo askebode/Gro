@@ -48,12 +48,25 @@
 
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
+}
 
-    /* "Magnetisk" scroll — kalenderens begivenheder trækker sig blidt
-       ind på midten af skærmen, når man holder op med at scrolle
-       (kun .event-row har scroll-snap-align, så resten af siden
-       opfører sig som normalt) */
+/* "Magnetisk" scroll — kalenderens begivenheder trækker sig blidt
+   ind på midten af skærmen, når man holder op med at scrolle
+   (kun .event-row har scroll-snap-align, så resten af siden
+   opfører sig som normalt).
+   Slås kun til via JS (se enableSnap), efter forsidens reveal-animation
+   er færdig — ellers måler browseren snap-positionen mens #main stadig
+   er transformeret, og retter sig selv hen mod målet i takt med at
+   transformen forsvinder, hvilket ses som et overshoot/jump ved
+   indlæsning. */
+:root.snap-ready {
     scroll-snap-type: y proximity;
+}
+
+/* Det første snap (når .snap-ready slås til) skal lande på sin plads
+   med det samme — ikke glide derhen med scroll-behavior: smooth */
+:root.snap-instant {
+    scroll-behavior: auto;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -486,7 +499,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     font-variation-settings: "opsz" 144, "wght" 600, "SOFT" 0;
 }
 
-.event-list { position: relative; }
+/* overflow-anchor: none — JS sets padding-top on load (and again once fonts
+   are ready) to centre the first event row. Without this, the browser's
+   scroll anchoring "corrects" for that layout shift by smooth-scrolling
+   the page, which looks like an overshoot-then-jump on load. */
+.event-list { position: relative; overflow-anchor: none; }
 .event-row {
     position: relative;
     display: grid;
@@ -770,7 +787,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
     .event-row, .event-when, .event-row h3,
     .event-toggle, .event-toggle-arrow, .event-details-wrap, .event-tag { transition: none; }
-    :root { scroll-snap-type: none; }
+    :root.snap-ready { scroll-snap-type: none; }
 }
 
 /* =====================================================
