@@ -82,7 +82,13 @@
         if (!firstEventRow || !eventList) { return; }
         eventList.style.paddingTop = '0px';
         var m = eventRowMetrics();
-        var rowCenter = (m.documentTop - window.scrollY) + m.rowHeight / 2;
+        // Beregnes uafhængigt af window.scrollY: padding'en er en fast
+        // egenskab ved layoutet (hvor meget plads der skal til for at den
+        // første begivenhed kan nå midten). Bruger man den aktuelle
+        // scrollposition, bliver paddingen forkert (og vokser sig selv
+        // større ved genindlæsning), når browseren har gendannet en
+        // scrollposition længere nede ad siden.
+        var rowCenter = m.documentTop + m.rowHeight / 2;
         eventList.style.paddingTop = Math.max(0, m.snapportCenter - rowCenter) + 'px';
     }
     updateFirstEventSpacing();
