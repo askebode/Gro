@@ -922,6 +922,56 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 
 /* =====================================================
+   View Transitions — app-like morphing between pages
+   Progressive enhancement (Chrome/Edge 126+); ignored
+   elsewhere. The header stays put instead of cross-fading,
+   each inner page's opening colour block morphs into the
+   next page's, and the rest of the page settles in with a
+   gentle drift in the brand's easing.
+   ===================================================== */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+
+    ::view-transition-group(root) {
+        animation-duration: 360ms;
+        animation-timing-function: var(--ease-standard);
+    }
+    ::view-transition-old(root) { animation-name: gro-vt-out; }
+    ::view-transition-new(root) { animation-name: gro-vt-in; }
+    @keyframes gro-vt-out {
+        to { opacity: 0; transform: translateY(-16px); }
+    }
+    @keyframes gro-vt-in {
+        from { opacity: 0; transform: translateY(16px); }
+    }
+
+    /* Header is identical on every page — keep it static
+       rather than cross-fading it along with the content */
+    .site-header {
+        view-transition-name: site-header;
+    }
+    ::view-transition-image-pair(site-header) { isolation: auto; }
+    ::view-transition-old(site-header),
+    ::view-transition-new(site-header) {
+        animation: none;
+        mix-blend-mode: normal;
+    }
+    ::view-transition-old(site-header) { display: none; }
+
+    /* Each inner page's hero block morphs (position, size and
+       colour) into the next page's, instead of just appearing */
+    .page-content > .hero:first-child {
+        view-transition-name: page-hero;
+    }
+    ::view-transition-group(page-hero) {
+        animation-duration: 420ms;
+        animation-timing-function: var(--ease-pop);
+    }
+}
+
+/* =====================================================
    Misc
    ===================================================== */
 
