@@ -460,9 +460,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     .nav-toggle { display: inline-flex; }
     .site-nav {
         position: absolute; inset-inline: 0; top: 100%;
-        background: color-mix(in oklch, var(--color-cream) 82%, transparent);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+        background: var(--color-cream);
         transform: translateY(-8px); opacity: 0; pointer-events: none;
         transition: transform 220ms var(--ease-standard), opacity 220ms var(--ease-standard);
     }
