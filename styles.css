@@ -424,10 +424,11 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     .brand-link:hover { opacity: 0.82; }
 }
 
-/* A second, hand-traced outline of the logo mark flickers in and out
-   on top of it at uneven intervals, in the page's accent colour
-   (falls back to orange on the calendar, which has no --page-accent) —
-   like someone occasionally re-tracing the shape with a marker. */
+/* A second, hand-traced outline of the logo mark periodically retraces
+   itself on top of it, in the page's accent colour (falls back to
+   orange on the calendar, which has no --page-accent) — the stroke
+   draws on at an easing tempo, then fades, every 10 seconds. The
+   draw-on animation itself lives inside assets/logo-outline.svg. */
 .brand-logo-wrap {
     position: relative;
     display: inline-block;
@@ -445,20 +446,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     -webkit-mask-repeat: no-repeat;
     mask-mode: luminance;
     -webkit-mask-source-type: luminance;
-    opacity: 0;
+    opacity: 0.9;
     pointer-events: none;
-    animation: logo-scratch-flicker 9s ease-in-out infinite;
-}
-
-@keyframes logo-scratch-flicker {
-    0%, 85%, 100% { opacity: 0; }
-    89% { opacity: 0.9; }
-    92% { opacity: 0.2; }
-    95% { opacity: 0.85; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .brand-logo-outline { animation: none; }
+    .brand-logo-outline { display: none; }
 }
 
 .nav-toggle {
