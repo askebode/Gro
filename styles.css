@@ -171,6 +171,39 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     }
 }
 
+/* Accent-coloured scratch overlay — same masked texture as the open
+   calendar cards (assets/scratches.png), painted in the section's own
+   accent colour on top of the 12%-tinted background. Each section sets
+   its own --scratch-pos/--scratch-transform inline so the streaks don't
+   repeat identically across pages. */
+.bg-green  { --block-accent: var(--color-green); }
+.bg-orange { --block-accent: var(--color-orange); }
+.bg-yellow { --block-accent: var(--color-yellow); }
+.bg-blue   { --block-accent: var(--color-blue); }
+.bg-pink   { --block-accent: var(--color-pink); }
+
+.bg-green::before, .bg-orange::before, .bg-yellow::before,
+.bg-blue::before, .bg-pink::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.85;
+    background-color: var(--block-accent);
+    mask-image: url("assets/scratches.png");
+    -webkit-mask-image: url("assets/scratches.png");
+    mask-size: 600px 400px;
+    -webkit-mask-size: 600px 400px;
+    mask-position: var(--scratch-pos, 0px 0px);
+    -webkit-mask-position: var(--scratch-pos, 0px 0px);
+    mask-repeat: repeat;
+    -webkit-mask-repeat: repeat;
+    mask-mode: luminance;
+    -webkit-mask-source-type: luminance;
+    transform: var(--scratch-transform, none);
+}
+
 .bg-green h1, .bg-green h2, .bg-green h3,
 .bg-orange h1, .bg-orange h2, .bg-orange h3,
 .bg-yellow h1, .bg-yellow h2, .bg-yellow h3,
