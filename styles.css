@@ -623,37 +623,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 
     /* Samme accentfarvede ridser + filmkorn som den åbne tilstand,
        blot på den smallere hover-baggrund */
-    .event-row:hover:not(.is-open)::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background-color: var(--event-accent, var(--color-orange));
-        mask-image: url("assets/scratches.png");
-        -webkit-mask-image: url("assets/scratches.png");
-        mask-size: var(--scratch-size, 180% 180%);
-        -webkit-mask-size: var(--scratch-size, 180% 180%);
-        mask-position: var(--scratch-pos, 0% 0%);
-        -webkit-mask-position: var(--scratch-pos, 0% 0%);
-        mask-repeat: no-repeat;
-        -webkit-mask-repeat: no-repeat;
-        mask-mode: luminance;
-        -webkit-mask-source-type: luminance;
-        transform: var(--scratch-transform, none);
-        opacity: 0.85;
-    }
-    .event-row:hover:not(.is-open)::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background-image: url("assets/grain.jpg");
-        background-size: 500px 500px;
-        opacity: 0.55;
-        mix-blend-mode: soft-light;
-    }
+    .event-row:hover:not(.is-open)::before { opacity: 0.85; }
+    .event-row:hover:not(.is-open)::after { opacity: 0.55; }
 }
 
 /* "Læs mere" toggle — diskret tekst-knap (ikke en kraftig knap-boks),
@@ -778,50 +749,58 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     padding-inline: clamp(var(--space-4), 6vw, var(--space-12));
     isolation: isolate;
 }
-/* Hvert kalenderkort får sit eget udsnit/spejling af samme
-   ridse-tekstur (delt mellem åben og hover-tilstand), så de
-   accentfarvede ridser ikke ser identiske ud på tværs af kort */
-.event-row:nth-of-type(2) { --scratch-size: 220% 130%; --scratch-pos: 100% 0%; --scratch-transform: scaleX(-1); }
-.event-row:nth-of-type(3) { --scratch-size: 150% 200%; --scratch-pos: 50% 100%; }
-.event-row:nth-of-type(4) { --scratch-size: 200% 150%; --scratch-pos: 0% 100%; --scratch-transform: scaleY(-1); }
-.event-row:nth-of-type(5) { --scratch-size: 240% 120%; --scratch-pos: 100% 50%; --scratch-transform: rotate(180deg); }
-.event-row:nth-of-type(6) { --scratch-size: 160% 220%; --scratch-pos: 30% 0%; --scratch-transform: scaleX(-1); }
-.event-row:nth-of-type(7) { --scratch-size: 190% 170%; --scratch-pos: 70% 100%; --scratch-transform: scaleY(-1); }
+/* Hvert kalenderkort viser et andet udsnit af samme (fliselagte)
+   ridse-tekstur (delt mellem åben, hover, aktiv og fokus-tilstand),
+   så de accentfarvede ridser ikke ser identiske ud på tværs af kort */
+.event-row:nth-of-type(2) { --scratch-pos: 200px 100px; --scratch-transform: scaleX(-1); }
+.event-row:nth-of-type(3) { --scratch-pos: 400px 250px; }
+.event-row:nth-of-type(4) { --scratch-pos: 100px 300px; --scratch-transform: scaleY(-1); }
+.event-row:nth-of-type(5) { --scratch-pos: 300px 50px; --scratch-transform: rotate(180deg); }
+.event-row:nth-of-type(6) { --scratch-pos: 500px 200px; --scratch-transform: scaleX(-1); }
+.event-row:nth-of-type(7) { --scratch-pos: 150px 350px; --scratch-transform: scaleY(-1); }
 
-.event-row.is-open::before,
-.event-row.is-active:not(.is-open)::before,
-.event-row:focus-within:not(.is-open)::before {
+/* Begge lag er altid til stede (skjult med opacity: 0) og fader
+   ind sammen med baggrundsfarvens egen transition — ellers blinker
+   det bløde korn gråt/farveløst i det øjeblik det dukker op, før
+   accentfarven nedenunder når at fade ind */
+.event-row::before,
+.event-row::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 320ms var(--ease-standard);
+}
+.event-row::before {
     background-color: var(--event-accent, var(--color-orange));
     mask-image: url("assets/scratches.png");
     -webkit-mask-image: url("assets/scratches.png");
-    mask-size: var(--scratch-size, 180% 180%);
-    -webkit-mask-size: var(--scratch-size, 180% 180%);
-    mask-position: var(--scratch-pos, 0% 0%);
-    -webkit-mask-position: var(--scratch-pos, 0% 0%);
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
+    mask-size: 600px 400px;
+    -webkit-mask-size: 600px 400px;
+    mask-position: var(--scratch-pos, 0px 0px);
+    -webkit-mask-position: var(--scratch-pos, 0px 0px);
+    mask-repeat: repeat;
+    -webkit-mask-repeat: repeat;
     mask-mode: luminance;
     -webkit-mask-source-type: luminance;
     transform: var(--scratch-transform, none);
+}
+.event-row::after {
+    background-image: url("assets/grain.jpg");
+    background-size: 500px 500px;
+    mix-blend-mode: soft-light;
+}
+.event-row.is-open::before,
+.event-row.is-active:not(.is-open)::before,
+.event-row:focus-within:not(.is-open)::before {
     opacity: 0.85;
 }
 .event-row.is-open::after,
 .event-row.is-active:not(.is-open)::after,
 .event-row:focus-within:not(.is-open)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: url("assets/grain.jpg");
-    background-size: 500px 500px;
     opacity: 0.55;
-    mix-blend-mode: soft-light;
 }
 .event-row.is-open + .event-row { border-top-color: transparent; }
 .event-row.is-open h3,
