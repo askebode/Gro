@@ -945,7 +945,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     }
 
     ::view-transition-group(root) {
-        animation-duration: 360ms;
+        animation-duration: 600ms;
         animation-timing-function: var(--ease-standard);
     }
     ::view-transition-old(root) { animation-name: gro-vt-out; }
@@ -976,7 +976,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
         view-transition-name: page-hero;
     }
     ::view-transition-group(page-hero) {
-        animation-duration: 420ms;
+        animation-duration: 700ms;
         animation-timing-function: var(--ease-pop);
     }
 }
