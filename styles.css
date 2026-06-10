@@ -742,6 +742,23 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     padding-inline: clamp(var(--space-4), 6vw, var(--space-12));
     isolation: isolate;
 }
+.event-row.is-open::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--event-accent, var(--color-orange));
+    mask-image: url("assets/scratches.png");
+    -webkit-mask-image: url("assets/scratches.png");
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-mode: luminance;
+    -webkit-mask-source-type: luminance;
+    opacity: 0.85;
+}
 .event-row.is-open::after {
     content: "";
     position: absolute;
