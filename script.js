@@ -111,6 +111,15 @@
             var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
 
             if (viaTop > target + 1) {
+                // Kalenderens [data-reveal]-fade skal ikke nå at spille af midt
+                // i intro-rullet — den er ellers usynlig (opacity: 0), når
+                // siden starter nede ved viaTop, hvilket ses som om kalenderen
+                // "ankommer" for sig selv lige inden snappet i toppen
+                eventList.style.transition = 'none';
+                eventList.classList.add('is-visible');
+                void eventList.offsetHeight;
+                eventList.style.transition = '';
+
                 window.scrollTo({ top: viaTop, behavior: 'instant' });
                 introScrollDone = new Promise(function (resolve) {
                     var DURATION_MS = 2000;
