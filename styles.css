@@ -993,21 +993,18 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 
 /* =====================================================
-   View Transitions — app-like morphing between pages
+   View Transitions — gentle cross-fade between pages
    Progressive enhancement (Chrome/Edge 126+); ignored
    elsewhere. The header stays put instead of cross-fading,
-   each inner page's opening colour block morphs into the
-   next page's, and the rest of the page settles in with a
-   gentle cross-fade in the brand's easing.
+   and the rest of the page fades in the brand's easing.
    ===================================================== */
 @media (prefers-reduced-motion: no-preference) {
     @view-transition {
         navigation: auto;
     }
 
-    /* Plain cross-fade (no slide) — the hero block morphs on its
-       own timeline below, and a vertical drift here would create a
-       moving edge that briefly gaps under it as the two settle */
+    /* Plain cross-fade (no slide) — a vertical drift here would
+       create a moving edge that briefly gaps as the two pages settle */
     ::view-transition-group(root) {
         animation-duration: 600ms;
         animation-timing-function: var(--ease-standard);
@@ -1039,16 +1036,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
         mix-blend-mode: normal;
     }
     ::view-transition-old(site-header) { display: none; }
-
-    /* Each inner page's hero block morphs (position, size and
-       colour) into the next page's, instead of just appearing */
-    .page-content > .hero:first-child {
-        view-transition-name: page-hero;
-    }
-    ::view-transition-group(page-hero) {
-        animation-duration: 700ms;
-        animation-timing-function: var(--ease-standard);
-    }
 }
 
 /* =====================================================
