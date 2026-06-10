@@ -121,23 +121,33 @@
                 eventList.style.transition = '';
 
                 window.scrollTo({ top: viaTop, behavior: 'instant' });
-                introScrollDone = new Promise(function (resolve) {
-                    var DURATION_MS = 2000;
-                    var startTime = null;
-                    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-                    function frame(now) {
-                        if (startTime === null) { startTime = now; }
-                        var elapsed = now - startTime;
-                        var t = Math.min(elapsed / DURATION_MS, 1);
-                        var y = viaTop + (target - viaTop) * easeOutCubic(t);
-                        window.scrollTo({ top: y, behavior: 'instant' });
-                        if (t < 1) {
-                            requestAnimationFrame(frame);
-                        } else {
-                            resolve();
+
+                // #main's "page-reveal"-transform kører i ca. 1100ms og
+                // forskubber alt malet indhold i forhold til de
+                // offsetTop-baserede mål (viaTop/target) ovenfor. Vent derfor
+                // med selve op-rulningen til transformen er færdig — siden
+                // står stille nederst i kalenderen imens (samme reveal som
+                // alle andre sider), og selve 2s-rulningen sker bagefter med
+                // korrekt, transform-fri geometri.
+                introScrollDone = revealDonePromise().then(function () {
+                    return new Promise(function (resolve) {
+                        var DURATION_MS = 2000;
+                        var startTime = null;
+                        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+                        function frame(now) {
+                            if (startTime === null) { startTime = now; }
+                            var elapsed = now - startTime;
+                            var t = Math.min(elapsed / DURATION_MS, 1);
+                            var y = viaTop + (target - viaTop) * easeOutCubic(t);
+                            window.scrollTo({ top: y, behavior: 'instant' });
+                            if (t < 1) {
+                                requestAnimationFrame(frame);
+                            } else {
+                                resolve();
+                            }
                         }
-                    }
-                    requestAnimationFrame(frame);
+                        requestAnimationFrame(frame);
+                    });
                 });
             } else if (target > 1) {
                 window.scrollTo({ top: target, behavior: 'instant' });
