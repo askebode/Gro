@@ -956,13 +956,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
    elsewhere. The header stays put instead of cross-fading,
    each inner page's opening colour block morphs into the
    next page's, and the rest of the page settles in with a
-   gentle drift in the brand's easing.
+   gentle cross-fade in the brand's easing.
    ===================================================== */
 @media (prefers-reduced-motion: no-preference) {
     @view-transition {
         navigation: auto;
     }
 
+    /* Plain cross-fade (no slide) — the hero block morphs on its
+       own timeline below, and a vertical drift here would create a
+       moving edge that briefly gaps under it as the two settle */
     ::view-transition-group(root) {
         animation-duration: 600ms;
         animation-timing-function: var(--ease-standard);
@@ -970,10 +973,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     ::view-transition-old(root) { animation-name: gro-vt-out; }
     ::view-transition-new(root) { animation-name: gro-vt-in; }
     @keyframes gro-vt-out {
-        to { opacity: 0; transform: translateY(-16px); }
+        to { opacity: 0; }
     }
     @keyframes gro-vt-in {
-        from { opacity: 0; transform: translateY(16px); }
+        from { opacity: 0; }
     }
 
     /* Header is identical on every page — keep it static
