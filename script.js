@@ -35,24 +35,6 @@
         });
     }
 
-    // Reveal-on-scroll
-    var revealEls = document.querySelectorAll('[data-reveal]');
-    if (revealEls.length) {
-        if ('IntersectionObserver' in window) {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-            revealEls.forEach(function (el) { observer.observe(el); });
-        } else {
-            revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-        }
-    }
-
     // Kalender — fremhæv begivenheden midt i billedet, når man
     // scroller på en touch-enhed (samme effekt som hover på desktop)
     var eventList = document.querySelector('.event-list');
@@ -117,15 +99,6 @@
             var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
 
             if (viaTop > target + 1) {
-                // Kalenderens [data-reveal]-fade skal ikke nå at spille af midt
-                // i intro-rullet — den er ellers usynlig (opacity: 0), når
-                // siden starter nede ved viaTop, hvilket ses som om kalenderen
-                // "ankommer" for sig selv lige inden snappet i toppen
-                eventList.style.transition = 'none';
-                eventList.classList.add('is-visible');
-                void eventList.offsetHeight;
-                eventList.style.transition = '';
-
                 window.scrollTo({ top: viaTop, behavior: 'instant' });
 
                 // #main's "page-reveal"-transform kører i ca. 1100ms og
