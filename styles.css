@@ -965,6 +965,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     .site-header {
         view-transition-name: site-header;
     }
+    /* Without this, the group itself still gets the browser's default
+       geometry animation: if the captured header size/position differs
+       even slightly between the old and new page (e.g. font-loading
+       timing), it briefly resizes/shifts before settling — seen as the
+       header (and the logo on it) jumping before snapping into place */
+    ::view-transition-group(site-header) { animation-duration: 0s; }
     ::view-transition-image-pair(site-header) { isolation: auto; }
     ::view-transition-old(site-header),
     ::view-transition-new(site-header) {
