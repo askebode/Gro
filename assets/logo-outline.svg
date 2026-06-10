@@ -3,13 +3,14 @@
     path {
       stroke-dasharray: 65918;
       stroke-dashoffset: 65918;
-      animation: logo-trace 10s ease-in-out infinite;
+      animation: logo-trace 128s ease-in-out infinite;
     }
     @keyframes logo-trace {
-      0%, 100% { stroke-dashoffset: 65918; }
-      45% { stroke-dashoffset: 0; }
-      55% { stroke-dashoffset: 0; }
-      90% { stroke-dashoffset: 65918; }
+      0% { stroke-dashoffset: 65918; }
+      3.5% { stroke-dashoffset: 0; }
+      50.4% { stroke-dashoffset: 0; }
+      53.1% { stroke-dashoffset: 65918; }
+      100% { stroke-dashoffset: 65918; }
     }
   </style>
   <g transform="translate(0.000000,976.000000) scale(0.100000,-0.100000)">
