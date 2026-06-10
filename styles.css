@@ -199,8 +199,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 }
 .inner-page .blob-divide image { opacity: 0.18; }
 
-/* Page title carries the accent colour instead of the header chrome */
-.inner-page .page-content h1 {
+/* Page title stays ink-coloured; only the highlighted word picks up the accent */
+.inner-page .page-content h1 .sketch-underline,
+.inner-page .page-content h1 .ink-circle {
     color: var(--page-accent, currentColor);
 }
 
