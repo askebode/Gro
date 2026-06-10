@@ -536,7 +536,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
    are ready) to centre the first event row. Without this, the browser's
    scroll anchoring "corrects" for that layout shift by smooth-scrolling
    the page, which looks like an overshoot-then-jump on load. */
-.event-list { position: relative; overflow-anchor: none; }
+/* z-index + isolation — keeps the wildflower backdrop (.weed-layer,
+   position: fixed, painted after <main> in source order) from showing
+   through on top of the event cards' own background and text. */
+.event-list { position: relative; z-index: 1; isolation: isolate; overflow-anchor: none; }
 .event-row {
     position: relative;
     display: grid;
