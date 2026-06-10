@@ -374,8 +374,18 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     gap: var(--space-4);
     padding: 1.4rem clamp(1.5rem, 5vw, 3rem);
     background: transparent;
+}
+.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    bottom: calc(-1 * var(--header-h) * 1.5);
+    z-index: -1;
+    pointer-events: none;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
+    mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
 }
 
 .brand-link {
