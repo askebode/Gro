@@ -88,28 +88,73 @@
     updateFirstEventSpacing();
     window.addEventListener('resize', updateFirstEventSpacing);
 
-    // Hvis der ikke er plads nok over kalenderen til at centrere den
-    // første begivenhed med padding alene, starter siden i stedet allerede
-    // scrollet ned til den hvileposition — uden animation, før noget er
-    // tegnet. Ellers ville scroll-snap rette positionen efter indlæsning,
-    // hvilket ses som et hop.
+    // Ved indlæsning ruller forsiden gennem hele kalenderen og lander
+    // til sidst centreret om den første begivenhed — et lille "kig",
+    // der viser at der er en hel liste af kommende ting, før blikket
+    // samles om den nærmeste. Sker uden "smooth"/scroll-snap (kun
+    // window.scrollTo pr. frame), så det er fuldt under kontrol.
+    var introScrollDone = Promise.resolve();
     if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
         var m0 = eventRowMetrics();
-        var target = m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter;
-        if (target > 1) {
-            window.scrollTo({ top: target, behavior: 'instant' });
+        var target = Math.max(0, m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter);
+        var reduceMotion = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reduceMotion) {
+            if (target > 1) { window.scrollTo({ top: target, behavior: 'instant' }); }
+        } else {
+            var lastRow = eventList.querySelector('.event-row:last-child');
+            var lastRowBottom = 0;
+            for (var lel = lastRow; lel; lel = lel.offsetParent) { lastRowBottom += lel.offsetTop; }
+            lastRowBottom += lastRow.getBoundingClientRect().height;
+            var maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
+
+            if (viaTop > target + 1) {
+                introScrollDone = new Promise(function (resolve) {
+                    var DOWN_MS = 1000, HOLD_MS = 150, UP_MS = 750;
+                    var TOTAL_MS = DOWN_MS + HOLD_MS + UP_MS;
+                    var startTime = null;
+                    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+                    function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+                    function frame(now) {
+                        if (startTime === null) { startTime = now; }
+                        var elapsed = now - startTime;
+                        var y;
+                        if (elapsed < DOWN_MS) {
+                            y = viaTop * easeOutCubic(elapsed / DOWN_MS);
+                        } else if (elapsed < DOWN_MS + HOLD_MS) {
+                            y = viaTop;
+                        } else if (elapsed < TOTAL_MS) {
+                            y = viaTop + (target - viaTop) * easeInOutCubic((elapsed - DOWN_MS - HOLD_MS) / UP_MS);
+                        } else {
+                            y = target;
+                        }
+                        window.scrollTo({ top: y, behavior: 'instant' });
+                        if (elapsed < TOTAL_MS) {
+                            requestAnimationFrame(frame);
+                        } else {
+                            resolve();
+                        }
+                    }
+                    requestAnimationFrame(frame);
+                });
+            } else if (target > 1) {
+                window.scrollTo({ top: target, behavior: 'instant' });
+            }
         }
     }
 
     // Scroll-snap slås først til, når både skrifterne er indlæst (så
-    // rækkehøjder er endelige) og forsidens "page-reveal"-animation er
-    // færdig. #main animeres med en transform under indlæsning, og
-    // browserens scroll-snap måler positioner inkl. denne transform —
-    // slås snap til mens den stadig kører, retter browseren sig selv hen
-    // mod målet i takt med at transformen forsvinder, hvilket ses som et
-    // hop efterfulgt af en glidende scroll. Selve snappet sker uden
-    // "smooth", så en evt. lille resterende korrektion ikke ses som en
-    // animeret overshoot.
+    // rækkehøjder er endelige), forsidens "page-reveal"-animation er
+    // færdig, og en evt. intro-rul gennem kalenderen er landet. #main
+    // animeres med en transform under indlæsning, og browserens
+    // scroll-snap måler positioner inkl. denne transform — slås snap til
+    // mens den stadig kører, retter browseren sig selv hen mod målet i
+    // takt med at transformen forsvinder, hvilket ses som et hop
+    // efterfulgt af en glidende scroll. Selve snappet sker uden "smooth",
+    // så en evt. lille resterende korrektion ikke ses som en animeret
+    // overshoot.
     function enableSnap() {
         if (!firstEventRow) { return; }
         updateFirstEventSpacing();
@@ -133,7 +178,7 @@
         });
     }
     var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-    Promise.all([fontsReady, revealDonePromise()]).then(enableSnap);
+    Promise.all([fontsReady, revealDonePromise(), introScrollDone]).then(enableSnap);
 
     var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
         window.matchMedia('(hover: none), (pointer: coarse)').matches;
