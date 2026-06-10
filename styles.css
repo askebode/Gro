@@ -68,6 +68,15 @@
     scroll-behavior: auto;
 }
 
+/* Mens en begivenhed foldes ud/sammen (se toggleEventRow) slås
+   scroll-snap midlertidigt fra — ellers kan browseren, mens layoutet
+   skifter højde, beslutte at snappe den følgende (lukkede) begivenhed
+   ind på midten i stedet for at lade den nyåbnede begivenheds top
+   blive stående lige under den slørede header. */
+:root.snap-ready.snap-paused {
+    scroll-snap-type: none;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --color-cream: oklch(13.5% 0.007 80);
@@ -529,9 +538,10 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     transition: padding-left 260ms var(--ease-pop);
 }
 /* On the cream background, the wildflowers (.weed-layer) paint above
-   non-isolated content — give text-heavy rows their own opaque layer
+   non-isolated content — give text-heavy blocks their own opaque layer
    so blooms never land on top of the text. */
-.bg-cream .item-row {
+.bg-cream .item-row,
+.bg-cream .kicker {
     position: relative;
     z-index: 1;
     isolation: isolate;

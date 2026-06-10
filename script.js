@@ -374,6 +374,7 @@
         var startTime = Date.now();
         var scrollDuration = 420; // matcher fold-ud-animationens varighed
         var lockDuration = 450;
+        document.documentElement.classList.add('snap-paused');
         (function animate() {
             var elapsed = Date.now() - startTime;
             var targetY = startY;
@@ -387,7 +388,11 @@
             }
             var stillScrolling = scrollTarget !== null && elapsed < scrollDuration;
             var stillLocking = elapsed < lockDuration;
-            if (stillScrolling || stillLocking) { window.requestAnimationFrame(animate); }
+            if (stillScrolling || stillLocking) {
+                window.requestAnimationFrame(animate);
+            } else {
+                document.documentElement.classList.remove('snap-paused');
+            }
         })();
     }
 
