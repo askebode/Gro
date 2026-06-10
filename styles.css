@@ -204,7 +204,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)));
 }
 .inner-page .site-header::after {
-    background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)), transparent);
+    background: linear-gradient(135deg, var(--page-accent, var(--color-cream)), color-mix(in oklch, var(--page-accent, var(--color-cream)) 80%, var(--color-cream)));
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+    mask-image: linear-gradient(to bottom, black, transparent);
 }
 
 .eyebrow {
