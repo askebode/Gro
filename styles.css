@@ -437,6 +437,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .brand-logo-outline {
     position: absolute;
     inset: 0;
+    transform: translate(3px, -2px);
     background-color: var(--page-accent, var(--color-orange));
     mask-image: url("assets/logo-outline.svg");
     -webkit-mask-image: url("assets/logo-outline.svg");
