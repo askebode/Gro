@@ -7,8 +7,7 @@
     --color-cream: oklch(97.5% 0.012 88);
     --color-ink: oklch(14% 0.007 80);
     --color-ink-soft: oklch(33% 0.010 80);
-    --header-fade: oklch(97.5% 0.012 88 / 0.7);
-    --header-fade-0: oklch(97.5% 0.012 88 / 0);
+    --header-h: 6.25rem;
 
     /* Cool analog palette — mint → sky → periwinkle → lavender → rose
        oklch gives perceptually even lightness across hues;
@@ -75,8 +74,6 @@
         --color-ink: oklch(97.5% 0.012 88);
         --color-ink-soft: oklch(80% 0.012 82);
         --color-on-bold: oklch(13.5% 0.007 80);
-        --header-fade: oklch(13.5% 0.007 80 / 0.7);
-        --header-fade-0: oklch(13.5% 0.007 80 / 0);
     }
 }
 
@@ -251,6 +248,13 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     color: var(--page-accent, currentColor);
 }
 
+/* Hero's colour block reaches the very top of the page, behind the
+   now-transparent header — content gets pushed down to clear it */
+.inner-page .page-content > .hero:first-child {
+    margin-top: calc(-1 * var(--header-h));
+    padding-top: calc(var(--header-h) + clamp(4rem, 11vw, var(--space-16)));
+}
+
 .eyebrow {
     display: inline-block;
     font-family: var(--font-head);
@@ -369,17 +373,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     justify-content: space-between;
     gap: var(--space-4);
     padding: 1.4rem clamp(1.5rem, 5vw, 3rem);
-    background: var(--color-cream);
-}
-.site-header::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    height: 2.75rem;
-    background: linear-gradient(to bottom, var(--header-fade), var(--header-fade-0));
-    pointer-events: none;
+    background: transparent;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
 .brand-link {
@@ -448,8 +444,9 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     .nav-toggle { display: inline-flex; }
     .site-nav {
         position: absolute; inset-inline: 0; top: 100%;
-        background: var(--color-cream);
-        border-bottom: 2px solid var(--color-ink);
+        background: color-mix(in oklch, var(--color-cream) 82%, transparent);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         transform: translateY(-8px); opacity: 0; pointer-events: none;
         transition: transform 220ms var(--ease-standard), opacity 220ms var(--ease-standard);
     }

@@ -18,6 +18,20 @@
     vwProbe.remove();
     document.documentElement.style.setProperty('--vw-overhang', vwOverhang + 'px');
 
+    // Mål header-højden, så undersidens forsidefarve kan strække sig
+    // helt op under den gennemsigtige header
+    var headerEl = document.querySelector('.site-header');
+    function updateHeaderHeight() {
+        document.documentElement.style.setProperty('--header-h', headerEl.getBoundingClientRect().height + 'px');
+    }
+    if (headerEl) {
+        updateHeaderHeight();
+        window.addEventListener('resize', updateHeaderHeight);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(updateHeaderHeight);
+        }
+    }
+
     // Mobil-menu
     var toggle = document.querySelector('[data-nav-toggle]');
     var nav = document.querySelector('[data-nav]');
