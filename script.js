@@ -614,3 +614,38 @@
         setTimeout(spawn, t);
     });
 })();
+
+// Scratch-overlay flimmer — mens man scroller, hopper ridse-teksturen på
+// farveblokkene til en ny tilfældig position hvert 300ms, som et stykke
+// filmstrimmel der rasler igennem en projektor. Står stille når scrollet
+// gør (og helt fra ved reduced motion).
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var blocks = document.querySelectorAll('.bg-green, .bg-orange, .bg-yellow, .bg-blue, .bg-pink');
+    if (!blocks.length) return;
+
+    var FLICKER_MS = 300;
+    var flickerTimer = null;
+    var stopTimer = null;
+
+    function flicker() {
+        blocks.forEach(function (block) {
+            var x = Math.floor(Math.random() * 600);
+            var y = Math.floor(Math.random() * 400);
+            block.style.setProperty('--scratch-pos', x + 'px ' + y + 'px');
+        });
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!flickerTimer) {
+            flicker();
+            flickerTimer = setInterval(flicker, FLICKER_MS);
+        }
+        clearTimeout(stopTimer);
+        stopTimer = setTimeout(function () {
+            clearInterval(flickerTimer);
+            flickerTimer = null;
+        }, FLICKER_MS);
+    }, { passive: true });
+})();
