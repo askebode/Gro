@@ -615,25 +615,40 @@
     });
 })();
 
-// Scratch-overlay flimmer — mens man scroller, hopper ridse-teksturen på
-// farveblokkene til en ny tilfældig position hvert 300ms, som et stykke
-// filmstrimmel der rasler igennem en projektor. Står stille når scrollet
-// gør (og helt fra ved reduced motion).
+// Scratch-overlay flimmer — mens man scroller, hopper ridse-teksturen til en
+// ny tilfældig position hvert 300ms, som et stykke filmstrimmel der rasler
+// igennem en projektor. Gælder farveblokkene altid, og kalenderkortene kun
+// mens deres ridse-overlay er synligt (åbent, hover, fokus eller aktivt på
+// touch). Står stille når scrollet gør (og helt fra ved reduced motion).
 (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var blocks = document.querySelectorAll('.bg-green, .bg-orange, .bg-yellow, .bg-blue, .bg-pink');
-    if (!blocks.length) return;
+    var eventRows = document.querySelectorAll('.event-row');
+    if (!blocks.length && !eventRows.length) return;
 
     var FLICKER_MS = 300;
     var flickerTimer = null;
     var stopTimer = null;
 
+    function randomScratchPos() {
+        var x = Math.floor(Math.random() * 600);
+        var y = Math.floor(Math.random() * 400);
+        return x + 'px ' + y + 'px';
+    }
+
     function flicker() {
         blocks.forEach(function (block) {
-            var x = Math.floor(Math.random() * 600);
-            var y = Math.floor(Math.random() * 400);
-            block.style.setProperty('--scratch-pos', x + 'px ' + y + 'px');
+            block.style.setProperty('--scratch-pos', randomScratchPos());
+        });
+        eventRows.forEach(function (row) {
+            var active = row.classList.contains('is-open') ||
+                row.classList.contains('is-active') ||
+                row.matches(':hover') ||
+                row.matches(':focus-within');
+            if (active) {
+                row.style.setProperty('--scratch-pos', randomScratchPos());
+            }
         });
     }
 
