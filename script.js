@@ -88,10 +88,10 @@
     updateFirstEventSpacing();
     window.addEventListener('resize', updateFirstEventSpacing);
 
-    // Ved indlæsning ruller forsiden gennem hele kalenderen og lander
-    // til sidst centreret om den første begivenhed — et lille "kig",
-    // der viser at der er en hel liste af kommende ting, før blikket
-    // samles om den nærmeste. Sker uden "smooth"/scroll-snap (kun
+    // Ved indlæsning starter forsiden nederst i kalenderen og glider
+    // langsomt op til den første begivenhed over 2 sekunder — et lille
+    // "kig" ned gennem hele listen af kommende ting, før blikket samles
+    // om den nærmeste. Sker uden "smooth"/scroll-snap (kun
     // window.scrollTo pr. frame), så det er fuldt under kontrol.
     var introScrollDone = Promise.resolve();
     if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
@@ -111,27 +111,18 @@
             var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
 
             if (viaTop > target + 1) {
+                window.scrollTo({ top: viaTop, behavior: 'instant' });
                 introScrollDone = new Promise(function (resolve) {
-                    var DOWN_MS = 1000, HOLD_MS = 150, UP_MS = 750;
-                    var TOTAL_MS = DOWN_MS + HOLD_MS + UP_MS;
+                    var DURATION_MS = 2000;
                     var startTime = null;
                     function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-                    function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
                     function frame(now) {
                         if (startTime === null) { startTime = now; }
                         var elapsed = now - startTime;
-                        var y;
-                        if (elapsed < DOWN_MS) {
-                            y = viaTop * easeOutCubic(elapsed / DOWN_MS);
-                        } else if (elapsed < DOWN_MS + HOLD_MS) {
-                            y = viaTop;
-                        } else if (elapsed < TOTAL_MS) {
-                            y = viaTop + (target - viaTop) * easeInOutCubic((elapsed - DOWN_MS - HOLD_MS) / UP_MS);
-                        } else {
-                            y = target;
-                        }
+                        var t = Math.min(elapsed / DURATION_MS, 1);
+                        var y = viaTop + (target - viaTop) * easeOutCubic(t);
                         window.scrollTo({ top: y, behavior: 'instant' });
-                        if (elapsed < TOTAL_MS) {
+                        if (t < 1) {
                             requestAnimationFrame(frame);
                         } else {
                             resolve();
