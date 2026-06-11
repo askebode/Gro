@@ -76,6 +76,18 @@
         : getComputedStyle(document.documentElement).getPropertyValue('--color-cream').trim();
     setThemeColor(baseThemeColor);
 
+    // Cross-document view transitions krydsblænder en frisk visning af den
+    // nye side (øverst) med et øjebliksbillede af den gamle side, som den så
+    // ud lige inden navigationen. Hvis man har scrollet ned, viser de to
+    // billeder helt forskelligt indhold — krydsblændingen ses da som et
+    // forvirrende "hop". Er siden scrollet, springes transition-effekten
+    // derfor over, så navigationen sker som et almindeligt sideskift.
+    window.addEventListener('pageswap', function (event) {
+        if (event.viewTransition && window.scrollY > 0) {
+            event.viewTransition.skipTransition();
+        }
+    });
+
     // Mobil-menu
     var toggle = document.querySelector('[data-nav-toggle]');
     var nav = document.querySelector('[data-nav]');
@@ -150,6 +162,13 @@
     // window.scrollTo pr. frame), så det er fuldt under kontrol.
     var introScrollDone = Promise.resolve();
     if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
+        // Forsiden flytter scroll-positionen væk fra 0 med det samme (se
+        // nedenfor) — en cross-document view transition ville ellers
+        // krydsblænde et øjebliksbillede af den forrige side i toppen med
+        // forsidens forskudte startposition, hvilket ses som et hop.
+        window.addEventListener('pagereveal', function (event) {
+            if (event.viewTransition) { event.viewTransition.skipTransition(); }
+        }, { once: true });
         var m0 = eventRowMetrics();
         var target = Math.max(0, m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter);
         var reduceMotion = window.matchMedia &&
