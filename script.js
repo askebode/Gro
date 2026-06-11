@@ -328,8 +328,8 @@
             if (!isOpen) { return; }
             var otherRect = other.getBoundingClientRect();
             if (otherRect.top < rowRect.top) {
-                var otherDetailsInner = other.querySelector('.event-details-inner');
-                shiftAbove -= (otherDetailsInner ? otherDetailsInner.offsetHeight : 0);
+                var otherWrap = other.querySelector('.event-details-wrap');
+                shiftAbove -= (otherWrap ? otherWrap.getBoundingClientRect().height : 0);
             }
         });
 
