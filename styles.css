@@ -539,9 +539,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
    non-isolated content. The kicker's heading is bold/large enough to
    stay readable over the flowers, so only its eyebrow/lead get a
    padded highlight — but a whole item-row (label, heading and text
-   together) gets a padded card so the entire entry is shielded. The
-   card is tinted slightly toward --color-ink so it reads as a card
-   rather than disappearing into the cream backdrop. */
+   together) gets a padded card so the entire entry is shielded. */
 .bg-cream .kicker > .eyebrow,
 .bg-cream .kicker > .lead {
     position: relative;
@@ -556,8 +554,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     position: relative;
     z-index: 1;
     isolation: isolate;
-    background: color-mix(in oklch, var(--color-ink) 6%, var(--color-cream));
-    box-shadow: 0 0 0 var(--space-3) color-mix(in oklch, var(--color-ink) 6%, var(--color-cream));
+    background: var(--color-cream);
+    box-shadow: 0 0 0 var(--space-3) var(--color-cream);
     margin-bottom: var(--space-6);
 }
 .bg-cream .item-row:last-child {
