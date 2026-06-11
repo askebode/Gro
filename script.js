@@ -513,7 +513,11 @@
     var layer = document.createElement('div');
     layer.className = 'weed-layer';
     layer.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(layer);
+    // Inserted first so it sits behind [data-reveal] content in the
+    // z-index:0 paint order (their scroll-driven animation gives them an
+    // implicit stacking context) while still painting above plain section
+    // backgrounds.
+    document.body.insertBefore(layer, document.body.firstChild);
 
     function pickImage() {
         // Avoid repeating the last 4 images
