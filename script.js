@@ -82,8 +82,13 @@
     // billeder helt forskelligt indhold — krydsblændingen ses da som et
     // forvirrende "hop". Er siden scrollet, springes transition-effekten
     // derfor over, så navigationen sker som et almindeligt sideskift.
+    // På forsiden gælder det samme selv ved scrollY 0: kalenderens
+    // top-padding (se updateFirstEventSpacing) skubber det første kort ned
+    // for at centrere det, så "toppen" af forsiden ikke flugter med toppen
+    // af en underside — uden dette tjek ses et lille hop ved navigation væk.
     window.addEventListener('pageswap', function (event) {
-        if (event.viewTransition && window.scrollY > 0) {
+        var calendarOffset = eventList ? parseFloat(eventList.style.paddingTop) || 0 : 0;
+        if (event.viewTransition && (window.scrollY > 0 || calendarOffset > 0)) {
             event.viewTransition.skipTransition();
         }
     });
