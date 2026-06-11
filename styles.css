@@ -538,12 +538,12 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     transition: padding-left 260ms var(--ease-pop);
 }
 /* On the cream background, the wildflowers (.weed-layer) paint above
-   non-isolated content — give paragraph text its own padded, opaque
-   highlight so blooms never land on top of it. Headings are bold/large
-   enough to stay readable over the flowers, so they're left uncovered. */
+   non-isolated content. The kicker's heading is bold/large enough to
+   stay readable over the flowers, so only its eyebrow/lead get a
+   padded highlight — but a whole item-row (label, heading and text
+   together) gets a padded card so the entire entry is shielded. */
 .bg-cream .kicker > .eyebrow,
-.bg-cream .kicker > .lead,
-.bg-cream .item-row p {
+.bg-cream .kicker > .lead {
     position: relative;
     z-index: 1;
     isolation: isolate;
@@ -551,6 +551,14 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     background: var(--color-cream);
     padding: 0.2em 0.5em;
     border-radius: 0.4em;
+}
+.bg-cream .item-row {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    background: var(--color-cream);
+    box-shadow: 0 0 0 var(--space-3) var(--color-cream);
+    border-radius: 6px;
 }
 @media (hover: hover) {
     .item-row:hover { padding-left: var(--space-4); }
