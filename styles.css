@@ -492,8 +492,22 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     font-weight: 600;
     font-size: var(--text-sm);
 }
-.site-nav a { text-decoration: none; padding: 0.4em 0.1em; border-bottom: 2px solid transparent; transition: border-color var(--trans-fast); }
-.site-nav a:hover, .site-nav a[aria-current="page"] { border-color: var(--color-ink); }
+.site-nav a { position: relative; text-decoration: none; padding: 0.4em 0.1em; border-bottom: 2px solid transparent; transition: border-color var(--trans-fast); }
+.site-nav a:hover { border-color: var(--color-ink); }
+
+/* Den aktive sides understregning er sit eget element (::after) i
+   stedet for border-bottom, så View Transitions API kan morphe den
+   hen til den nye sides aktive link ved navigation — se
+   view-transition-name: nav-underline længere nede. */
+.site-nav a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 0.1em;
+    right: 0.1em;
+    bottom: -2px;
+    height: 2px;
+    background: var(--color-ink);
+}
 .nav-cta { white-space: nowrap; }
 
 @media (max-width: 860px) {
@@ -506,9 +520,30 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     }
     .site-nav[data-open="true"] { transform: translateY(0); opacity: 1; pointer-events: auto; }
     .site-nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: var(--space-3) clamp(1.5rem, 5vw, 3rem) var(--space-6); font-size: 1.05rem; }
-    .site-nav li { border-top: 1px solid color-mix(in oklch, var(--color-ink) 12%, transparent); }
-    .site-nav li:first-child { border-top: none; }
-    .site-nav a { display: block; padding: 1em 0.1em; border-bottom: none; }
+    .site-nav li:first-child a { border-top: none; }
+    /* Linkene strækkes ud til skærmkanterne (negativ margin opvejet af
+       lige så stor padding, så teksten visuelt bliver stående),
+       så skillelinjen og hover/tap-baggrunden fylder hele bredden i
+       stedet for kun tekst-kolonnen. Browserens egen tap-highlight
+       fjernes til fordel for denne baggrund. */
+    .site-nav a {
+        display: block;
+        border-bottom: none;
+        border-top: 1px solid color-mix(in oklch, var(--color-ink) 12%, transparent);
+        margin-inline: calc(-1 * clamp(1.5rem, 5vw, 3rem));
+        padding: 1em clamp(1.5rem, 5vw, 3rem);
+        -webkit-tap-highlight-color: transparent;
+        transition: background-color var(--trans-fast);
+    }
+    .site-nav a:hover, .site-nav a:focus-visible, .site-nav a:active {
+        background-color: color-mix(in oklch, var(--color-ink) 8%, transparent);
+    }
+    /* Den fuldbredte skillelinje under den aktive side ville ellers
+       sammenfalde med ::after-understregningen og se ud som én tyk
+       streg — menuen viste heller ikke et aktiv-mærke før. */
+    .site-nav a[aria-current="page"]::after {
+        display: none;
+    }
 }
 
 /* =====================================================
@@ -1091,6 +1126,24 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
         mix-blend-mode: normal;
     }
     ::view-transition-old(site-header) { display: none; }
+
+    /* Den aktive sides understregning (se .site-nav a[aria-current="page"]
+       ::after ovenfor) morpher hen til den nye sides plads i stedet for
+       at springe direkte dertil — og laver undervejs en lille kolbøtte
+       (360°), så sideskiftet føles legende. */
+    .site-nav a[aria-current="page"]::after {
+        view-transition-name: nav-underline;
+    }
+    ::view-transition-group(nav-underline) {
+        animation-duration: 500ms;
+        animation-timing-function: var(--ease-standard);
+    }
+    ::view-transition-image-pair(nav-underline) {
+        animation: nav-underline-somersault 500ms var(--ease-standard);
+    }
+    @keyframes nav-underline-somersault {
+        to { transform: rotate(360deg); }
+    }
 }
 
 /* =====================================================
