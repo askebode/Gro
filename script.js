@@ -85,7 +85,8 @@
     // På forsiden gælder det samme selv ved scrollY 0: kalenderens
     // top-padding (se updateFirstEventSpacing) skubber det første kort ned
     // for at centrere det, så "toppen" af forsiden ikke flugter med toppen
-    // af en underside — uden dette tjek ses et lille hop ved navigation væk.
+    // af en underside — at FORLADE forsiden springer derfor også over
+    // (at ANKOMME til den er ikke et problem, se cameFromSiteNav nedenfor).
     window.addEventListener('pageswap', function (event) {
         var calendarOffset = eventList ? parseFloat(eventList.style.paddingTop) || 0 : 0;
         if (event.viewTransition && (window.scrollY > 0 || calendarOffset > 0)) {
@@ -167,19 +168,26 @@
     // window.scrollTo pr. frame), så det er fuldt under kontrol.
     var introScrollDone = Promise.resolve();
     if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
-        // Forsiden flytter scroll-positionen væk fra 0 med det samme (se
-        // nedenfor) — en cross-document view transition ville ellers
-        // krydsblænde et øjebliksbillede af den forrige side i toppen med
-        // forsidens forskudte startposition, hvilket ses som et hop.
-        window.addEventListener('pagereveal', function (event) {
-            if (event.viewTransition) { event.viewTransition.skipTransition(); }
-        }, { once: true });
         var m0 = eventRowMetrics();
         var target = Math.max(0, m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter);
         var reduceMotion = window.matchMedia &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        if (reduceMotion) {
+        // Kommer man fra en anden side på sitet, kører der sandsynligvis en
+        // cross-document view transition — her springes "kig ned gennem
+        // listen"-introen over, så forsidens øjebliksbillede ikke selv
+        // hopper væk fra scrollY 0 og ødelægger krydsblændingen. Landingen
+        // (target) er normalt allerede 0 takket være paddingen ovenfor.
+        var cameFromSiteNav = document.referrer && document.referrer.indexOf(location.origin) === 0;
+
+        if (cameFromSiteNav) {
+            if (target > 1) {
+                window.addEventListener('pagereveal', function (event) {
+                    if (event.viewTransition) { event.viewTransition.skipTransition(); }
+                }, { once: true });
+                window.scrollTo({ top: target, behavior: 'instant' });
+            }
+        } else if (reduceMotion) {
             if (target > 1) { window.scrollTo({ top: target, behavior: 'instant' }); }
         } else {
             var lastRow = eventList.querySelector('.event-row:last-child');
