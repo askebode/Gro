@@ -1129,8 +1129,8 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 
     /* Den aktive sides understregning (se .site-nav a[aria-current="page"]
        ::after ovenfor) morpher hen til den nye sides plads i stedet for
-       at springe direkte dertil — og laver undervejs en lille kolbøtte
-       (360°), så sideskiftet føles legende. */
+       at springe direkte dertil — og laver undervejs en lille kurve
+       (➰), i tråd med sidens håndtegnede streger (.sketch-underline). */
     .site-nav a[aria-current="page"]::after {
         view-transition-name: nav-underline;
     }
@@ -1139,10 +1139,13 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
         animation-timing-function: var(--ease-standard);
     }
     ::view-transition-image-pair(nav-underline) {
-        animation: nav-underline-somersault 500ms var(--ease-standard);
+        animation: nav-underline-curl 500ms var(--ease-standard);
     }
-    @keyframes nav-underline-somersault {
-        to { transform: rotate(360deg); }
+    @keyframes nav-underline-curl {
+        0%   { transform: translate(0, 0) rotate(0deg); }
+        35%  { transform: translate(10px, -12px) rotate(170deg); }
+        65%  { transform: translate(-2px, -14px) rotate(330deg); }
+        100% { transform: translate(0, 0) rotate(360deg); }
     }
 }
 
