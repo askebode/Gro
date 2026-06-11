@@ -685,6 +685,7 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 .tag-green { color: var(--color-green); }
 .tag-pink { color: var(--color-pink); }
 .tag-blue { color: var(--color-blue); }
+.tag-yellow { color: var(--color-yellow); }
 .event-tag-icon {
     display: inline-block;
     width: 1.2em;
@@ -933,6 +934,20 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     color: var(--color-ink);
     border-color: var(--event-accent);
     opacity: 1;
+}
+
+/* Delt link til et bestemt event (#event-<slug>) — kort glow-puls om
+   kortets kant, så det er tydeligt hvilket kort man er sendt til */
+@keyframes event-highlight-pulse {
+    0%   { box-shadow: 0 0 0 0 color-mix(in oklch, var(--event-accent) 70%, transparent); }
+    50%  { box-shadow: 0 0 0 14px color-mix(in oklch, var(--event-accent) 0%, transparent); }
+    100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--event-accent) 0%, transparent); }
+}
+.event-row.event-highlight {
+    animation: event-highlight-pulse 1200ms var(--ease-standard) 2;
+}
+@media (prefers-reduced-motion: reduce) {
+    .event-row.event-highlight { animation: none; }
 }
 
 @media (max-width: 760px) {

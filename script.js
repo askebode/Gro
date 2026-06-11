@@ -124,13 +124,183 @@
     // scroller på en touch-enhed (samme effekt som hover på desktop)
     var eventList = document.querySelector('.event-list');
 
+    // Begivenheder hentes fra events.json (redigeres uafhængigt af HTML/JS —
+    // se kommentaren i index.html for skemaet). category bestemmer som
+    // udgangspunkt både farve og ikon via EVENT_CATEGORIES, men begge (samt
+    // et evt. foto) kan overstyres pr. event i JSON'en.
+    var EVENT_ICONS = {
+        lightbulb: '<circle cx="24" cy="20" r="11" /><path d="M20 36h8M21 41h6" /><path d="M24 6v3M9 20h3M36 20h3M13.5 9.5l2 2M34.5 9.5l-2 2" />',
+        flag: '<path d="M30 11l7 7-17 17-7-7z" /><path d="M13 32l-4 11 11-4" /><circle cx="34.5" cy="13.5" r="2.6" />',
+        'cardboard-box': '<rect x="11" y="16" width="26" height="18" rx="3" /><path d="M18 24l-4 3 4 3M30 24l4 3-4 3M26 22l-4 8" />',
+        'two-circles': '<circle cx="19" cy="24" r="11" /><circle cx="29" cy="24" r="11" />',
+        bowl: '<path d="M9 23a15 15 0 0 0 30 0z" /><path d="M9 23h30" /><path d="M18 8c-2 2-2 4 0 6M28 8c-2 2-2 4 0 6" />',
+        speaker: '<rect x="18" y="7" width="12" height="20" rx="6" /><path d="M13 21a11 11 0 0 0 22 0M24 32v8M17 40h14" />',
+        guitar: '<circle cx="16" cy="35" r="5" /><circle cx="33" cy="31" r="5" /><path d="M21 35V14l17-4v21" />'
+    };
+    var EVENT_CATEGORIES = {
+        'Workshop': { color: 'orange', icon: 'lightbulb' },
+        'Åbent værksted': { color: 'green', icon: 'flag' },
+        'Samarbejde': { color: 'pink', icon: 'two-circles' },
+        'Spisning': { color: 'blue', icon: 'bowl' },
+        'Koncert': { color: 'pink', icon: 'guitar' }
+    };
+
+    function buildEventIconSvg(iconKey, isLarge) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 48 48');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        if (isLarge) {
+            svg.setAttribute('stroke-width', '2.5');
+        } else {
+            svg.setAttribute('stroke-width', '3');
+            svg.setAttribute('class', 'event-tag-icon');
+            svg.setAttribute('aria-hidden', 'true');
+        }
+        svg.innerHTML = EVENT_ICONS[iconKey] || '';
+        return svg;
+    }
+
+    // events.json gemmer kun en ISO-dato — visningsformatet ("14. aug")
+    // udledes herfra. Datoens dele bruges til at bygge en lokal Date (ikke
+    // new Date(isoString), som tolkes som UTC og kan rykke en dag i
+    // tidszoner vest for UTC). da-DK's korte månedsnavne ender med punktum
+    // ("14. aug."), som fjernes for at matche det hidtidige format.
+    function formatEventDate(isoDate) {
+        var parts = isoDate.split('-');
+        var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+        return new Intl.DateTimeFormat('da-DK', { day: 'numeric', month: 'short' })
+            .format(date)
+            .replace(/\.$/, '');
+    }
+
+    // Bygger et helt .event-row-træ via DOM-API'et (ikke innerHTML-strenge),
+    // så titler/beskrivelser fra events.json aldrig fortolkes som markup
+    function buildEventRow(ev) {
+        var defaults = EVENT_CATEGORIES[ev.category] || {};
+        var color = ev.color || defaults.color;
+        var icon = ev.icon || defaults.icon;
+        var detailId = 'event-detail-' + ev.slug;
+
+        var row = document.createElement('div');
+        row.className = 'event-row';
+        row.style.setProperty('--event-accent', 'var(--color-' + color + ')');
+
+        var info = document.createElement('div');
+        info.className = 'event-info';
+
+        var line = document.createElement('p');
+        line.className = 'event-line';
+
+        var when = document.createElement('span');
+        when.className = 'event-when';
+        when.setAttribute('data-event-open', '');
+        when.textContent = formatEventDate(ev.date);
+        line.appendChild(when);
+
+        var tag = document.createElement('span');
+        tag.className = 'event-tag tag-' + color;
+        tag.appendChild(buildEventIconSvg(icon, false));
+        tag.appendChild(document.createTextNode(ev.category));
+        line.appendChild(tag);
+
+        info.appendChild(line);
+
+        var h3 = document.createElement('h3');
+        h3.setAttribute('data-event-open', '');
+        h3.textContent = ev.title;
+        info.appendChild(h3);
+
+        var cta = document.createElement('div');
+        cta.className = 'event-cta';
+        var toggleBtn = document.createElement('button');
+        toggleBtn.className = 'event-toggle';
+        toggleBtn.type = 'button';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-controls', detailId);
+        toggleBtn.setAttribute('data-event-toggle', '');
+        toggleBtn.appendChild(document.createTextNode('Læs mere '));
+        var arrow = document.createElement('span');
+        arrow.className = 'event-toggle-arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '↓';
+        toggleBtn.appendChild(arrow);
+        cta.appendChild(toggleBtn);
+
+        var detailsWrap = document.createElement('div');
+        detailsWrap.className = 'event-details-wrap';
+        detailsWrap.id = detailId;
+
+        var details = document.createElement('div');
+        var image = document.createElement('div');
+        image.setAttribute('aria-hidden', 'true');
+        if (ev.photo) {
+            details.className = 'event-details event-details--with-photo';
+            image.className = 'event-details-image event-details-image--photo';
+            var img = document.createElement('img');
+            img.src = ev.photo;
+            img.alt = '';
+            image.appendChild(img);
+        } else {
+            details.className = 'event-details event-details--with-image';
+            image.className = 'event-details-image';
+            image.appendChild(buildEventIconSvg(icon, true));
+        }
+        details.appendChild(image);
+
+        var ctaP = document.createElement('p');
+        ctaP.className = 'event-details-cta';
+        var ctaLink = document.createElement('a');
+        ctaLink.className = 'btn btn-on-bold btn-square';
+        ctaLink.href = ev.cta.href;
+        ctaLink.textContent = ev.cta.label;
+        ctaP.appendChild(ctaLink);
+        details.appendChild(ctaP);
+
+        var inner = document.createElement('div');
+        inner.className = 'event-details-inner';
+        var descP = document.createElement('p');
+        descP.textContent = ev.description;
+        var metaP = document.createElement('p');
+        metaP.className = 'event-details-meta';
+        metaP.textContent = ev.meta;
+        inner.appendChild(descP);
+        inner.appendChild(metaP);
+        details.appendChild(inner);
+
+        detailsWrap.appendChild(details);
+
+        row.appendChild(info);
+        row.appendChild(cta);
+        row.appendChild(detailsWrap);
+        return row;
+    }
+
+    function renderEvents() {
+        return fetch('events.json')
+            .then(function (response) { return response.json(); })
+            .then(function (events) {
+                events.forEach(function (ev) {
+                    eventList.appendChild(buildEventRow(ev));
+                });
+                return events;
+            })
+            .catch(function (err) {
+                console.error('Kunne ikke indlæse events.json', err);
+                return [];
+            });
+    }
+
     // Kalenderens kort "trækkes" magnetisk ind på midten af skærmen
     // (scroll-snap). Uden ekstra plads foroven kan den første begivenhed
     // aldrig nå den centrerede hvileposition — kun de andre kan. Vi
     // måler derfor, hvor meget luft der skal til for at den første
     // begivenhed allerede starter centreret, så man altid kan "lande"
-    // tilbage på den, ligesom resten af listen
-    var firstEventRow = eventList ? eventList.querySelector('.event-row') : null;
+    // tilbage på den, ligesom resten af listen. Sættes først efter
+    // renderEvents() har tilføjet kortene til DOM'en.
+    var firstEventRow;
 
     // documentTop bruger offsetTop-kæden (layout-baseret) i stedet for
     // getBoundingClientRect().top (maleri-baseret) — listen kan stadig
@@ -157,80 +327,6 @@
         // scrollposition længere nede ad siden.
         var rowCenter = m.documentTop + m.rowHeight / 2;
         eventList.style.paddingTop = Math.max(0, m.snapportCenter - rowCenter) + 'px';
-    }
-    updateFirstEventSpacing();
-    window.addEventListener('resize', updateFirstEventSpacing);
-
-    // Ved indlæsning starter forsiden nederst i kalenderen og glider
-    // langsomt op til den første begivenhed over 2 sekunder — et lille
-    // "kig" ned gennem hele listen af kommende ting, før blikket samles
-    // om den nærmeste. Sker uden "smooth"/scroll-snap (kun
-    // window.scrollTo pr. frame), så det er fuldt under kontrol.
-    var introScrollDone = Promise.resolve();
-    if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
-        var m0 = eventRowMetrics();
-        var target = Math.max(0, m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter);
-        var reduceMotion = window.matchMedia &&
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // Kommer man fra en anden side på sitet, kører der sandsynligvis en
-        // cross-document view transition — her springes "kig ned gennem
-        // listen"-introen over, så forsidens øjebliksbillede ikke selv
-        // hopper væk fra scrollY 0 og ødelægger krydsblændingen. Landingen
-        // (target) er normalt allerede 0 takket være paddingen ovenfor.
-        var cameFromSiteNav = document.referrer && document.referrer.indexOf(location.origin) === 0;
-
-        if (cameFromSiteNav) {
-            if (target > 1) {
-                window.addEventListener('pagereveal', function (event) {
-                    if (event.viewTransition) { event.viewTransition.skipTransition(); }
-                }, { once: true });
-                window.scrollTo({ top: target, behavior: 'instant' });
-            }
-        } else if (reduceMotion) {
-            if (target > 1) { window.scrollTo({ top: target, behavior: 'instant' }); }
-        } else {
-            var lastRow = eventList.querySelector('.event-row:last-child');
-            var lastRowBottom = 0;
-            for (var lel = lastRow; lel; lel = lel.offsetParent) { lastRowBottom += lel.offsetTop; }
-            lastRowBottom += lastRow.getBoundingClientRect().height;
-            var maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-            var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
-
-            if (viaTop > target + 1) {
-                window.scrollTo({ top: viaTop, behavior: 'instant' });
-
-                // #main's "page-reveal"-transform kører i ca. 1100ms og
-                // forskubber alt malet indhold i forhold til de
-                // offsetTop-baserede mål (viaTop/target) ovenfor. Vent derfor
-                // med selve op-rulningen til transformen er færdig — siden
-                // står stille nederst i kalenderen imens (samme reveal som
-                // alle andre sider), og selve 2s-rulningen sker bagefter med
-                // korrekt, transform-fri geometri.
-                introScrollDone = revealDonePromise().then(function () {
-                    return new Promise(function (resolve) {
-                        var DURATION_MS = 2000;
-                        var startTime = null;
-                        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-                        function frame(now) {
-                            if (startTime === null) { startTime = now; }
-                            var elapsed = now - startTime;
-                            var t = Math.min(elapsed / DURATION_MS, 1);
-                            var y = viaTop + (target - viaTop) * easeOutCubic(t);
-                            window.scrollTo({ top: y, behavior: 'instant' });
-                            if (t < 1) {
-                                requestAnimationFrame(frame);
-                            } else {
-                                resolve();
-                            }
-                        }
-                        requestAnimationFrame(frame);
-                    });
-                });
-            } else if (target > 1) {
-                window.scrollTo({ top: target, behavior: 'instant' });
-            }
-        }
     }
 
     // Scroll-snap slås først til, når både skrifterne er indlæst (så
@@ -266,63 +362,12 @@
         });
     }
     var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-    Promise.all([fontsReady, revealDonePromise(), introScrollDone]).then(enableSnap);
-
-    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
-        window.matchMedia('(hover: none), (pointer: coarse)').matches;
-    if (eventList && 'IntersectionObserver' in window && isTouchDevice) {
-        var touchEventRows = Array.prototype.slice.call(eventList.querySelectorAll('.event-row'));
-        var ticking = false;
-
-        function updateActiveEventRow() {
-            ticking = false;
-            var viewportCenter = window.innerHeight / 2;
-            var closest = null;
-            var closestDist = Infinity;
-            touchEventRows.forEach(function (row) {
-                var rect = row.getBoundingClientRect();
-                var dist = Math.abs((rect.top + rect.height / 2) - viewportCenter);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closest = row;
-                }
-            });
-            touchEventRows.forEach(function (row) {
-                var wasActive = row.classList.contains('is-active');
-                var willBeActive = row === closest;
-                row.classList.toggle('is-active', willBeActive);
-                if (willBeActive && !wasActive && row._marqueeStart) row._marqueeStart();
-                if (!willBeActive && wasActive && row._marqueeStop) row._marqueeStop();
-            });
-            eventList.classList.toggle('has-active', !!closest);
-        }
-
-        function onScroll() {
-            if (!ticking) {
-                ticking = true;
-                window.requestAnimationFrame(updateActiveEventRow);
-            }
-        }
-
-        var listObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    window.addEventListener('scroll', onScroll, { passive: true });
-                    updateActiveEventRow();
-                } else {
-                    window.removeEventListener('scroll', onScroll);
-                    touchEventRows.forEach(function (row) { row.classList.remove('is-active'); });
-                    eventList.classList.remove('has-active');
-                }
-            });
-        }, { threshold: 0 });
-        listObserver.observe(eventList);
-    }
 
     // Kalender — "Læs mere" folder en beskrivelse ud under begivenheden.
     // Kun én begivenhed er åben ad gangen, og man kan også åbne/lukke den
-    // ved at trykke på overskriften eller datoen (ikke kun selve knappen)
-    var allEventRows = Array.prototype.slice.call(document.querySelectorAll('.event-row'));
+    // ved at trykke på overskriften eller datoen (ikke kun selve knappen).
+    // Sættes først efter renderEvents() har tilføjet kortene til DOM'en.
+    var allEventRows;
 
     function setEventRowOpen(row, open) {
         var btn = row.querySelector('[data-event-toggle]');
@@ -439,63 +484,222 @@
     }
 
 
-    allEventRows.forEach(function (row) {
-        var btn = row.querySelector('[data-event-toggle]');
-        if (btn) {
-            btn.addEventListener('click', function () { toggleEventRow(row); });
-        }
-        row.querySelectorAll('[data-event-open]').forEach(function (trigger) {
-            trigger.addEventListener('click', function () { toggleEventRow(row); });
+    if (eventList) {
+        renderEvents().then(function () {
+            firstEventRow = eventList.querySelector('.event-row');
+            allEventRows = Array.prototype.slice.call(eventList.querySelectorAll('.event-row'));
+
+            updateFirstEventSpacing();
+            window.addEventListener('resize', updateFirstEventSpacing);
+
+            // Et link på formen #event-<slug> peger på en bestemt begivenhed
+            // (se event-detail-<slug> i buildEventRow) — bruges nedenfor til
+            // at folde den ud, scrolle til den og fremhæve den kort.
+            var deepLinkMatch = /^#event-(.+)$/.exec(location.hash);
+            var deepLinkRow = deepLinkMatch
+                ? allEventRows.find(function (row) {
+                      return row.querySelector('.event-details-wrap').id === 'event-detail-' + deepLinkMatch[1];
+                  }) || null
+                : null;
+
+            // Ved indlæsning starter forsiden nederst i kalenderen og glider
+            // langsomt op til den første begivenhed over 2 sekunder — et lille
+            // "kig" ned gennem hele listen af kommende ting, før blikket samles
+            // om den nærmeste. Sker uden "smooth"/scroll-snap (kun
+            // window.scrollTo pr. frame), så det er fuldt under kontrol.
+            var introScrollDone = Promise.resolve();
+            if (firstEventRow && eventList && window.scrollY === 0 && !location.hash) {
+                var m0 = eventRowMetrics();
+                var target = Math.max(0, m0.documentTop + m0.rowHeight / 2 - m0.snapportCenter);
+                var reduceMotion = window.matchMedia &&
+                    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                // Kommer man fra en anden side på sitet, kører der sandsynligvis en
+                // cross-document view transition — her springes "kig ned gennem
+                // listen"-introen over, så forsidens øjebliksbillede ikke selv
+                // hopper væk fra scrollY 0 og ødelægger krydsblændingen. Landingen
+                // (target) er normalt allerede 0 takket være paddingen ovenfor.
+                var cameFromSiteNav = document.referrer && document.referrer.indexOf(location.origin) === 0;
+
+                if (cameFromSiteNav) {
+                    if (target > 1) {
+                        window.addEventListener('pagereveal', function (event) {
+                            if (event.viewTransition) { event.viewTransition.skipTransition(); }
+                        }, { once: true });
+                        window.scrollTo({ top: target, behavior: 'instant' });
+                    }
+                } else if (reduceMotion) {
+                    if (target > 1) { window.scrollTo({ top: target, behavior: 'instant' }); }
+                } else {
+                    var lastRow = eventList.querySelector('.event-row:last-child');
+                    var lastRowBottom = 0;
+                    for (var lel = lastRow; lel; lel = lel.offsetParent) { lastRowBottom += lel.offsetTop; }
+                    lastRowBottom += lastRow.getBoundingClientRect().height;
+                    var maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+                    var viaTop = Math.min(maxScroll, Math.max(0, lastRowBottom - window.innerHeight));
+
+                    if (viaTop > target + 1) {
+                        window.scrollTo({ top: viaTop, behavior: 'instant' });
+
+                        // #main's "page-reveal"-transform kører i ca. 1100ms og
+                        // forskubber alt malet indhold i forhold til de
+                        // offsetTop-baserede mål (viaTop/target) ovenfor. Vent derfor
+                        // med selve op-rulningen til transformen er færdig — siden
+                        // står stille nederst i kalenderen imens (samme reveal som
+                        // alle andre sider), og selve 2s-rulningen sker bagefter med
+                        // korrekt, transform-fri geometri.
+                        introScrollDone = revealDonePromise().then(function () {
+                            return new Promise(function (resolve) {
+                                var DURATION_MS = 2000;
+                                var startTime = null;
+                                function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+                                function frame(now) {
+                                    if (startTime === null) { startTime = now; }
+                                    var elapsed = now - startTime;
+                                    var t = Math.min(elapsed / DURATION_MS, 1);
+                                    var y = viaTop + (target - viaTop) * easeOutCubic(t);
+                                    window.scrollTo({ top: y, behavior: 'instant' });
+                                    if (t < 1) {
+                                        requestAnimationFrame(frame);
+                                    } else {
+                                        resolve();
+                                    }
+                                }
+                                requestAnimationFrame(frame);
+                            });
+                        });
+                    } else if (target > 1) {
+                        window.scrollTo({ top: target, behavior: 'instant' });
+                    }
+                }
+            } else if (deepLinkRow) {
+                var openDeepLink = function () {
+                    toggleEventRow(deepLinkRow);
+                    deepLinkRow.classList.add('event-highlight');
+                    deepLinkRow.addEventListener('animationend', function handler() {
+                        deepLinkRow.classList.remove('event-highlight');
+                        deepLinkRow.removeEventListener('animationend', handler);
+                    });
+                };
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(openDeepLink);
+                } else {
+                    openDeepLink();
+                }
+            }
+
+            Promise.all([fontsReady, revealDonePromise(), introScrollDone]).then(enableSnap);
+
+            var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) ||
+                window.matchMedia('(hover: none), (pointer: coarse)').matches;
+            if ('IntersectionObserver' in window && isTouchDevice) {
+                var touchEventRows = allEventRows;
+                var ticking = false;
+
+                function updateActiveEventRow() {
+                    ticking = false;
+                    var viewportCenter = window.innerHeight / 2;
+                    var closest = null;
+                    var closestDist = Infinity;
+                    touchEventRows.forEach(function (row) {
+                        var rect = row.getBoundingClientRect();
+                        var dist = Math.abs((rect.top + rect.height / 2) - viewportCenter);
+                        if (dist < closestDist) {
+                            closestDist = dist;
+                            closest = row;
+                        }
+                    });
+                    touchEventRows.forEach(function (row) {
+                        var wasActive = row.classList.contains('is-active');
+                        var willBeActive = row === closest;
+                        row.classList.toggle('is-active', willBeActive);
+                        if (willBeActive && !wasActive && row._marqueeStart) row._marqueeStart();
+                        if (!willBeActive && wasActive && row._marqueeStop) row._marqueeStop();
+                    });
+                    eventList.classList.toggle('has-active', !!closest);
+                }
+
+                function onScroll() {
+                    if (!ticking) {
+                        ticking = true;
+                        window.requestAnimationFrame(updateActiveEventRow);
+                    }
+                }
+
+                var listObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            window.addEventListener('scroll', onScroll, { passive: true });
+                            updateActiveEventRow();
+                        } else {
+                            window.removeEventListener('scroll', onScroll);
+                            touchEventRows.forEach(function (row) { row.classList.remove('is-active'); });
+                            eventList.classList.remove('has-active');
+                        }
+                    });
+                }, { threshold: 0 });
+                listObserver.observe(eventList);
+            }
+
+            allEventRows.forEach(function (row) {
+                var btn = row.querySelector('[data-event-toggle]');
+                if (btn) {
+                    btn.addEventListener('click', function () { toggleEventRow(row); });
+                }
+                row.querySelectorAll('[data-event-open]').forEach(function (trigger) {
+                    trigger.addEventListener('click', function () { toggleEventRow(row); });
+                });
+            });
+
+            // Event title ticker — seamless infinite one-way scroll on hover
+            allEventRows.forEach(function (row) {
+                var h3 = row.querySelector('h3');
+                if (!h3) return;
+                var inner = document.createElement('span');
+                inner.className = 'event-title-inner';
+                while (h3.firstChild) { inner.appendChild(h3.firstChild); }
+                h3.appendChild(inner);
+                var originalText = inner.textContent;
+                var isRunning = false;
+
+                function start() {
+                    if (isRunning) return;
+                    var originalWidth = inner.offsetWidth;
+                    var overflow = h3.scrollWidth - h3.offsetWidth;
+                    if (overflow < 6) return;
+                    isRunning = true;
+                    var gap = 80;
+                    var spacer = document.createElement('span');
+                    spacer.className = 'event-title-spacer';
+                    spacer.setAttribute('aria-hidden', 'true');
+                    spacer.style.cssText = 'display:inline-block;width:' + gap + 'px';
+                    var clone = document.createElement('span');
+                    clone.className = 'event-title-clone';
+                    clone.setAttribute('aria-hidden', 'true');
+                    clone.textContent = originalText;
+                    inner.appendChild(spacer);
+                    inner.appendChild(clone);
+                    var scrollDist = originalWidth + gap;
+                    var dur = (scrollDist / 80).toFixed(2);
+                    h3.style.setProperty('--marquee-scroll', scrollDist + 'px');
+                    h3.style.setProperty('--marquee-dur', dur + 's');
+                    h3.classList.add('is-marquee');
+                }
+                function stop() {
+                    if (!isRunning) return;
+                    isRunning = false;
+                    h3.classList.remove('is-marquee');
+                    inner.querySelectorAll('.event-title-spacer, .event-title-clone')
+                        .forEach(function (el) { el.remove(); });
+                }
+
+                row.addEventListener('mouseenter', start);
+                row.addEventListener('mouseleave', stop);
+                row._marqueeStart = start;
+                row._marqueeStop = stop;
+            });
         });
-    });
-
-    // Event title ticker — seamless infinite one-way scroll on hover
-    allEventRows.forEach(function (row) {
-        var h3 = row.querySelector('h3');
-        if (!h3) return;
-        var inner = document.createElement('span');
-        inner.className = 'event-title-inner';
-        while (h3.firstChild) { inner.appendChild(h3.firstChild); }
-        h3.appendChild(inner);
-        var originalText = inner.textContent;
-        var isRunning = false;
-
-        function start() {
-            if (isRunning) return;
-            var originalWidth = inner.offsetWidth;
-            var overflow = h3.scrollWidth - h3.offsetWidth;
-            if (overflow < 6) return;
-            isRunning = true;
-            var gap = 80;
-            var spacer = document.createElement('span');
-            spacer.className = 'event-title-spacer';
-            spacer.setAttribute('aria-hidden', 'true');
-            spacer.style.cssText = 'display:inline-block;width:' + gap + 'px';
-            var clone = document.createElement('span');
-            clone.className = 'event-title-clone';
-            clone.setAttribute('aria-hidden', 'true');
-            clone.textContent = originalText;
-            inner.appendChild(spacer);
-            inner.appendChild(clone);
-            var scrollDist = originalWidth + gap;
-            var dur = (scrollDist / 80).toFixed(2);
-            h3.style.setProperty('--marquee-scroll', scrollDist + 'px');
-            h3.style.setProperty('--marquee-dur', dur + 's');
-            h3.classList.add('is-marquee');
-        }
-        function stop() {
-            if (!isRunning) return;
-            isRunning = false;
-            h3.classList.remove('is-marquee');
-            inner.querySelectorAll('.event-title-spacer, .event-title-clone')
-                .forEach(function (el) { el.remove(); });
-        }
-
-        row.addEventListener('mouseenter', start);
-        row.addEventListener('mouseleave', stop);
-        row._marqueeStart = start;
-        row._marqueeStop = stop;
-    });
+    }
 
     // Kontaktformular (demo — ingen backend endnu)
     var form = document.querySelector('[data-contact-form]');
@@ -723,8 +927,8 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var blocks = document.querySelectorAll('.bg-green, .bg-orange, .bg-yellow, .bg-blue, .bg-pink');
-    var eventRows = document.querySelectorAll('.event-row');
-    if (!blocks.length && !eventRows.length) return;
+    var eventList = document.querySelector('.event-list');
+    if (!blocks.length && !eventList) return;
 
     var FLICKER_MS = 300;
     var flickerTimer = null;
@@ -740,7 +944,9 @@
         blocks.forEach(function (block) {
             block.style.setProperty('--scratch-pos', randomScratchPos());
         });
-        eventRows.forEach(function (row) {
+        // .event-row elements are rendered asynchronously from events.json,
+        // so re-query each tick instead of caching an empty NodeList up-front
+        document.querySelectorAll('.event-row').forEach(function (row) {
             var active = row.classList.contains('is-open') ||
                 row.classList.contains('is-active') ||
                 row.matches(':hover') ||
