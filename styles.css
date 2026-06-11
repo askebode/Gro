@@ -533,8 +533,6 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     align-items: baseline;
     padding-block: var(--space-6);
     padding-left: 0;
-    --item-border-color: color-mix(in oklch, var(--color-ink) 16%, transparent);
-    border-top: 1px solid var(--item-border-color);
     transition: padding-left 260ms var(--ease-pop);
 }
 /* On the cream background, the wildflowers (.weed-layer) paint above
@@ -560,17 +558,16 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     isolation: isolate;
     background: color-mix(in oklch, var(--color-ink) 6%, var(--color-cream));
     box-shadow: 0 0 0 var(--space-3) color-mix(in oklch, var(--color-ink) 6%, var(--color-cream));
-    border-radius: 6px;
+    margin-bottom: var(--space-6);
+}
+.bg-cream .item-row:last-child {
+    margin-bottom: 0;
 }
 @media (hover: hover) {
     .item-row:hover { padding-left: var(--space-4); }
     .item-row:hover .item-label { opacity: 1; transform: translateX(4px); }
 }
 .item-row .item-label { display: inline-block; transition: opacity 200ms var(--ease-standard), transform 260ms var(--ease-pop); }
-.bg-green .item-row, .bg-orange .item-row, .bg-blue .item-row, .bg-pink .item-row, .bg-ink .item-row {
-    --item-border-color: oklch(97.5% 0.012 88 / 0.28);
-}
-.item-row:last-child { border-bottom: 1px solid var(--item-border-color); }
 .item-row .item-label { font-family: var(--font-head); font-weight: 700; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.7; }
 .item-row h3 { margin-bottom: 0.35em; }
 .item-row p { margin-bottom: 0; opacity: 0.85; }
