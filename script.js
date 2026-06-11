@@ -186,6 +186,7 @@
 
         var row = document.createElement('div');
         row.className = 'event-row';
+        row.dataset.slug = ev.slug;
         row.style.setProperty('--event-accent', 'var(--color-' + color + ')');
 
         var info = document.createElement('div');
@@ -448,6 +449,13 @@
             setEventRowOpen(other, other === row ? willOpen : false);
         });
         refreshThemeColor();
+
+        // Spejl den åbne begivenhed i adresselinjen, så man kan dele
+        // linket — uden at lægge et historik-trin per åbn/luk eller
+        // udløse browserens egen anker-scroll (replaceState gør ingen af
+        // delene, i modsætning til at sætte location.hash direkte).
+        var newUrl = willOpen ? '#event-' + row.dataset.slug : location.pathname + location.search;
+        history.replaceState(null, '', newUrl);
 
         // Lås den vandrette scrollposition og — når en begivenhed åbnes —
         // animer samtidig hen til dens plads i vinduet, i ét samlet loop
