@@ -968,7 +968,18 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
    Forms
    ===================================================== */
 
-.form { display: grid; gap: var(--space-6); max-width: 560px; margin-top: var(--space-8); }
+/* Fast cremefarvet baggrund + isolation, så de flydende vilde blomster
+   (.weed-layer, fixed, malet efter <main>) ikke ligger oven på
+   formularens felter — samme afskærmningsteknik som .bg-cream .item-row. */
+.form {
+    display: grid; gap: var(--space-6); max-width: 560px; margin-top: var(--space-8);
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+    background: var(--color-cream);
+    padding: var(--space-6);
+    border-radius: 1rem;
+}
 .form-row { display: grid; gap: 0.5rem; }
 .form label { font-family: var(--font-head); font-weight: 700; font-size: var(--text-sm); }
 .form input, .form textarea {
