@@ -538,14 +538,19 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
     transition: padding-left 260ms var(--ease-pop);
 }
 /* On the cream background, the wildflowers (.weed-layer) paint above
-   non-isolated content — give text-heavy blocks their own opaque layer
-   so blooms never land on top of the text. */
-.bg-cream .item-row,
-.bg-cream .kicker {
+   non-isolated content — give paragraph text its own padded, opaque
+   highlight so blooms never land on top of it. Headings are bold/large
+   enough to stay readable over the flowers, so they're left uncovered. */
+.bg-cream .kicker > .eyebrow,
+.bg-cream .kicker > .lead,
+.bg-cream .item-row p {
     position: relative;
     z-index: 1;
     isolation: isolate;
+    width: fit-content;
     background: var(--color-cream);
+    padding: 0.2em 0.5em;
+    border-radius: 0.4em;
 }
 @media (hover: hover) {
     .item-row:hover { padding-left: var(--space-4); }
