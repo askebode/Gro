@@ -55,15 +55,25 @@
         return '#' + channel(r) + channel(g) + channel(bl);
     }
     function resolveThemeColor(colorStr) {
-        var m = /^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/.exec(colorStr);
-        return m ? oklchToHex(parseFloat(m[1]), parseFloat(m[2]), parseFloat(m[3])) : colorStr;
+        var m = /^oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)/.exec(colorStr);
+        if (!m) { return colorStr; }
+        var lightness = parseFloat(m[1]);
+        if (m[2] === '%') { lightness /= 100; }
+        return oklchToHex(lightness, parseFloat(m[3]), parseFloat(m[4]));
     }
     var themeColorMeta = document.querySelector('meta[name="theme-color"]');
     function setThemeColor(colorStr) {
         if (themeColorMeta && colorStr) { themeColorMeta.setAttribute('content', resolveThemeColor(colorStr)); }
     }
     var pageHeroEl = document.querySelector('.page-content > .hero:first-child');
-    var baseThemeColor = getComputedStyle(pageHeroEl || document.body).backgroundColor;
+    // Forsiden har ingen .hero — her læses --color-cream direkte fra :root i
+    // stedet for body's baggrund. body's baggrund propagerer til canvas
+    // (html har ingen egen baggrund), hvilket i nogle browsere gør
+    // getComputedStyle(body).backgroundColor gennemsigtig og adresselinjen
+    // hvid i stedet for cremefarvet.
+    var baseThemeColor = pageHeroEl
+        ? getComputedStyle(pageHeroEl).backgroundColor
+        : getComputedStyle(document.documentElement).getPropertyValue('--color-cream').trim();
     setThemeColor(baseThemeColor);
 
     // Mobil-menu
