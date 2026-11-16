@@ -1251,3 +1251,21 @@ p { margin: 0 0 var(--space-4); max-width: 56ch; text-wrap: pretty; }
 @media (prefers-color-scheme: dark) {
     .weed-flower { mix-blend-mode: screen; opacity: 0.08; }
 }
+
+/* ---------- Indmeldelse (Unioo-embeds på bliv-med.html) ---------- */
+.membership { margin-top: var(--space-8); }
+.membership-tabs { display: inline-flex; gap: 4px; padding: 4px; border: 2px solid var(--color-ink); border-radius: 999px; margin-bottom: var(--space-4); }
+.membership-tab {
+    font: inherit; font-family: var(--font-head); font-weight: 700; letter-spacing: 0.04em;
+    padding: 0.55em 1.4em; border: 0; border-radius: 999px; cursor: pointer;
+    background: transparent; color: var(--color-ink);
+    transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard);
+}
+.membership-tab[aria-pressed="true"] { background: var(--color-ink); color: var(--color-cream); }
+.membership-tab:focus-visible { outline: 3px solid var(--color-pink); outline-offset: 2px; }
+.membership-frame { border: 2px solid var(--color-ink); border-radius: 16px; overflow: hidden; background: #fff; }
+.membership-frame iframe { display: block; width: 100%; height: 820px; border: 0; }
+.membership-fallback { margin-top: var(--space-3); font-size: var(--text-sm); opacity: 0.8; }
+@media (max-width: 600px) {
+    .membership-frame iframe { height: 960px; }
+}

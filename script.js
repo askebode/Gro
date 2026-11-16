@@ -977,3 +977,21 @@
         }, FLICKER_MS);
     }, { passive: true });
 })();
+
+// Indmeldelse: skifter Unioo-embed mellem voksne og børn på bliv-med.html
+(function () {
+    var wrap = document.querySelector('[data-membership]');
+    if (!wrap) return;
+    var frame = wrap.querySelector('[data-membership-frame]');
+    var tabs = wrap.querySelectorAll('[data-membership-src]');
+    Array.prototype.forEach.call(tabs, function (tab) {
+        tab.addEventListener('click', function () {
+            if (tab.getAttribute('aria-pressed') === 'true') return;
+            Array.prototype.forEach.call(tabs, function (t) {
+                t.setAttribute('aria-pressed', t === tab ? 'true' : 'false');
+            });
+            frame.src = tab.getAttribute('data-membership-src');
+            frame.title = tab.getAttribute('data-membership-title');
+        });
+    });
+})();
